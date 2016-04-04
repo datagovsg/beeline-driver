@@ -1,10 +1,17 @@
 <div id="pg_replaceDriver">
     <my-header my-title="Enter Phone Number"></my-header>
-	<div id="update">
-            Enter phone no. of replacement driver<br>
-            <input type="text" id="phoneno" placeholder="+65"></input>
-	</div>
-	<div id="btnsendjob" class="btn" ng-click="sendjob()">
-		<div class="resp">SEND JOB</div>
-	</div>
+    <div class="page_has_header">
+    	<div id="info">
+                Enter phone no. of replacement driver<br>
+                <div class="holder">
+                    <input id="loginphone" type="tel" data-role="none" name="telephoneNo" id="login-telephoneNo">
+                    <div class="phtxt">
+                        <img src="img/IconLoginPhone.png"> +65
+                    </div>
+                </div>
+    	</div>
+    	<div id="btnsendjob" class="btn" ng-click="sendjob()">
+    		<div class="resp">SEND JOB</div>
+    	</div>
+    </div>
 </div>
