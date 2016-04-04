@@ -2,7 +2,7 @@
 
 var EmergencyController =[
     '$scope',
-    '$state', 
+    '$state',
 function(
     $scope,
     $state
@@ -24,4 +24,8 @@ function(
 			angular.element(emerg).addClass('hide');
 		}
 	}
+
+    $scope.replace = function(){
+        $state.go('replaceDriver');
+    }
 }];

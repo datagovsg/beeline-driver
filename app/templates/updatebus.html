@@ -1,0 +1,13 @@
+<div id="pg_updateBus">
+    <my-header my-title="Car Plate No."></my-header>
+	<div id="update">
+            <input type="file" name="image" id="image" accept="image/*" capture onchange="loadFile(event)"/>
+            <label for="image" id="scan">Scan with Camera</label>
+            <img id="output"/><br>
+            or<br>
+            <input type="text" id="carplate" placeholder="Type Car Plate No."></input>
+	</div>
+	<div id="btnupdatebus" class="btn" ng-click="confirm()">
+		<div class="resp">CONFIRM</div>
+	</div>
+</div>

@@ -1,6 +1,6 @@
 'use strict';
 
-var JobAcceptedController =[
+var ReplaceDriverController =[
     '$scope',
     '$state',
 function(
@@ -15,11 +15,5 @@ function(
 		eroad: 'Anson Road'
 	};
 
-    $scope.startJob = function() {
-        $state.go('jobStarted');
-    }
 
-    $scope.updateBus = function() {
-        $state.go('updateBus');  
-    }
 }];

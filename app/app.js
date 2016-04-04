@@ -8,7 +8,9 @@ angular.module('myApp', [
 .controller('jobAcceptCtrl', JobAcceptController)
 .controller('jobAcceptedCtrl', JobAcceptedController)
 .controller('jobStartedCtrl', JobStartedController)
+.controller('updateBusCtrl', UpdateBusController)
 .controller('emergencyCtrl', EmergencyController)
+.controller('replaceDriverCtrl', ReplaceDriverController)
 .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
@@ -49,6 +51,16 @@ angular.module('myApp', [
             url: '/jobStarted',
             templateUrl: 'templates/jobstarted.html',
             controller: 'jobStartedCtrl'
+        })
+        .state('updateBus', {
+            url: '/updatebus',
+            templateUrl: 'templates/updatebus.html',
+            controller: 'updateBusCtrl'
+        })
+        .state('replaceDriver', {
+            url: '/replacedriver',
+            templateUrl: 'templates/replacedriver.html',
+            controller: 'replaceDriverCtrl'
         })
 	$urlRouterProvider.otherwise('/accept');
 });
