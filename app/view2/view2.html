@@ -1,13 +1,8 @@
-<!--<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>-->
 <div class="view2">
-    
+
 
     <table ng-repeat = "(key, value) in passengersByStop">
-        
+
        <tr >
           <th></th>
           <th>{{stopbyid[key].stop.description}}&nbsp;&nbsp;&nbsp;&nbsp;{{stopbyid[key].stop.road}}</th>

@@ -1,15 +1,6 @@
 'use strict';
 
-angular.module('myApp.version.version-directive', [])
-
-
-//directive is app-version
-//'version' is to avoid min js error
-.directive('appVersion', ['version', function(version) {
-  return function(scope, elm, attrs) {
-    elm.text(version);
-  };
-}])
+angular.module('myApp.utility.utility-directive', [])
 
 .directive('myHeader', function() {
     return {
@@ -18,7 +9,7 @@ angular.module('myApp.version.version-directive', [])
          scope: {
              title: '@myTitle',
          },
-         templateUrl: './components/version/my-header.html',
+         templateUrl: './components/utility/my-header.html',
          controller: function ($scope,$state) {
               $scope.close = function(){
                   $state.go('accept');

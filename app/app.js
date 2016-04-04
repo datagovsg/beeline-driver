@@ -2,7 +2,7 @@
 angular.module('myApp', [
   'ui.router',
   'uiGmapgoogle-maps',
-  'myApp.version'
+  'myApp.utility'
 ])
 .controller('indexCtrl', function(){})
 .controller('jobAcceptCtrl', JobAcceptController)
