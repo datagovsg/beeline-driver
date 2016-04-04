@@ -1,0 +1,37 @@
+<div class="view1">
+<div class="view1-top">
+    <div class="left">
+        <p>Name: {{driver.name}}</p>
+        <p>Company: {{driver.company}}</p>
+        <p>ContactNo: {{driver.telephone}}</p>
+        <p>PlateNo: {{driver.plateno}}</p>
+    </div>
+    <div class="right">
+        <button class="yellow-button">START</button>
+        <input type="file" name="image" id="image" accept="image/*" capture onchange="loadFile(event)"/>
+        <label class="yellow-button" for="image">Take a Photo</label>
+<!--        <span>Photo less than 5MB</span>-->
+        <img id="output"/>
+    </div>
+
+</div>
+
+<div class="map">
+
+    <ui-gmap-google-map center="map.center" pan="true" zoom="map.zoom" options="map.options" events="map.events" control="map.mapControl" data-tap-disabled="true">
+        <ui-gmap-marker
+            ng-repeat="ping in pings"
+            idKey="ping.id"
+            coords="{
+                latitude: ping.coordinates.coordinates[1],
+                longitude: ping.coordinates.coordinates[0],
+            }"
+            options="pingMarkerOptions"
+        ></ui-gmap-marker>     
+    </ui-gmap-google-map>
+</div>
+    
+</div>
+
+
+
