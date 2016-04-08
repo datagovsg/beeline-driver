@@ -6,7 +6,7 @@ angular.module('myApp')
       scope: {
         title: '@title',
       },
-      templateUrl: 'directives/TitleHeaderDirective/title-header-directive.html',
+      templateUrl: 'directives/TitleHeader/title-header.html',
       controller: function ($scope,$state) {
         $scope.close = function(){
           $state.go('accept');
