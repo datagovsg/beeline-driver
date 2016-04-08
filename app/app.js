@@ -1,66 +1,64 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ui.router',
-  'uiGmapgoogle-maps',
-  'myApp.utility'
+  'uiGmapgoogle-maps'
 ])
-.controller('indexCtrl', function(){})
-.controller('jobAcceptCtrl', JobAcceptController)
-.controller('jobAcceptedCtrl', JobAcceptedController)
-.controller('jobStartedCtrl', JobStartedController)
-.controller('updateBusCtrl', UpdateBusController)
-.controller('emergencyCtrl', EmergencyController)
-.controller('replaceDriverCtrl', ReplaceDriverController)
+.controller('IndexController', function(){})
+.controller('JobAcceptController', JobAcceptController)
+.controller('JobAcceptedController', JobAcceptedController)
+.controller('JobStartedController', JobStartedController)
+.controller('UpdateBusController', UpdateBusController)
+.controller('EmergencyController', EmergencyController)
+.controller('ReplaceDriverController', ReplaceDriverController)
 .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
-        libraries: 'places'
-    });
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
+    libraries: 'places'
+  });
 })
 .config(function($stateProvider, $urlRouterProvider) {
-
-	$stateProvider
-		.state('index', {
-			abstract: true,
-			views: {
-				'@': {
-					template: '<div ui-view="sidemenu"></div><div id="contentview" ui-view="content"></div>',
-					controller: 'indexCtrl'
-				},
-				'content@index': { template: '<div id="content" ui-view=""></div>'},
-				'sidemenu@index': {
-					templateUrl: 'templates/emerg.html',
-					controller: 'emergencyCtrl'
-				}
-			}
-		})
-		.state('accept', {
-			parent: 'index',
-			url: '/accept',
-			templateUrl: 'templates/accept.html',
-			controller: 'jobAcceptCtrl'
-		})
-        .state('jobAccepted', {
-            parent: 'index',
-            url: '/jobAccepted',
-            templateUrl: 'templates/jobaccepted.html',
-            controller: 'jobAcceptedCtrl'
-        })
-        .state('jobStarted', {
-            parent: 'index',
-            url: '/jobStarted',
-            templateUrl: 'templates/jobstarted.html',
-            controller: 'jobStartedCtrl'
-        })
-        .state('updateBus', {
-            url: '/updatebus',
-            templateUrl: 'templates/updatebus.html',
-            controller: 'updateBusCtrl'
-        })
-        .state('replaceDriver', {
-            url: '/replacedriver',
-            templateUrl: 'templates/replacedriver.html',
-            controller: 'replaceDriverCtrl'
-        })
-	$urlRouterProvider.otherwise('/accept');
+  $stateProvider
+  	.state('index', {
+  		abstract: true,
+  		views: {
+  			'@': {
+  				template: '<div ui-view="sidemenu"></div><div id="contentview" ui-view="content"></div>',
+  				controller: 'IndexController'
+  			},
+  			'content@index': { template: '<div id="content" ui-view=""></div>'},
+  			'sidemenu@index': {
+  				templateUrl: 'templates/emerg.html',
+  				controller: 'EmergencyController'
+  			}
+  		}
+  	})
+  	.state('accept', {
+  		parent: 'index',
+  		url: '/accept',
+  		templateUrl: 'templates/accept.html',
+  		controller: 'JobAcceptController'
+  	})
+    .state('jobAccepted', {
+      parent: 'index',
+      url: '/jobAccepted',
+      templateUrl: 'templates/job-accepted.html',
+      controller: 'JobAcceptedController'
+    })
+    .state('jobStarted', {
+      parent: 'index',
+      url: '/jobStarted',
+      templateUrl: 'templates/job-started.html',
+      controller: 'JobStartedController'
+    })
+    .state('updateBus', {
+      url: '/updatebus',
+      templateUrl: 'templates/update-bus.html',
+      controller: 'UpdateBusController'
+    })
+    .state('replaceDriver', {
+      url: '/replacedriver',
+      templateUrl: 'templates/replace-driver.html',
+      controller: 'ReplaceDriverController'
+    })
+  $urlRouterProvider.otherwise('/accept');
 });
