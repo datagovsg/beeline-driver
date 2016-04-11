@@ -1,6 +1,6 @@
 'use strict';
 
-var JobAcceptedController =[
+export default[
   '$scope',
   '$state',
 function(

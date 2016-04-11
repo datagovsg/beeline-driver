@@ -6,36 +6,18 @@
   <title>Driver App ver 0.1</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <meta http-equiv="Content-Security-Policy" content="default-src * data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *;">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
-  <!--script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script-->
 </head>
 <body>
-	<!--ul class="menu">
-		<a href="#/TripInfor"><button>Trip Information</button></a>
-		<a href="#/PassengerList"><button>Passenger List</button></a>
-	</ul-->
-
 	<div ui-view id="index"></div>
-
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 	<script src='bower_components/lodash/dist/lodash.min.js'></script>
 	<script src='bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
 	<script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
-	<script src="controllers/JobAcceptController.js"></script>
-  <script src="controllers/JobAcceptedController.js"></script>
-  <script src="controllers/JobStartedController.js"></script>
-  <script src="controllers/UpdateBusController.js"></script>
-	<script src="controllers/EmergencyController.js"></script>
-  <script src="controllers/ReplaceDriverController.js"></script>
-	<script src="app.js"></script>
-  <script src="directives/TitleHeader/TitleHeader.js"></script>
-  <script src="components/driverservice/driverservice.js"></script>
-  <script src="components/passengerservice/passengerservice.js"></script>
-  <script src="components/pingservice/pingservice.js"></script>
+  <script src="lib/bundle.js"></script>
 </body>
 </html>

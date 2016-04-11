@@ -1,6 +1,6 @@
 'use strict';
 
-var EmergencyController =[
+export default[
   '$scope',
   '$state',
 function(

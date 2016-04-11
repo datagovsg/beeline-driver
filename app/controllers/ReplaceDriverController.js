@@ -1,6 +1,6 @@
 'use strict';
 
-var ReplaceDriverController =[
+export default[
   '$scope',
   '$state',
 function(

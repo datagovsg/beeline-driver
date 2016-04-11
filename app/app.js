@@ -1,4 +1,12 @@
 // Declare app level module which depends on views, and components
+import JobAcceptController from './controllers/JobAcceptController.js';
+import JobAcceptedController from './controllers/JobAcceptedController.js';
+import JobStartedController from './controllers/JobStartedController.js';
+import UpdateBusController from './controllers/UpdateBusController.js';
+import EmergencyController from './controllers/EmergencyController.js';
+import ReplaceDriverController from './controllers/ReplaceDriverController.js';
+import TitleHeader from './directives/TitleHeader/TitleHeader.js';
+
 angular.module('myApp', [
   'ui.router',
   'uiGmapgoogle-maps'
@@ -10,6 +18,7 @@ angular.module('myApp', [
 .controller('UpdateBusController', UpdateBusController)
 .controller('EmergencyController', EmergencyController)
 .controller('ReplaceDriverController', ReplaceDriverController)
+.directive('titleHeader', TitleHeader)
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',

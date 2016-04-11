@@ -1,6 +1,6 @@
 'use strict';
 
-var UpdateBusController =[
+export default[
   '$scope',
   '$state',
 function(
@@ -14,13 +14,13 @@ function(
     startRoad: 'Punggol Central',
     endRoad: 'Anson Road'
   };
-}];
 
-var loadFile = function(event) {
-  var reader = new FileReader();
-  reader.readAsDataURL(event.target.files[0]);
-  reader.onload = function(){
-    var output = document.getElementById('output');
-    output.src = reader.result;
+  $scope.loadFile = function(event) {
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = function(){
+      var output = document.getElementById('output');
+      output.src = reader.result;
+    };
   };
-};
+}];
