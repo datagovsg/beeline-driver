@@ -1,0 +1,15 @@
+<div id="stub" ng-click="toggle = !toggle" ng-class="{hide: !toggle}">
+	EMERGENCY
+	<div class="icon"></div>
+</div>
+<div id="emerg" ng-class="{hide: !toggle}">
+	<div id="emergclose" class="close" ng-click="toggle = !toggle"></div>
+	<ul>
+		<li class="first"></li>
+		<li ui-sref='replaceDriver'>Replace Driver</li>
+		<li>Cancel Trip</li>
+		<li class="last">Notify Late</li>
+	</ul>
+</div>
+
+<div class="icon"></div>

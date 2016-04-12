@@ -29,7 +29,7 @@
 		</div>
 		<div class="accept">Would you like to take the job?</div>
 	</div>
-	<div id="btnaccept" class="yellow-btn" ng-disabled="job.acceptoff" ng-click="accept()">
+	<div id="btnaccept" class="yellow-btn" ng-disabled="job.acceptoff" ui-sref='jobAccepted'>
 		<div class="resp" ng-hide="job.acceptoff">YES</div>
 		<div class="resp" ng-hide="!job.acceptoff">OPS ALERT SENT</div>
 		<div class="timer">{{job.hh}}<i>h</i> {{job.mm}}<i>m</i> {{job.ss}}<i>s</i></div>

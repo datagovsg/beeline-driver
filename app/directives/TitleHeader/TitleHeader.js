@@ -5,12 +5,8 @@ export default function (){
     transclude: true,
     scope: {
       title: '@title',
+      nextState: '@nextState',
     },
     templateUrl: './directives/TitleHeader/title-header.html',
-    controller: function ($scope,$state) {
-      $scope.close = function(){
-        $state.go('accept');
-      }
-    },
   };
 }

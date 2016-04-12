@@ -36,7 +36,7 @@ angular.module('myApp', [
   			},
   			'content@index': { template: '<div id="content" ui-view=""></div>'},
   			'sidemenu@index': {
-  				templateUrl: 'templates/emerg.html',
+  				templateUrl: 'templates/emergency.html',
   				controller: 'EmergencyController'
   			}
   		}
