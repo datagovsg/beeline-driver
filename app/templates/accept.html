@@ -1,4 +1,4 @@
-<div id="pg_accept">
+<div id="pg-accept">
 	<div class="msg">
 		<div class="greet">
 			Good morning Mr Tan,
@@ -6,16 +6,16 @@
 		</div>
 		<div class="tripinfo">
 			<div class="routeinfo">
-				<div class="busnum">{{job.tripnum}}</div>
+				<div class="busnum">{{job.tripNumber}}</div>
 				<div class=" stops">
 					<div class="line"></div>
 					<div class="start">
-						<div class="time">{{job.stime}}</div>
-						<div class="loc">{{job.sroad}}</div>
+						<div class="time">{{job.startTime}}</div>
+						<div class="loc">{{job.startRoad}}</div>
 						to
 					</div>
 					<div class="end">
-						<div class="loc">{{job.eroad}}</div>
+						<div class="loc">{{job.endRoad}}</div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="accept">Would you like to take the job?</div>
 	</div>
-	<div id="btnaccept" class="btn" ng-disabled="job.acceptoff" ng-click="accept()">
+	<div id="btnaccept" class="yellow-btn" ng-disabled="job.acceptoff" ui-sref='jobAccepted'>
 		<div class="resp" ng-hide="job.acceptoff">YES</div>
 		<div class="resp" ng-hide="!job.acceptoff">OPS ALERT SENT</div>
 		<div class="timer">{{job.hh}}<i>h</i> {{job.mm}}<i>m</i> {{job.ss}}<i>s</i></div>

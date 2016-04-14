@@ -1,117 +1,117 @@
 /* app css stylesheet */
 * {
-    font-family: ubuntu;
+  font-family: ubuntu;
 }
 
 html, body{
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-    background-color: #FFF;
-    font-size: 16px;
+  background-color: #FFF;
+  font-size: 16px;
 }
 
 #index, #contentview {
-	height: 100%;
+  height: 100%;
 }
 
 #content {
-	height: calc(100% - 80px);
-	background-color: #FFF;
-	padding: 70px 15px 10px 15px;
+  height: calc(100% - 80px);
+  background-color: #FFF;
+  padding: 70px 15px 10px 15px;
 }
 
 .clear {
-	clear:both;
+  clear:both;
 }
 
 
 /* ----- SIDE MENU ----- */
 #emerg {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	height: 100%;
-	background-color: rgba(0,0,0,0.5);
-	transition: all 0.4s;
-	opacity: 1;
-	z-index: 5;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  transition: all 0.4s;
+  opacity: 1;
+  z-index: 5;
 }
 
 #emerg .close {
-	width: 40px;
-	height: 48px;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	background: url('img/android-close.png') no-repeat center center;
-	background-size: 35px auto;
-	cursor: pointer;
+  width: 40px;
+  height: 48px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: url('image/android-close.png') no-repeat center center;
+  background-size: 35px auto;
+  cursor: pointer;
 }
 
 #stub {
-	width: calc(100% - 125px);
-	height: 35px;
-	position: absolute;
-	top: 10px;
-	background-color: #FF6F6F;
-	border-bottom: 3px solid #d14c4c;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	padding: 5px 60px 5px 10px;
-	color: #FFF;
-	font-size: 35px;
-	font-weight: normal;
-	line-height: 35px;
-	box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
-	transition: all 0.3s;
-	overflow: hidden;
-	z-index: 6;
-	cursor: pointer;
+  width: calc(100% - 125px);
+  height: 35px;
+  position: absolute;
+  top: 10px;
+  background-color: #FF6F6F;
+  border-bottom: 3px solid #d14c4c;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 5px 60px 5px 10px;
+  color: #FFF;
+  font-size: 35px;
+  font-weight: normal;
+  line-height: 35px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+  transition: all 0.3s;
+  overflow: hidden;
+  z-index: 6;
+  cursor: pointer;
 }
 
 #stub .icon {
-	width: 45px;
-	height: 35px;
-	background: url('img/alert-circled.png') no-repeat left center #FF6F6F;
-	background-size: 35px auto;
-	position: absolute;
-	top: 5px;
-	right: 0px;
+  width: 45px;
+  height: 35px;
+  background: url('image/alert-circled.png') no-repeat left center #FF6F6F;
+  background-size: 35px auto;
+  position: absolute;
+  top: 5px;
+  right: 0px;
 }
 
 #emerg ul {
-	width: calc(100% - 65px);
-	height: 100%;
-	margin: 0px;
-	padding: 0px;
-	background-color: #FFF;
-	position:relative;
-	transition: all 0.3s;
+  width: calc(100% - 65px);
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-color: #FFF;
+  position:relative;
+  transition: all 0.3s;
 }
 
 #emerg ul li {
-	border-bottom: 1px solid #CCC;
-	padding: 20px 15px;
-	font-size: 24px;
-	font-weight: bold;
+  border-bottom: 1px solid #CCC;
+  padding: 20px 15px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #emerg ul li.first {
-	height: 70px;
-	padding: 0px;
+  height: 70px;
+  padding: 0px;
 }
 
 #emerg ul li.last {
-	width: calc(100% - 55px);
-	background: url('img/ios7-clock.png') no-repeat left 15px center;
-	background-size: 35px auto;
-	position: absolute;
-	bottom: 20px;
-	padding: 20px 0px 20px 55px;
-	border-top: 1px solid #CCC;
+  width: calc(100% - 55px);
+  background: url('image/ios7-clock.png') no-repeat left 15px center;
+  background-size: 35px auto;
+  position: absolute;
+  bottom: 20px;
+  padding: 20px 0px 20px 55px;
+  border-top: 1px solid #CCC;
 }
 
 #stub.hide { width:0px; padding-right:45px; }
@@ -124,351 +124,313 @@ body {
 .routeinfo {
 }
 .routeinfo .busnum {
-	width: 40px;
-	height: 40px;
-	text-align: center;
-	background-color: #4b3863;
-	color: #FFF;
-	line-height: 40px;
-	border-radius: 20px;
-	margin-right: 10px;
-	float:left;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #4b3863;
+  color: #FFF;
+  line-height: 40px;
+  border-radius: 20px;
+  margin-right: 10px;
+  float:left;
 }
 
 .routeinfo .stops {
-	width: calc(100% - 50px);
-	position: relative;
-	float: left;
-	margin-bottom: 10px;
+  width: calc(100% - 50px);
+  position: relative;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .routeinfo .stops .line {
-	width: 2px;
-	height: 60px;
-	background: url('img/dash.png') center center;
-	top: 10px;
-	left: 4px;
-	position: absolute;
+  width: 2px;
+  height: 60px;
+  background: url('image/dash.png') center center;
+  top: 10px;
+  left: 4px;
+  position: absolute;
 }
 
 .routeinfo .stops .start, .routeinfo .stops .end {
-	line-height: 20px;
-	background: url('img/icon_stop.png') left top 5px no-repeat;
-	background-size: 10px 10px;
-	padding-left: 15px;
-	position: relative;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  line-height: 20px;
+  background: url('image/icon-stop.png') left top 5px no-repeat;
+  background-size: 10px 10px;
+  padding-left: 15px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .routeinfo .stops .time {
-	text-transform: lowercase;
-	margin-right: 7px;
+  text-transform: lowercase;
+  margin-right: 7px;
 }
 
 .routeinfo .stops .road {
-	text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 
 /* ----- GOOGLE MAP ----- */
 ui-gmap-google-map, .angular-google-map, .angular-google-map-container {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .gmnoprint, .gm-style-cc {
-	display:none;
+  display:none;
 }
 
 
 /* ----- YELLOW BUTTON ----- */
-.btn {
-	width: 260px;
-	padding: 10px 0px;
-	font-size: 16px;
-	margin: 20px 0px 20px -130px;
-	background-color: #ffe76e;
-	border: 0px;
-	border-bottom: 4px solid #f7c639;
-	border-radius: 80px;
-	box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
-	transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-	position: relative;
-	left: 50%;
-	color: #333;
-	text-align: center;
-	cursor: pointer;
+.yellow-btn {
+  width: 260px;
+  padding: 10px 0px;
+  font-size: 16px;
+  margin: 20px 0px 20px -130px;
+  background-color: #ffe76e;
+  border: 0px;
+  border-bottom: 4px solid #f7c639;
+  border-radius: 80px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  position: relative;
+  left: 50%;
+  color: #333;
+  text-align: center;
+  cursor: pointer;
 }
 
-.btn div {
-	user-select: none;
-	-webkit-user-select: none;
+.yellow-btn div {
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.btn:not([disabled="disabled"]):active {
-	margin-top: 23px;
-	border-bottom: 1px solid #f7c639;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+.yellow-btn:not([disabled="disabled"]):active {
+  margin-top: 23px;
+  border-bottom: 1px solid #f7c639;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
 }
 
-.btn[disabled="disabled"] {
-	background-color: #d6d6d6;
-	border-bottom: 4px solid #b9b9b9;
-	color: #6f6f6f;
+.yellow-btn[disabled="disabled"] {
+  background-color: #d6d6d6;
+  border-bottom: 4px solid #b9b9b9;
+  color: #6f6f6f;
 }
 
-.btn .resp {
-	font-size: 28px;
-	line-height: 32px;
+.yellow-btn .confirm {
+  font-size: 28px;
+  line-height: 32px;
 }
 
-.btn .timer {
-	margin-top: 10px;
-	font-size: 20px;
-	line-height: 15px;
+.yellow-btn .timer {
+  margin-top: 10px;
+  font-size: 20px;
+  line-height: 15px;
 }
 
-.btn .timer i {
-	font-style: normal;
-	font-size: 11px;
+.yellow-btn .timer i {
+  font-style: normal;
+  font-size: 11px;
 }
 
-.btn .note {
-	font-size: 11px;
+.yellow-btn .note {
+  font-size: 11px;
 }
 
 /* ----- ACCEPT PAGE ----- */
-#pg_accept {
-	height: 100%;
+#pg-accept {
+  height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-#pg_accept .tripinfo{
-	height: 100%;
-	position:relative;
-	font-size: 14px;
-	background-color: #F5F5F5;
-	padding: 10px;
-	margin: 15px 0px;
-	border: 1px solid #CCC;
-	border-radius: 10px;
+#pg-accept .tripinfo{
+  height: 100%;
+  position:relative;
+  font-size: 14px;
+  background-color: #F5F5F5;
+  padding: 10px;
+  margin: 15px 0px;
+  border: 1px solid #CCC;
+  border-radius: 10px;
 }
 
-#pg_accept .msg .greet,
-#pg_accept .msg .tripinfo .routeinfo,
-#pg_accept .msg .accept,
-#pg_accept #btnaccept {
-	flex-grow: 0;
+#pg-accept .msg .greet,
+#pg-accept .msg .tripinfo .routeinfo,
+#pg-accept .msg .accept,
+#pg-accept #btnaccept {
+  flex-grow: 0;
 }
 
-#pg_accept .msg,
-#pg_accept .msg .tripinfo,
-#pg_accept .msg .tripinfo #tripmap,
-#pg_accept ui-gmap-google-map,
-#pg_accept .angular-google-map,
-#pg_accept .angular-google-map-container {
-	flex-grow: 1;
-	display: flex;
+#pg-accept .msg,
+#pg-accept .msg .tripinfo,
+#pg-accept .msg .tripinfo #tripmap,
+#pg-accept ui-gmap-google-map,
+#pg-accept .angular-google-map,
+#pg-accept .angular-google-map-container {
+  flex-grow: 1;
+  display: flex;
     flex-direction: column;
 }
 
-#pg_jobAccept {
-	height: 100%;
+#pg-jobAccepted {
+  height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-#pg_jobAccept .msg .greet,
-#pg_jobAccept #btncorrectbus,
-#pg_jobAccept #btnupdatebus {
-	flex-grow: 0;
+#pg-jobAccepted .msg .greet,
+#pg-jobAccepted #btn-correct-bus,
+#pg-jobAccepted #btn-update-bus {
+  flex-grow: 0;
 }
 
-#pg_jobAccept .msg .greet,
-#pg_jobAccept .note {
-	text-align: center;
+#pg-jobAccepted .msg .greet,
+#pg-jobAccepted .note {
+  text-align: center;
 }
-#pg_jobAccept img{
+#pg-jobAccepted img{
     width: 300px;
     height: 200px;
 }
-#pg_jobAccept .msg .greet .carplate {
+#pg-jobAccepted .msg .greet .carplate {
     font-size: 28px;
 }
-#pg_jobAccept #btncorrectbus {
+#pg-jobAccepted #btn-correct-bus {
     background-color: #14C3A5;
     border-bottom: 4px solid #317966;
     box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
 }
 
-#pg_jobStarted .banner {
+#pg-jobStarted .banner {
     position: absolute;
     top: 0px;
-	height: 100px;
+  height: 100px;
     width: 100%;
-	padding: 20px 0px 0px 0px;
-	background-color: #FFF;
+  padding: 20px 0px 0px 0px;
+  background-color: #FFF;
     text-align: center;
     box-sizing: border-box;
 }
 
-#pg_jobStarted .code {
+#pg-jobStarted .code {
     font-size: 50px;
 }
 
-#pg_jobStarted ul {
+#pg-jobStarted ul {
     top: 100px;
-	width: 100%;
-	height: 100%;
-	margin: 0px;
-	padding: 0px;
-	background-color: #FFF;
-	position:relative;
-	transition: all 0.3s;
-}
-
-#pg_jobStarted ul li {
-	border-bottom: 1px solid #CCC;
-	padding: 20px 15px;
-	font-size: 24px;
-	font-weight: bold;
-}
-
-#pg_jobStarted ul li.first {
-	height: 70px;
-	padding: 0px;
-}
-
-
-
-/*
-.menu {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-  border-bottom: 0.1em solid black;
   width: 100%;
-  position: absolute;
-  top: 0px;
-  height: 60px;
-  left: 0px;
-  padding: 5px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-color: #FFF;
+  position:relative;
+  transition: all 0.3s;
+}
+
+#pg-jobStarted ul li {
+  border-bottom: 1px solid #CCC;
+  padding: 20px 15px;
+  font-size: 24px;
+  font-weight: bold;
+    list-style: none;
+}
+
+#pg-jobStarted ul li.first {
+  height: 70px;
+  padding: 0px;
+}
+
+#pg-update-bus #update {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  text-align: center;
+  font-size: 20px;
+}
+
+
+#pg-update-bus #image {
+  width: 0px;
+  height: 0px;
+  opacity: 0 !important;
+}
+
+#pg-update-bus #scan {
+  color: #493762;
+  border-radius: 80px;
+  text-align: center;
+  cursor: pointer;
+  border: 3px solid #493762;
+  display: inline-block;
+  width: 100%;
   box-sizing: border-box;
-
+  height: 40px;
 }
 
-.menu a{
-  flex: 1 1 auto;
+#pg-update-bus #carplate {
+  width: 100%;
+  height: 40px;
+  background-color: #FFF;
+  border: 0px;
 }
 
-.menu button {
-    flex: 1 1 auto;
-    width: 100%;
-    height: 50px;
-    background-color: #493761;
-    color: #FFF;
-    font-size: 130%;
-    text-align: center;
+#title-header{
+  height: 60px;
+  width: 100%;
+  background-color: #493762;
+  color: #FFF;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 20px;
 }
 
-.view1, .view2 {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    bottom: 0px;
-    width: 100%;
-    left: 0px;
-    padding: 5px;
-    box-sizing: border-box;
-
+#title-header img{
+  right: -20%;
+  position: relative;
+  width: 20px;
+  height: 20px;
 }
 
-.view1-top{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    border-bottom: 0.1em solid black;
+/*page with header: car plate no, beeline driver*/
+.page-content {
+  background-color: #ECEFF1;
+  top: 60px;
+  bottom: 0px;
+  width: 100%;
+  position: absolute;;
 }
 
-.view1-top .left {
-    float: left;
-    width: 50%;
-
+#pg-replace-driver #info {
+  text-align: center;
+  padding-top: 20px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.view1-top .right {
-    float: right;
-    width: 50%;
-    flex: 1 1 auto;
-    overflow: hidden;
-}
-
-.yellow-button{
-    width: 100%;
-    height: 50px;
-    margin-top: 100px;
-    background-color: #ffe76e;
-    color: #4b3863;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 10px 0px;
-    line-height: 1;
-    border-radius: 5px;
-    border-bottom: 3px solid #f8c638;
-    font-weight: bold;
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
-    margin: 20px 0px;
-    font-size: 16px;
-}
-
-.map{
-    flex: 1 1 auto;
-    position: relative;
-}
-
-.angular-google-map, .angular-google-map-container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-}
-
-.view2 table{
-    margin-top: 20px;
-    width: 100%;
-}
-
-table, th , td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 10px;
+#pg-replace-driver .holder {
   text-align: left;
+  background-color: #FFF;
+  padding: 10px;
+  font-size: 20px;
+  line-height: 30px;
 }
 
-th {
-  background-color: #f2f2f2;
+#pg-replace-driver input {
+  width: 200px;
+  height: 30px;
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 30px;
+  margin-left: 75px;
 }
 
-#image {
-    width: 0px;
-    height: 0px;
-    opacity: 0 !important;
+#pg-replace-driver .phtxt {
+  color: #8e8e8e;
+  padding-left: 5px;
 }
-
-#output {
-    width: 50px;
-    height: 50px;
-}
-*/
-/*table tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-table tr:nth-child(even) {
-  background-color: #ffffff;
-}*/

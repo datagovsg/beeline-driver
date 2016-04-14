@@ -1,0 +1,15 @@
+<div id="pg-update-bus">
+  <title-header title="Car Plate No." next-state="jobAccepted"></title-header>
+  <div class="page-content">
+    <div id="update">
+      <input type="file" name="image" id="image" accept="image/*" capture ngChange="loadFile(event)"/>
+      <label for="image" id="scan">Scan with Camera</label>
+      <img id="output"/><br>
+      or<br>
+      <input type="text" id="carplate" placeholder="Type Car Plate No."></input>
+    </div>
+    <div id="btn-update-bus" class="yellow-btn" ng-click="confirm()">
+      <div class="confirm">CONFIRM</div>
+    </div>
+  <div>
+</div>
