@@ -16,12 +16,13 @@
 
         <span class="right">
   				<!--span class="circle">{{$index+1}} min left</span-->
-  				<span class="passenger">{{boardstop.noPassenger > 0 ? boardstop.noPassenger : 0}} <img src="image/IconBookingPassenger.png"></span>
-  		    </span>
+  				<span class="passenger">{{boardstop.noPassenger > 0 ? boardstop.noPassenger : 0}}</span>
+  		  </span>
+        <i class="icon ion-android-person"></i>
   		</ion-item>
     </ion-list>
 
-    <div id="btn-stop-pings" class="yellow-btn" ng-click="endTripClick()">End Trip</div>
+    <div id="btn-stop-pings" class="button button-block" ng-click="endTripClick()">End Trip</div>
 
   </ion-content>
 </ion-view>

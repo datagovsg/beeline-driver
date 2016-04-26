@@ -70,7 +70,7 @@ export default[
 
        angular.forEach($scope.passengersByStop, function(value,key){
          var stop = $scope.boardstops.find(stop => stop.id === parseInt(key));
-         $scope.stop.noPassenger = value.length;
+         stop.noPassenger = value.length;
        });
     });
 
