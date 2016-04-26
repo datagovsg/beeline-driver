@@ -7,33 +7,43 @@ export default[
   'TripService',
   '$interval',
   '$cordovaGeolocation',
+  '$ionicPopup',
   function(
     $scope,
     $state,
     DriverService,
     TripService,
     $interval,
-    $cordovaGeolocation
+    $cordovaGeolocation,
+    $ionicPopup
   ){
 
     var tripData = DriverService.getDecodedToken();
-    var timer;
-    var pingStatus;
+    var gpsStatusTimer;
+    var pingTimer = true;
+    var pingStatus = "GPS OFF";
+    var pingStausSymbol;
 
     $scope.endTripClick = function() {
-      //display popup to let driver confirm whether to really end trip
       console.log('End Trip clicked');
-      $interval.cancel(timer);
-      $state.go("app.jobEnded",{status: 0});
+      //display popup to let driver confirm whether to really end trip
+      this.confirmEndTrip();
     };
 
     $scope.confirmEndTrip = function() {
-      $interval.cancel(timer);
+      $ionicPopup.confirm({
+        title: 'Confirm End Trip',
+        template: 'Are you sure you want to end trip?',
+      }).then(function(response){
+        if(response){
+          if (gpsStatusTimer) {
+            $interval.cancel(gpsStatusTimer);
+          }
+          pingTimer = false;
+          $state.go("app.jobEnded",{status: 0});
+        }
+      })
     };
-
-    // $scope.$on('$ionicView.leave',()=>{
-    //   $interval.cancel(timer);
-    // });
 
     //Display Stops + Passenger Information
     TripService.getTrip(tripData.tripId)
@@ -46,7 +56,6 @@ export default[
       console.log($scope.boardstops);
     })
     .then(function(){
-
       return TripService.getPassengers(tripData.tripId);
     }).then(function(response){
        $scope.passengerData = response.data;
@@ -62,16 +71,18 @@ export default[
     });
 
 
-    $interval(() => {
+    gpsStatusTimer = $interval(() => {
       var timeSincePing = new Date().getTime() - $scope.lastPingTime;
 
-      if (timeSincePing > 5000) {
-        $scope.pingStatus = 0;
+      if (timeSincePing > 30000) {
+        $scope.pingStatus = "GPS OFF";
+        $scope.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.png' />";
       }
       else {
-        $scope.pingStatus = 1;
+        $scope.pingStatus = "GPS ON";
+        $scope.pingStausSymbol = "<img class='title-image' src='../image/GPSon.png' />";
       }
-    }, 1000)
+    }, 5000);
 
     //Start Up the timer to ping GPS location
     DriverService.getVehicleInfo().then(async function(){
@@ -83,13 +94,15 @@ export default[
         })
       }
 
-      while (true) {
+      while (pingTimer) {
         try {
           var userPosition = await $cordovaGeolocation.getCurrentPosition({ timeout: 5000, enableHighAccuracy: true })
         }
         catch (error) {
           console.log(error.stack);
-          $ionicPopup.alert('Please turn on your GPS Location Service')
+          $ionicPopup.alert({
+            template: 'Please turn on your GPS Location Service'
+          });
           continue;
         }
 
@@ -102,29 +115,11 @@ export default[
         catch (error) {
           console.log(error.stack);
           $scope.$apply(() => {
-            // $scope.pingStatus = 0;
+
           })
         }
         await delay(10000);
       }
-
-      // timer = $interval(function(){
-      //   $cordovaGeolocation.getCurrentPosition({ timeout: 5000, enableHighAccuracy: true })
-      //   .then(function(userPosition) {
-      //     //console.log(userPosition);
-      //     TripService.sendPing(tripData.tripId, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude)
-      //     .then(function (response) {
-      //       // success
-      //       pingStatus = 1;
-      //     })
-      //     .then(null, function (error) {
-      //       // HTTP error
-      //       pingStatus = 0;
-      //     });
-      //   }, function(error){
-      //     alert('Please turn on your GPS Location Service');
-      //   });
-      // },20000);
 
     });
   }];
