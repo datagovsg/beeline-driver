@@ -21,8 +21,12 @@ export default[
     var tripData = DriverService.getDecodedToken();
     var gpsStatusTimer;
     var pingTimer = true;
-    var pingStatus = "GPS OFF";
-    var pingStausSymbol;
+
+    $scope.ping ={
+      pingStatus : null,
+      pingStausSymbol: null,
+      lastPingTime : null
+    }
 
     $scope.endTripClick = function() {
       console.log('End Trip clicked');
@@ -72,15 +76,15 @@ export default[
 
 
     gpsStatusTimer = $interval(() => {
-      var timeSincePing = new Date().getTime() - $scope.lastPingTime;
+      var timeSincePing = new Date().getTime() - $scope.ping.lastPingTime;
 
       if (timeSincePing > 30000) {
-        $scope.pingStatus = "GPS OFF";
-        $scope.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.png' />";
+        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.png' />";
       }
       else {
-        $scope.pingStatus = "GPS ON";
-        $scope.pingStausSymbol = "<img class='title-image' src='../image/GPSon.png' />";
+        $scope.ping.pingStatus = "GPS ON";
+        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSon.png' />";
       }
     }, 5000);
 
@@ -107,10 +111,12 @@ export default[
         }
 
         try {
-          var response = await TripService.sendPing(tripData.tripId, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude)
-          $scope.$apply(() => {
-            $scope.lastPingTime = new Date().getTime();
-          })
+          var response = await TripService.sendPing(tripData.tripId, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude);
+          if (response) {
+            $scope.$apply(() => {
+              $scope.ping.lastPingTime = new Date().getTime();
+            })
+          }
         }
         catch (error) {
           console.log(error.stack);
