@@ -5,6 +5,7 @@ export default function(DriverService){
   var self = this;
   var latlng = [1.38, 103.8];
   var trip;
+  var tripCode;
   var routepath;
 
   this.getTrip = function(id){
@@ -15,6 +16,15 @@ export default function(DriverService){
 	  self.trip = response.data;
 	});
   };
+
+  this.getTripCode = function(id){
+    return DriverService.beeline({
+      method: 'GET',
+      url: '/trips/'+id+'/code',
+    }).then(function(response){
+	    self.tripCode = response.data;
+	});
+  }
 
   this.getRoutePath = function(id){
     return DriverService.beeline({

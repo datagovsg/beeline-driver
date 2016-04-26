@@ -74,6 +74,11 @@ export default[
        });
     });
 
+    //get generated trip code
+    TripService.getTripCode(tripData.tripId)
+    .then(function(){
+      $scope.tripCode = TripService.tripCode;
+    })
 
     gpsStatusTimer = $interval(() => {
       var timeSincePing = new Date().getTime() - $scope.ping.lastPingTime;
