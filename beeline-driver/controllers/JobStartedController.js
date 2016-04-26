@@ -20,7 +20,6 @@ export default[
 
     var tripData = DriverService.getDecodedToken();
     var gpsStatusTimer;
-    var pingTimer = true;
 
     $scope.ping ={
       pingStatus : null,
@@ -43,7 +42,7 @@ export default[
           if (gpsStatusTimer) {
             $interval.cancel(gpsStatusTimer);
           }
-          pingTimer = false;
+          TripService.pingTimer = false;
           $state.go("app.jobEnded",{status: 0});
         }
       })
@@ -81,6 +80,7 @@ export default[
     })
 
     gpsStatusTimer = $interval(() => {
+      $scope.ping.lastPingTime = TripService.lastPingTime;
       var timeSincePing = new Date().getTime() - $scope.ping.lastPingTime;
 
       if (timeSincePing > 30000) {
@@ -96,41 +96,8 @@ export default[
     //Start Up the timer to ping GPS location
     DriverService.getVehicleInfo().then(async function(){
       var vehicleId = DriverService.vehicle[0].id;
-
-      function delay(ms) {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, ms);
-        })
-      }
-
-      while (pingTimer) {
-        try {
-          var userPosition = await $cordovaGeolocation.getCurrentPosition({ timeout: 5000, enableHighAccuracy: true })
-        }
-        catch (error) {
-          console.log(error.stack);
-          $ionicPopup.alert({
-            template: 'Please turn on your GPS Location Service'
-          });
-          continue;
-        }
-
-        try {
-          var response = await TripService.sendPing(tripData.tripId, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude);
-          if (response) {
-            $scope.$apply(() => {
-              $scope.ping.lastPingTime = new Date().getTime();
-            })
-          }
-        }
-        catch (error) {
-          console.log(error.stack);
-          $scope.$apply(() => {
-
-          })
-        }
-        await delay(10000);
-      }
-
-    });
-  }];
+      //start to ping
+      TripService.pingTimer = true;
+      TripService.sendPingService(tripData.tripId, vehicleId);
+  });
+}];

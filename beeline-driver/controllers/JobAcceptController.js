@@ -111,7 +111,7 @@ export default[
       var startTimeObj = new Date(tripStops[0].time);
       var endTimeObj = new Date(tripStops[tripStops.length-1].time);
 
-      $scope.job.path = pathTemp;      
+      $scope.job.path = pathTemp;
       $scope.job.startLocation = routeStartEnd[0];
       $scope.job.endLocation = routeStartEnd[1];
       $scope.job.startTime = startTimeObj.getTime()
@@ -164,7 +164,7 @@ export default[
       if ($scope.job.acceptoff != true)
       {
         $state.go('app.jobAccepted');
-        
+
         //call the API that will update the DB to indicate the driver has taken the job
 //FIX ME
       }
@@ -177,22 +177,22 @@ export default[
     //Grab Trip and Route info
     if (typeof(tripData) != 'undefined') {
       TripService.getTrip(tripData.tripId).then(function(){ //grab trip info
-        
+        console.log(TripService.trip);
         $scope.job.tripNumber = TripService.trip.id;
-      
+
         return TripService.getRoutePath(TripService.trip.routeId);
       }).then(function() { //grab route info
 
         //populate $scope.job with the relevant data
         $scope.fillInTripRouteData();
-        
+
         //Now that we got the route info, let's start up the timer
         $scope.initTimer();
 
         return uiGmapGoogleMapApi;
       }).then(function(googleMaps) {
         var gmap = $scope.map.control.getGMap();
-      
+
         //console.log(gmap);
       }); //end Promise
     }

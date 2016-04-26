@@ -4,13 +4,16 @@ export default[
     '$scope',
     '$stateParams',
     'DriverService',
+    'TripService',
   function(
     $scope,
     $stateParams,
-    DriverService
+    DriverService,
+    TripService
   ){
     $scope.job = {
-      date: new Date(),
+      // date: new Date(),
+      date: TripService.trip.date,
       status: '',
       tripId: null
     };

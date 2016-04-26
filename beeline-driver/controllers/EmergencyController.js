@@ -4,10 +4,14 @@ export default[
   '$scope',
   '$ionicPopup',
   'DriverService',
+  '$state',
+  'TripService',
   function(
     $scope,
     $ionicPopup,
-    DriverService
+    DriverService,
+    $state,
+    TripService
   ){
 
     var tripData = DriverService.getDecodedToken();
@@ -38,17 +42,22 @@ export default[
 
                 DriverService.assignReplacementDriver(tripData.tripId, phoneNum).then(function(response){
                   //Success! Show the confirmation popup.
-                
+
                   $ionicPopup.alert({
                     template: 'The Trip info has been sent to +65'+ $scope.data.replaceDriverNo+'<br>Driver Ops has been alerted!'
-                  });
+                  }).then(function(response){
+                    if(response){
+                      TripService.pingTimer = false;
+                      $state.go("app.jobEnded",{status: 1});
+                    }
+                  })
                 },function(error){
                   alert('There was an error submitting the replacement number. Please try again.')
                 });
               }
               else { //not true - display error message
                 var replaceErr = document.getElementById('replace-error');
-              
+
                 angular.element(replaceErr).removeClass('ng-hide');
               }
             }
@@ -88,7 +97,13 @@ export default[
 
              $ionicPopup.alert({
                template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
-             });
+             }).then(function(response){
+               if(response){
+                 TripService.pingTimer = false;
+                 $state.go("app.jobEnded",{status: 2});
+               }
+             })
+
           } else {
              console.log('Not sure!');
           }

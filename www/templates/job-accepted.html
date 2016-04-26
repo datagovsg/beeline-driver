@@ -7,29 +7,24 @@
     	</div>
     </div>
       <div class="list">
-
-          <a class="item item-input item-icon-right">
-            <span>Name</span>
-            <span class="item-note" ng-bind="driver.name"></span>
-          </a>
-
-        <ion-item>
-          <label class="item-input">
-            <span class="input-label">Vehicle No.</span>
-            <input type="text" placeholder="{{vehicle.vehicleNumber}}"/>
-            <i class="icon ion-compose"></i>
-          </label>
-        </ion-item>
-        <ion-item>
-          <label class="item-input">
-            <span class="input-label">Phone No.</span>
-            <input type="text" placeholder="{{driver.telephoneNo}}"/>
-            <i class="icon ion-compose"></i>
-          </label>
-        </ion-item>
+        <a class="item item-input item-icon-right">
+          <span class="input-label">Name</span>
+          <span class="item-note" ng-bind="driver.name"></span>
+          <i class="icon ion-compose"></i>
+        </a>
+        <a class="item item-input item-icon-right">
+          <span class="input-label">Vehicle No.</span>
+          <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
+          <i class="icon ion-compose"></i>
+        </a>
+        <a class="item item-input item-icon-right">
+          <span class="input-label">Phone No.</span>
+          <span class="item-note" ng-bind="driver.telephoneNo"></span>
+          <i class="icon ion-compose"></i>
+        </a>
     </div>
     <div class="buttons">
-      <div id="btn-correct-bus" class="yellow-btn" ui-sref='app.jobStarted'>
+      <div id="btn-correct-bus" class="button button-block" ui-sref='app.jobStarted'>
         <div class="resp"><b>Done</b>Start Trip</div>
       </div>
     </div>
