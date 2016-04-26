@@ -17,8 +17,9 @@ export default [
     var tripCode;
     var routepath;
     var pingTimer;
-    var lastPingTime;
     var tripId;
+
+    this.lastPingTime = 0;
 
     this.getTrip = function(id){
       if (typeof(self.trip)!='undefined'){
@@ -69,7 +70,7 @@ export default [
       });
     };
 
-    this.sendPingService = async function(id, vehicleId){
+    this.sendPingService = async function(id, vehicleId, callback){
       function delay(ms) {
         return new Promise((resolve, reject) => {
           setTimeout(resolve, ms);
@@ -95,6 +96,9 @@ export default [
           var response = await this.sendPing(id, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude);
           if (response) {
             self.lastPingTime = new Date().getTime();
+            if (callback) {
+              callback(self.lastPingTime);
+            }
           }
         }
         catch (error) {

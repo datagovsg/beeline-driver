@@ -85,11 +85,11 @@ export default[
 
       if (timeSincePing > 30000) {
         $scope.ping.pingStatus = "GPS OFF";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.png' />";
+        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.svg' />";
       }
       else {
         $scope.ping.pingStatus = "GPS ON";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSon.png' />";
+        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSon.svg' />";
       }
     }, 5000);
 
@@ -98,6 +98,7 @@ export default[
       var vehicleId = DriverService.vehicle[0].id;
       //start to ping
       TripService.pingTimer = true;
-      TripService.sendPingService(tripData.tripId, vehicleId);
-  });
+      TripService.sendPingService(tripData.tripId, vehicleId,
+        () => { $scope.$apply() });
+    });
 }];
