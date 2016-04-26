@@ -1,0 +1,325 @@
+#pg-landing {
+  height: 100%;
+  width: 100%;
+  background-color:#4b3863;
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-landing .scroll {
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-landing .overlay {
+  height: 100%;
+  width: 100%;
+  background: url('../image/loader60.gif') no-repeat center center rgba(0,0,0,0.6);
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+#pg-landing .overlay.hide {
+  opacity: 0;
+  z-index: -1;
+}
+
+#pg-landing .overlay .txt {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  margin-top: 40px;
+}
+
+#pg-landing .ver {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+}
+
+#pg-landing .header {
+  margin-top: 70px;
+  text-align: center;
+  font-size: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #FFF;
+  flex-grow: 0;
+}
+
+#pg-landing .header .logo{
+  width: 100%;
+  height: 90px;
+  background: url('../image/banner_logo.png') no-repeat center center;
+  background-size: auto 120px;
+}
+
+#pg-landing .welcome {
+  text-align:center;
+  border-bottom: 1px solid #FFF;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-landing .welcome .block {
+  flex-grow: 1;
+}
+
+#pg-landing .welcome h3,
+#pg-landing .welcome h1 {
+ padding: 10px 0px;
+ margin: 0px;
+ color: #FFF;
+}
+
+#pg-landing .redirect {
+  margin: 20px 0px;
+  flex-grow: 0;
+}
+
+#pg-landing .redirect .loginok{
+  text-align:center;
+}
+
+#pg-landing .redirect .loginok .txt {
+  height: 40px;
+  display: inline-block;
+  padding-left: 40px;
+  line-height: 40px;
+  background: url('../image/loader60.gif') no-repeat left center;
+  background-size: 40px auto;
+}
+
+#loginmodal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+#loginmodal .formsholder{
+  width: calc(100% - 18px);
+  height: calc(100% - 18px);
+  background-color: #4b3863;
+  margin: 9px 0px 0px 9px;
+  border: 1px solid #CCC;
+  border-radius: 20px;
+  overflow: hidden;
+  position: absolute;
+  transition: all 0.3s;
+  top: 100%;
+}
+
+#loginmodal.show .formsholder {
+  top: 0%;
+}
+
+#loginmodal.verify .loginform{ left: -100%; }
+#loginmodal.verify .verifyform { left: 0%; }
+
+#loginmodal .loginform,
+#loginmodal .verifyform {
+  width: 100%;
+  height: 100%;
+  background-color: #4b3863;
+  color: #FFF;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  left: 0%;
+  opacity: 1;
+}
+#loginmodal .loginform { z-index: 2; }
+#loginmodal .verifyform { left: 100%; }
+
+#loginmodal .header {
+  height: 28px;
+  color: #FFF;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 28px;
+  background-color: rgba(0,0,0,0.1);
+  padding: 10px 0px;
+  position: relative;
+  flex-grow: 0;
+}
+
+#loginmodal .header .back {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  background: url('../image/arrow-back.png') no-repeat center center;
+  background-size: 26px auto;
+}
+
+#loginmodal .header .close {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: url('../image/android-close.png') no-repeat center center;
+  background-size: 18px auto;
+  border-radius: 15px;
+  border: 1px solid #FFF;
+}
+
+#loginmodal .content {
+  padding: 16px;
+  flex-grow: 1;
+  position: relative;
+}
+
+#loginmodal .err {
+	height: 26px;
+	width: calc(100% - 32px);
+	color: #FFF;
+	text-shadow: 1px 1px 1px #333;
+	text-align: center;
+	line-height: 26px;
+	background-color: #c93440;
+	border-radius: 5px;
+  font-size: 14px;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+#loginmodal .err.show {
+  opacity: 1;
+  z-index: 1;
+}
+
+#loginmodal .err .icon.alert {
+  width: 24px;
+  height: 24px;
+  background: url('../image/alert-circled.png') no-repeat center center;
+  background-size: 100% auto;
+  display: inline-block;
+  position: absolute;
+}
+
+#loginmodal .err .txt {
+  padding-left: 25px;
+}
+
+#loginmodal .instruct {
+  height: 26px;
+  line-height: 26px;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  text-align: center;
+}
+
+#loginmodal .verifyform .instruct {
+  height: auto;
+}
+
+#loginmodal .holder {
+  background-color: #FFF;
+  padding: 10px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+#loginmodal .holder	input {
+  width: calc(100% - 75px);
+  height: 28px;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 30px;
+  margin-left: 75px;
+  color: #111;
+}
+#loginmodal .holder	input:focus {
+  outline-width: 0;
+}
+
+#loginmodal .holder .phtxt {
+  background: url('../image/IconLoginPhone.png') no-repeat left center;
+  color: #8e8e8e;
+  padding-left: 30px;
+  position: absolute;
+  line-height: 32px;
+}
+
+#loginmodal .holder .phtxt .icon {
+  font-size: 30px;
+  position: absolute;
+  left: 16px;
+}
+
+#loginmodal .yellow-btn {
+  position: absolute;
+  bottom: 10px;
+}
+
+#loginmodal .verifyform .telephone {
+  color: #FFF;
+  font-size: 30px;
+  margin: 5px auto 45px auto;
+}
+
+#loginmodal .verifyform .err {
+  top: 85px;
+}
+
+#loginmodal .verifyform .codebox {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+#loginmodal .codebox .cover {
+  width: 100%;
+  height: 100%;
+  /*background-color: rgba(0,0,0,0.3);*/
+  position: absolute;
+  z-index: 5;
+}
+
+#loginmodal .codebox .digit {
+  width: auto;
+  height: 45px;
+  font-size: 28px;
+  min-width: 0px !important;
+  margin: 0px 5px;
+  text-align:center;
+  line-height: 45px;
+  background-color: #FFF;
+  color: #000;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+#loginmodal .overlay {
+  width: 100%;
+  height: 100%;
+  background: url('../image/loader120.gif') no-repeat center center rgba(0,0,0,0.6);
+  position: absolute;
+  z-index: 5;
+}
+
+#loginmodal .overlay .txt {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: calc(50% + 50px);
+  font-size: 18px;
+}

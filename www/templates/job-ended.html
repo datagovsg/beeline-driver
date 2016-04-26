@@ -1,0 +1,31 @@
+<ion-view view-title="{{job.date| date:'d MMM y'}}" hide-back-button="true" id="pg-job-ended">
+  <ion-content>
+    <p ng-show="job.status===0">
+      {{job.tripId}} Trip Ended<br>
+      <br>
+      <br>
+      Thank you {{job.driver.name}}!<br>
+      The customers are happy with your service!<br>
+    </p>
+    <p ng-show="job.status===1">
+      {{job.tripId}} Driver Replaced<br>
+      Sent to</br>
+      <br>
+      <br>
+      The job has been forwarded to another driver.<br>
+      You will resume your service tomorrow.<br>
+      Thank you!<br>
+    </p>
+    <p ng-show="job.status===2">
+      {{job.tripId}} Trip Cancelled<br>
+      <br>
+      <br>
+      The trip has been cancelled.<br>
+      Service will resumed tomorrow.<br>
+      Thank you!<br>
+    </p>
+    <br>
+    <br>
+    You will receive your new job via the SMS.
+  </ion-content>
+</ion-view>

@@ -1,0 +1,13 @@
+<div ng-form name="replaceForm">
+  <div class="txt">Please specify the <b>mobile</b> phone number for the replacement driver.</div>
+  <div class="holder">
+    <div id="replace-error" class="err" ng-show="replaceForm.telephone.$invalid">
+      <i class="icon ion-alert-circled"></i>
+      <span class="txt">Please specify a valid phone number.</span>
+    </div>
+    <input id="replace-phone" type="tel" data-role="none" name="telephone" ng-model="replaceTel" ng-pattern="eightDigitNumber" autofocus required>
+    <div class="phtxt">
+      <i class="icon ion-ios-telephone-outline"></i> +65
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<ion-view id="pg-jobStarted" view-title="Job in Progress {{pingStatus}}" hide-back-button="true">
+  <ion-content>
+    <div class="banner">
+      <div>Trip Code</div>
+      <div class="code">5678</div>
+    </div>
+    <ion-list>
+      <ion-item ng-repeat="boardstop in boardstops">
+  			<div class="stopIndex">{{$index+1}}</div>
+
+        <div class="middle">
+          <div class="time">{{boardstop.time | date:'h:mm a'}}</div>
+          <div class="stopName">{{boardstop.stop.description}}{{boardstop.stop.road}}</div>
+          <div class="stopId">({{boardstop.stop.type}} ID {{boardstop.stop.label}})</div>
+        </div>
+
+        <span class="right">
+  				<!--span class="circle">{{$index+1}} min left</span-->
+  				<span class="passenger">{{boardstop.noPassenger > 0 ? boardstop.noPassenger : 0}} <img src="image/IconBookingPassenger.png"></span>
+  		    </span>
+  		</ion-item>
+    </ion-list>
+
+    <div id="btn-stop-pings" class="yellow-btn" ng-click="endTripClick()">End Trip</div>
+
+  </ion-content>
+</ion-view>
