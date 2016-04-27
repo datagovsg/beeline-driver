@@ -13,13 +13,10 @@ export default [
   ){
     var self = this;
     var latlng = [1.38, 103.8];
-    var trip;
-    var tripCode;
     var routepath;
-    var pingTimer;
-    var tripId;
 
     this.lastPingTime = 0;
+    this.pingTimer = false;
 
     this.getTrip = function(id){
       if (typeof(self.trip)!='undefined'){
@@ -77,7 +74,7 @@ export default [
         })
       }
 
-      while (self.pingTimer) {
+      while (this.pingTimer) {
         console.log("start to send");
         var positionOptions = {timeout: 5000, enableHighAccuracy: true};
         try {
