@@ -19,52 +19,51 @@ export default[
     $scope.data = {}
 
     //Phone Number submission
-    $scope.eightDigitNumber = /^[0-9]{8}$/;
+    $scope.eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
 
     $scope.showReplaceDriverPopup = function() {
 
-     // Custom popup
-      var replaceDriverPopup = $ionicPopup.show({
-        title: 'Driver Replacement',
-        cssClass: 'driver-replace',
-        templateUrl: '/templates/emerg-replace-driver.html',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Send Job</b>',
-            onTap: function(e) {
-              var phoneNum = document.getElementById('replace-phone').value;
+      async function promptForDriver() {
+        var template = 'Enter replacement driver number';
 
-              //check if phone number is valid or not
-              if ($scope.eightDigitNumber.test(phoneNum)) {
-                //Regex check OK - proceed with submission
-
-                DriverService.assignReplacementDriver(tripData.tripId, phoneNum).then(function(response){
-                  //Success! Show the confirmation popup.
-                  $scope.data.replaceDriverNo = phoneNum;
-                  $ionicPopup.alert({
-                    template: 'The Trip info has been sent to +65'+ $scope.data.replaceDriverNo+'<br>Driver Ops has been alerted!'
-                  }).then(function(response){
-                    if(response){
-                      TripService.pingTimer = false;
-                      $state.go("app.jobEnded",{status: 1, replacePhoneNo:phoneNum});
-                    }
-                  })
-                },function(error){
-                  console.log(error);
-                  alert('There was an error submitting the replacement number. Please try again.')
-                });
-              }
-              else { //not true - display error message
-                var replaceErr = document.getElementById('replace-error');
-
-                angular.element(replaceErr).removeClass('ng-hide');
-              }
+        while (true) {
+          var result = await $ionicPopup.prompt({
+            title: 'Replacement Driver',
+            template: template,
+          })
+          if (result){
+            if (result && $scope.eightDigitNumber.test(result)) {
+              break;
             }
+            else {
+              template = 'Invalid number! Enter replacement driver number'
+            }
+          }else {
+             break;
           }
-        ]
-       });
+        }
+        return result;
+      }
+
+      promptForDriver().then(function(phoneNum) {
+        if (phoneNum) {
+          DriverService.assignReplacementDriver(tripData.tripId, phoneNum).then(function(response){
+            //Success! Show the confirmation popup.
+            $scope.data.replaceDriverNo = phoneNum;
+            $ionicPopup.alert({
+              template: 'The Trip info has been sent to +65'+ $scope.data.replaceDriverNo+'<br>Driver Ops has been alerted!'
+            }).then(function(response){
+              if(response){
+                TripService.pingTimer = false;
+                $state.go("app.jobEnded",{status: 1, replacePhoneNo:phoneNum});
+              }
+            })
+          },function(error){
+            console.log(error);
+            alert('There was an error submitting the replacement number. Please try again.')
+          });
+        }
+      });
     };
 
 
