@@ -52,7 +52,7 @@ angular.module('beeline-driver', [
     controller: 'JobEmergencyController'
   })
   .state('app.landing', {
-    url: '/landing',
+    url: '/landing?eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk',
     views: {
       'menuContent': {
         templateUrl: 'templates/landing.html',

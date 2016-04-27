@@ -2,9 +2,12 @@ import jwt from 'jsonwebtoken';
 
 export default function($http){
   var driver;
-  var sessionToken = localStorage['sessionToken'] || null;
+  var sessionToken = window.location.search || localStorage['sessionToken'] || null;
   var self = this;
   var driverId;
+  if (typeof localStorage['sessionToken']=='undefined'){
+    localStorage['sessionToken'] = sessionToken;
+  }
 
   this.beeline = function(options) {
     options.url = 'http://staging.beeline.sg' + options.url;
@@ -17,7 +20,7 @@ export default function($http){
 
   this.getDecodedToken = function() {
     //HARDCODE testing token - the token should be taken from the URL
-    localStorage['sessionToken'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk';
+    // localStorage['sessionToken'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk';
 
     var decodedToken = jwt.decode(localStorage['sessionToken']); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
     driverId = decodedToken.driverId;
