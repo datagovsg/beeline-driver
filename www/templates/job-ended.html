@@ -1,5 +1,6 @@
-<ion-view view-title="{{job.date| date:'d MMM y'}}" hide-back-button="true" id="pg-job-ended">
+<ion-view  view-title="" hide-back-button="true" id="pg-job-ended">
   <ion-content>
+    <span ng-cloak>{{job.date| date:'d MMM y'}}</span>
     <p ng-show="job.status===0">
       {{job.tripId}} Trip Ended<br>
       <br>
