@@ -15,7 +15,8 @@ export default[
       // date: new Date(),
       date: undefined,
       status: '',
-      tripId: null
+      tripId: null,
+      replacePhoneNo: undefined
     };
 
     $scope.$on('$ionicView.beforeEnter',()=>{
@@ -26,5 +27,6 @@ export default[
     });
     $scope.$on('$ionicView.afterEnter',()=>{
       $scope.job.status = parseInt($stateParams.status);
+      $scope.job.replacePhoneNo = parseInt($stateParams.replacePhoneNo);
     })
 }];

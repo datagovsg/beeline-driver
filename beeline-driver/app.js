@@ -88,7 +88,7 @@ angular.module('beeline-driver', [
     }
   })
   .state('app.jobEnded', {
-    url: '/jobEnded/:status',
+    url: '/jobEnded/:status?replacePhoneNo',
     views: {
       'menuContent': {
         templateUrl: 'templates/job-ended.html',

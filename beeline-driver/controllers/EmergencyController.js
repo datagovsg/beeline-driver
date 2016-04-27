@@ -42,16 +42,17 @@ export default[
 
                 DriverService.assignReplacementDriver(tripData.tripId, phoneNum).then(function(response){
                   //Success! Show the confirmation popup.
-
+                  $scope.data.replaceDriverNo = phoneNum;
                   $ionicPopup.alert({
                     template: 'The Trip info has been sent to +65'+ $scope.data.replaceDriverNo+'<br>Driver Ops has been alerted!'
                   }).then(function(response){
                     if(response){
                       TripService.pingTimer = false;
-                      $state.go("app.jobEnded",{status: 1});
+                      $state.go("app.jobEnded",{status: 1, replacePhoneNo:phoneNum});
                     }
                   })
                 },function(error){
+                  console.log(error);
                   alert('There was an error submitting the replacement number. Please try again.')
                 });
               }

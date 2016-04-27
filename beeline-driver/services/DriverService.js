@@ -56,12 +56,8 @@ export default function($http){
 
   this.assignReplacementDriver = function (tripId, replaceTelephone) {
     return this.beeline({
-      method: 'GET',
-      url: '/trips/' + tripId + '/send_to_phone',
-      data: {
-        id: tripId,
-        telephone: '+65' + replaceTelephone
-      },
+      method: 'POST',
+      url: '/trips/' + tripId + '/send_to_phone?telephone=%2B65'+replaceTelephone,
     })
   };
 
