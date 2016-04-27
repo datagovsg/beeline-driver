@@ -73,7 +73,6 @@ export default [
           setTimeout(resolve, ms);
         })
       }
-
       while (this.pingTimer) {
         console.log("start to send");
         var positionOptions = {timeout: 5000, enableHighAccuracy: true};
@@ -87,7 +86,6 @@ export default [
           });
           continue;
         }
-
         try {
           //trip id and vehicle id are hardcoded
           var response = await this.sendPing(id, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude);

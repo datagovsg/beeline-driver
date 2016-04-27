@@ -64,4 +64,43 @@ export default function($http){
       },
     })
   };
+
+  this.updateDriverName = function (newName) {
+    if (typeof(driverId)=='undefined') {
+      driverId = self.getDecodedToken().driverId;
+    }
+    return this.beeline({
+      method: 'PUT',
+      url: '/drivers/'+driverId,
+      data: {
+        name: newName
+      }
+    })
+  };
+
+  this.updateDriverPhone = function (newPhoneNo) {
+    if (typeof(driverId)=='undefined') {
+      driverId = self.getDecodedToken().driverId;
+    }
+    return this.beeline({
+      method: 'PUT',
+      url: '/drivers/'+driverId,
+      data: {
+        telephone: newPhoneNo
+      }
+    })
+  };
+
+  this.updateVehicleNo = function (newVehileNo) {
+    if (typeof(self.vehicle)=='undefined'){
+      this.getVehicleInfo();
+    };
+    return this.beeline({
+      method: 'PUT',
+      url: '/vehicles/'+self.vehicle.id,
+      data: {
+        vehicleNumber: newVehileNo
+      }
+    })
+  };
 }
