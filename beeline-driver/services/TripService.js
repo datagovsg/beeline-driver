@@ -17,6 +17,7 @@ export default [
 
     this.lastPingTime = 0;
     this.pingTimer = false;
+    this.passengersByStop = undefined;
 
     this.getTrip = function(id){
       if (typeof(self.trip)!='undefined'){
@@ -52,8 +53,29 @@ export default [
       return DriverService.beeline({
         method: 'GET',
         url: '/trips/'+id+'/get_passengers',
+      }).then(function(response){
+        self.passengerData = response.data;
       })
     };
+
+    this.getPassengersByStop = async function(id) {
+      if (typeof this.passengersByStop != 'undefined'){
+        return Promise.resolve(this.passengersByStop);
+      } else{
+        await this.getTrip(id);
+        console.log(this.trip);
+        this.boardstops = this.trip.tripStops.filter(
+          stop => stop.canBoard == true);
+        await this.getPassengers(id);
+        console.log(this.passengerData);
+        this.passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
+        return Promise.resolve(this.passengersByStop);
+      }
+    }
+
+    this.cancelTrip = function(id){
+
+    }
 
     this.sendPing = function(tripId, vehicleId, lat, lng){
       return DriverService.beeline({

@@ -5,7 +5,7 @@
       <div class="code">{{tripCode}}</div>
     </div>
     <ion-list>
-      <ion-item ng-repeat="boardstop in boardstops">
+      <ion-item ng-repeat="boardstop in boardstops" ng-click="showPassengerList(boardstop.id)">
   			<div class="stopIndex">{{$index+1}}</div>
 
         <div class="middle">

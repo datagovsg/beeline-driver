@@ -3,6 +3,7 @@ import JobEmergencyController from './controllers/EmergencyController.js';
 import JobAcceptController from './controllers/JobAcceptController.js';
 import JobAcceptedController from './controllers/JobAcceptedController.js';
 import JobStartedController from './controllers/JobStartedController.js';
+import PassengerListController from './controllers/PassengerListController.js';
 import JobEndedController from './controllers/JobEndedController.js';
 import DriverService from './services/DriverService.js';
 import TripService from './services/TripService.js';
@@ -23,6 +24,7 @@ angular.module('beeline-driver', [
 .controller('JobAcceptController', JobAcceptController)
 .controller('JobAcceptedController', JobAcceptedController)
 .controller('JobStartedController', JobStartedController)
+.controller('PassengerListController', PassengerListController)
 .controller('JobEndedController', JobEndedController)
 .service('DriverService',DriverService)
 .service('TripService',TripService)
@@ -84,6 +86,15 @@ angular.module('beeline-driver', [
       'menuContent': {
         templateUrl: 'templates/job-started.html',
         controller: 'JobStartedController'
+      }
+    }
+  })
+  .state('app.passengerList', {
+    url: '/jobStarted/:stopId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/passenger-list.html',
+        controller: 'PassengerListController'
       }
     }
   })

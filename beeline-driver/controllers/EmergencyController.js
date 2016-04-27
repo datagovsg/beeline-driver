@@ -82,7 +82,7 @@ export default[
             // type: 'button-positive',
             onTap: function(e) {
              if (!$scope.data.cancelTrip || !$scope.data.cancelTripConfirm) {
-               //don't allow the user to close unless he enters wifi password
+               //don't allow the user to close unless he on toggle
                e.preventDefault();
              } else {
                return $scope.data.cancelTripConfirm;

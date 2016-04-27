@@ -49,29 +49,16 @@ export default[
     };
 
     //Display Stops + Passenger Information
-    TripService.getTrip(tripData.tripId)
+    TripService.getPassengersByStop(tripData.tripId)
     .then(function(){
-      $scope.trip = TripService.trip;
-    })
-    .then(function(){
-      $scope.boardstops = $scope.trip.tripStops.filter(
-        stop => stop.canBoard == true);
-      console.log($scope.boardstops);
-    })
-    .then(function(){
-      return TripService.getPassengers(tripData.tripId);
-    }).then(function(response){
-       $scope.passengerData = response.data;
-
-       // group by
-       $scope.passengersByStop = _.groupBy($scope.passengerData, psg => psg.boardStopId);
-       console.log($scope.passengersByStop);
-
-       angular.forEach($scope.passengersByStop, function(value,key){
-         var stop = $scope.boardstops.find(stop => stop.id === parseInt(key));
-         stop.noPassenger = value.length;
-       });
+      console.log(TripService.passengersByStop);
+      $scope.boardstops = TripService.boardstops;
+      $scope.passengersByStop = TripService.passengersByStop;
+      angular.forEach($scope.passengersByStop, function(value,key){
+        var stop = $scope.boardstops.find(stop => stop.id === parseInt(key));
+        stop.noPassenger = value.length;
     });
+  })
 
     //get generated trip code
     TripService.getTripCode(tripData.tripId)
@@ -101,4 +88,8 @@ export default[
       TripService.sendPingService(tripData.tripId, vehicleId,
         () => { $scope.$apply() });
     });
+
+    $scope.showPassengerList = function(id){
+      $state.go('app.passengerList',{stopId: id});
+    }
 }];
