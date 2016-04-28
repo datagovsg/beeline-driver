@@ -1,0 +1,108 @@
+/* app css stylesheet */
+@import url("pg-landing.css");
+@import url("pg-accept.css");
+@import url("pg-job-started.css");
+@import url("pg-emergency.css");
+@import url("pg-job-accepted.css");
+
+/* In use most often, Webfont: Lato-Regular */
+@font-face {
+  font-family: 'LatoWeb';
+  src: url('fonts/Lato-Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-Bold */
+@font-face {
+  font-family: 'LatoWebBold';
+  src: url('fonts/Lato-Bold.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  font-family: LatoWeb !important;
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #FFF;
+  font-size: 16px;
+}
+
+#index, #contentview {
+  height: 100%;
+}
+
+.clear {
+  clear:both;
+}
+
+.scroll {
+  height: 100%;
+  padding: 10px 16px;
+}
+
+/* ----- YELLOW BUTTON ----- */
+.yellow-btn {
+  width: 260px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin: 20px 0px 20px -130px;
+  background-color: #ffe76e;
+  border: 0px;
+  border-bottom: 4px solid #f7c639;
+  border-radius: 80px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  position: relative;
+  left: 50%;
+  color: #333;
+  text-align: center;
+  cursor: pointer;
+}
+
+.yellow-btn div {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.yellow-btn:not([disabled="disabled"]):active {
+  margin-top: 23px;
+  border-bottom: 1px solid #f7c639;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+}
+
+.yellow-btn[disabled="disabled"] {
+  background-color: #d6d6d6;
+  border-bottom: 4px solid #b9b9b9;
+  color: #6f6f6f;
+}
+
+.yellow-btn .confirm {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.yellow-btn .timer {
+  margin-top: 10px;
+  font-size: 20px;
+  line-height: 15px;
+}
+
+.yellow-btn .timer i {
+  font-style: normal;
+  font-size: 11px;
+}
+
+.yellow-btn .note {
+  font-size: 11px;
+}

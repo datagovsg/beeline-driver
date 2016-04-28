@@ -19,10 +19,10 @@ module.exports = {
         ],
     },
     entry: [
-        path.resolve('app/app.js'),
+        path.resolve('beeline-driver/app.js'),
     ],
     output: {
-        path: path.resolve('app/lib'),
+        path: path.resolve('www/lib'),
         filename: 'bundle.js',
         pathinfo: true,
     },

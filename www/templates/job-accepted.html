@@ -1,0 +1,32 @@
+<ion-view id="pg-job-accepted" view-title="Job Accepted!" hide-back-button="true">
+  <ion-content>
+    <div class="msg">
+    	<div class="greet">
+    		<p>Please check the following details.<br>
+        If wrong, tap to edit.</p>
+    	</div>
+    </div>
+      <div class="list">
+        <a class="item item-icon-right" ng-click='popup("name")'>
+          <span class="">Name</span>
+          <span class="item-note" ng-bind="driver.name"></span>
+          <i class="icon ion-compose"></i>
+        </a>
+        <a class="item item-icon-right" ng-click='popup("vehicle")'>
+          <span class="">Vehicle No.</span>
+          <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
+          <i class="icon ion-compose"></i>
+        </a>
+        <a class="item item-icon-right" ng-click='popup("phoneNo")'>
+          <span class="">Phone No.</span>
+          <span class="item-note" ng-bind="driver.telephoneNo"></span>
+          <i class="icon ion-compose"></i>
+        </a>
+    </div>
+    <div class="buttons">
+      <div id="btn-correct-bus" class="button button-block" ui-sref='app.jobStarted'>
+        <div class="resp"><b>Done</b>Start Trip</div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,33 @@
+#pg-update-bus #update {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 44px;
+}
+
+#pg-update-bus #image {
+  width: 0px;
+  height: 0px;
+  opacity: 0 !important;
+}
+
+#pg-update-bus #scan {
+  color: #493762;
+  border-radius: 80px;
+  text-align: center;
+  cursor: pointer;
+  border: 3px solid #493762;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+#pg-update-bus #carplate {
+  width: 100%;
+  height: 40px;
+  background-color: #FFF;
+  border: 0px;
+}

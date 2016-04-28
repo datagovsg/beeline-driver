@@ -1,0 +1,107 @@
+/* ----- ACCEPT PAGE ----- */
+#pg-accept {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-accept .scroll {
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-accept .tripinfo{
+  height: 100%;
+  position:relative;
+  font-size: 14px;
+  background-color: #F5F5F5;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0px 0px 15px 0px;
+  border: 1px solid #CCC;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+}
+
+#pg-accept .msg .greet,
+#pg-accept .msg .tripinfo .routeinfo,
+#pg-accept .msg .accept,
+#pg-accept #btnaccept {
+	flex-grow: 0;
+}
+
+#pg-accept .msg,
+#pg-accept .msg .tripinfo,
+#pg-accept .msg .tripinfo #tripmap,
+#pg-accept ui-gmap-google-map,
+#pg-accept .angular-google-map,
+#pg-accept .angular-google-map-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-accept .msg .accept {
+  text-align:center;
+}
+
+/* ----- ROUTE INFO BOX ----- */
+
+.routeinfo {
+}
+.routeinfo .busnum {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #4b3863;
+  color: #FFF;
+  line-height: 40px;
+  border-radius: 20px;
+  margin-right: 10px;
+  float:left;
+}
+
+.routeinfo .stops {
+  width: calc(100% - 50px);
+  position: relative;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.routeinfo .stops .line {
+  width: 2px;
+  height: 60px;
+  background: url('../image/dash.png') center center;
+  top: 10px;
+  left: 4px;
+  position: absolute;
+}
+
+.routeinfo .stops .start, .routeinfo .stops .end {
+  line-height: 20px;
+  background: url('../image/icon-stop.png') left top 5px no-repeat;
+  background-size: 10px 10px;
+  padding-left: 15px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.routeinfo .stops .time {
+  text-transform: lowercase;
+  margin-right: 7px;
+}
+
+.routeinfo .stops .road {
+  text-transform: capitalize;
+}
+/* ----- GOOGLE MAP ----- */
+ui-gmap-google-map, .angular-google-map, .angular-google-map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.gmnoprint, .gm-style-cc {
+  display:none;
+}
