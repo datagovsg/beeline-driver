@@ -23,7 +23,7 @@ export default[
 
     $scope.ping ={
       pingStatus : null,
-      pingStausSymbol: null,
+      pingStatusSymbol: null,
       lastPingTime : null
     }
 
@@ -72,11 +72,11 @@ export default[
 
       if (timeSincePing > 30000) {
         $scope.ping.pingStatus = "GPS OFF";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.svg' />";
+        $scope.ping.pingStatusSymbol = "<img class='title-image' src='../image/GPSoff.svg' />";
       }
       else {
         $scope.ping.pingStatus = "GPS ON";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSon.svg' />";
+        $scope.ping.pingStatusSymbol = "<img class='title-image' src='../image/GPSon.svg' />";
       }
     }, 5000);
 

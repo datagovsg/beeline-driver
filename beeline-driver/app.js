@@ -29,6 +29,13 @@ angular.module('beeline-driver', [
 .service('DriverService',DriverService)
 .service('TripService',TripService)
 .service('PingService',PingService)
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //client: 'gme-infocommunications',
+        key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
+        libraries: 'places'
+    });
+})
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

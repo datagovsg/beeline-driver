@@ -124,6 +124,7 @@ export default [
           $ionicPopup.alert({
             template: 'Please turn on your GPS Location Service'
           });
+          //TODO think any other good way to do this
           continue;
         }
         try {
