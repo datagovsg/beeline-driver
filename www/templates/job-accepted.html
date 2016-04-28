@@ -7,17 +7,17 @@
     	</div>
     </div>
       <div class="list">
-        <a class="item item-icon-right" ng-click='popup("name")'>
+        <a class="item item-icon-right" ng-click='popup("name", driver.name)'>
           <span class="">Name</span>
           <span class="item-note" ng-bind="driver.name"></span>
           <i class="icon ion-compose"></i>
         </a>
-        <a class="item item-icon-right" ng-click='popup("vehicle")'>
+        <a class="item item-icon-right" ng-click='popup("vehicle", vehicle.vehicleNumber)'>
           <span class="">Vehicle No.</span>
           <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
           <i class="icon ion-compose"></i>
         </a>
-        <a class="item item-icon-right" ng-click='popup("phoneNo")'>
+        <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNo)'>
           <span class="">Phone No.</span>
           <span class="item-note" ng-bind="driver.telephoneNo"></span>
           <i class="icon ion-compose"></i>

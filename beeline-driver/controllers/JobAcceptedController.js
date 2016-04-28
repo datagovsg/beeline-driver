@@ -39,48 +39,79 @@ export default[
       $scope.driver.telephoneNo = DriverService.driver.telephone;
     })
 
-    $scope.popup = function(modelName){
-      $scope.data = {};
-      $scope.data[modelName] = null;
+    $scope.popupTelephone = function(initial) {
+      var scope = $scope.$new();
+      scope.data = {
+        newTelephone: initial.substr(3)
+      }
       var myPopup = $ionicPopup.show({
-         template: '<input ng-model="data.modelName">',
+         template: `Enter your telephone number:
+         <div class="item-input">
+          +65 <input ng-model="data.newTelephone">
+         </div>`,
          title: 'Update',
-         subTitle: 'Enter your '+ modelName,
-         scope: $scope,
+         defaultValue: initial,
+         scope: scope,
          buttons: [
-           { text: 'Cancel' },
-           {
-             text: '<b>Save</b>',
-             onTap: function(e) {
-               if (!$scope.data.modelName) {
-                 //don't allow the user to close unless he enters wifi password
-                 e.preventDefault();
-               } else {
-                 return $scope.data.modelName;
-               }
-             }
-           }
-         ]
+            { text: 'Cancel' },
+            {
+              text: '<b>Save</b>',
+              onTap: function(e) {
+                if (!scope.data.newTelephone) {
+                  //don't allow the user to close unless he enters wifi password
+                  e.preventDefault();
+                } else {
+                  return scope.data.newTelephone;
+                }
+              }
+            }
+          ]
        });
-       $scope.eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
+       var eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
        myPopup.then(async function(res) {
          try{
            if (res){
-             if (modelName == "name"){
-               await DriverService.updateDriverName(res);
-               $scope.driver.name = res;
-             }else if (modelName == "vehicle"){
-               await DriverService.updateVehicleNo(res);
-               $scope.vehicle.vehicleNumber = res;
-             }else if (modelName == 'phoneNo'){
-               if ($scope.eightDigitNumber.test(res)==false){
+               if (eightDigitNumber.test(res)==false){
                  $ionicPopup.alert({
                    template: 'Wrong phone no. Please try again.'
                  })
                } else {
                  await DriverService.updateDriverPhone(res);
-                 $scope.driver.telephoneNo = res;
+                 $scope.$apply(() => {
+                   $scope.driver.telephoneNo = "+65"+res;
+                 })
                }
+           } else {
+              console.log('Not sure!');
+           }
+         } catch (error) {
+           $ionicPopup.alert({
+             template: 'There is error, please try again.'
+           })
+           console.log(error);
+         }
+       });
+    }
+
+    $scope.popup = function(modelName, initial){
+      var myPopup = $ionicPopup.prompt({
+         template: `Enter your ${modelName}`,
+         title: 'Update',
+         defaultText: initial,
+       });
+       myPopup.then(async function(res) {
+         try{
+           if (res){
+             if (modelName == "name"){
+               await DriverService.updateDriverName(res);
+               $scope.$apply(() => {
+                 $scope.driver.name = res
+               });
+             }else if (modelName == "vehicle"){
+               await DriverService.updateVehicleNo(res);
+               $scope.$apply(()=>{
+                 $scope.vehicle.vehicleNumber = res;
+               })
              }
            } else {
               console.log('Not sure!');

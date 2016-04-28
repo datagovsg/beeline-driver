@@ -5,6 +5,7 @@ export default function($http){
   var sessionToken = window.location.search || localStorage['sessionToken'] || null;
   var self = this;
   var driverId;
+
   if (typeof localStorage['sessionToken']=='undefined'){
     localStorage['sessionToken'] = sessionToken;
   }
@@ -90,13 +91,13 @@ export default function($http){
     })
   };
 
-  this.updateVehicleNo = function (newVehileNo) {
+  this.updateVehicleNo = async function (newVehileNo) {
     if (typeof(self.vehicle)=='undefined'){
-      this.getVehicleInfo();
+      await this.getVehicleInfo();
     };
     return this.beeline({
       method: 'PUT',
-      url: '/vehicles/'+self.vehicle.id,
+      url: '/vehicles/'+self.vehicle[0].id,
       data: {
         vehicleNumber: newVehileNo
       }
