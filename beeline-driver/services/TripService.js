@@ -73,8 +73,26 @@ export default [
       }
     }
 
-    this.cancelTrip = function(id){
+    this.cancelTrip = function(tripId){
+      return DriverService.beeline({
+        method: 'POST',
+        url: '/trips/'+tripId+'/statuses',
+        data: {
+          message: "vehicle break down",
+          status: "cancelled"
+        }
+      })
+    }
 
+    this.notifyTripLate = function(tripId){
+      return DriverService.beeline({
+        method: 'POST',
+        url: '/trips/'+tripId+'/statuses',
+        data: {
+          message: "15 mins late",
+          status: "late"
+        }
+      })
     }
 
     this.sendPing = function(tripId, vehicleId, lat, lng){

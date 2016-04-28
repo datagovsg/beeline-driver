@@ -62,7 +62,7 @@ export default[
            }
          ]
        });
-
+       $scope.eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
        myPopup.then(async function(res) {
          try{
            if (res){
@@ -73,13 +73,22 @@ export default[
                await DriverService.updateVehicleNo(res);
                $scope.vehicle.vehicleNumber = res;
              }else if (modelName == 'phoneNo'){
-               await DriverService.updateDriverPhone(res);
-               $scope.driver.telephoneNo = res;
+               if ($scope.eightDigitNumber.test(res)==false){
+                 $ionicPopup.alert({
+                   template: 'Wrong phone no. Please try again.'
+                 })
+               } else {
+                 await DriverService.updateDriverPhone(res);
+                 $scope.driver.telephoneNo = res;
+               }
              }
            } else {
               console.log('Not sure!');
            }
          } catch (error) {
+           $ionicPopup.alert({
+             template: 'There is error, please try again.'
+           })
            console.log(error);
          }
 

@@ -70,10 +70,17 @@ export default[
     // When button is clicked, the popup will be shown...
     $scope.showCancelTripPopup = function() {
      // Custom popup
+      var template = '<ion-checkbox ng-model="data.cancelTrip">\
+                        Yes, I want to cancel trip.\
+                      </ion-checkbox>\
+                      <p>Slide to cancel trip. This will notify the passengers and ops.</p>\
+                      <ion-toggle ng-model="data.cancelTripConfirm" toggle-class="toggle-assertive">\
+                        Slide to confirm\
+                      </ion-toggle>';
       var cancelTripPopup = $ionicPopup.show({
         title: 'Are you sure?',
-        cssClass: 'driver-cancel',
-        templateUrl: '/templates/emerg-job-cancel.html',
+        // cssClass: 'driver-cancel',
+        template: template,
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
@@ -91,19 +98,22 @@ export default[
           }
         ]
        });
-       cancelTripPopup.then(function(res) {
+       cancelTripPopup.then(async function(res) {
           if(res) {
-             //TODO: send cancel job infor to server
-
-             $ionicPopup.alert({
-               template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
-             }).then(function(response){
-               if(response){
-                 TripService.pingTimer = false;
-                 $state.go("app.jobEnded",{status: 2});
-               }
-             })
-
+            try {
+              //TODO: send cancel job infor to server
+              await TripService.cancelTrip(tripData.tripId);
+              $ionicPopup.alert({
+                template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
+              }).then(function(response){
+                if(response){
+                  TripService.pingTimer = false;
+                  $state.go("app.jobEnded",{status: 2});
+                }
+              })
+            } catch(error) {
+              console.log(error);
+            }
           } else {
              console.log('Not sure!');
           }
@@ -113,10 +123,14 @@ export default[
 
     $scope.showNotifyLatePopup = function() {
      // Custom popup
+     var template = '<p>More than 15 mins late. Notify your passengers that you will be late.</p>\
+                      <ion-toggle ng-model="data.tripLate" toggle-class="toggle-assertive">\
+                        Slide to confirm\
+                      </ion-toggle>';
       var tripLatePopup = $ionicPopup.show({
         title: 'Late?',
-        cssClass: 'driver-late',
-        templateUrl: '/templates/emerg-job-late.html',
+        // cssClass: 'driver-late',
+        template: template,
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
@@ -134,13 +148,17 @@ export default[
           }
         ]
        });
-       tripLatePopup.then(function(res) {
+       tripLatePopup.then(async function(res) {
           if(res) {
-             //TODO: send job late infor to server
-
-             $ionicPopup.alert({
-               template: 'Passengers Notified that you will be more than 15 mins late.'
-             });
+            try {
+              //TODO: send job late infor to server
+              await TripService.notifyTripLate(tripData.tripId);
+              $ionicPopup.alert({
+                template: 'Passengers Notified that you will be more than 15 mins late.'
+              });
+            } catch(error) {
+              console.log(error);
+            }
           } else {
              console.log('Not sure!');
           }
