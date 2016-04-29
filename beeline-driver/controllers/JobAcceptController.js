@@ -70,7 +70,6 @@ export default[
 
 
     var countdownTimer;
-    var tripData = DriverService.getDecodedToken();
 
     $scope.fillInTripRouteData = function() {
 //re-organise the DB output into Google Map compatible JSON
@@ -98,20 +97,17 @@ export default[
     };
 
     //Grab Trip and Route info
-    if (typeof(tripData) != 'undefined') {
-      TripService.getTrip(tripData.tripId).then(function(){ //grab trip info
-        console.log(TripService.trip);
-        $scope.job.tripNumber = TripService.trip.id;
 
-        return TripService.getRoutePath(TripService.trip.routeId);
-      }).then(function() { //grab route info
+    TripService.getTrip(DriverService.getDecodedToken().tripId).then(function(){ //grab trip info
+      console.log(TripService.trip);
+      $scope.job.tripNumber = TripService.trip.id;
+      return TripService.getRoutePath(TripService.trip.routeId);
+    }).then(function() { //grab route info
+      //populate $scope.job with the relevant data
+      $scope.fillInTripRouteData();
+      return uiGmapGoogleMapApi;
+    }).then(function(googleMaps) {
+      var gmap = $scope.map.control.getGMap();
+    }); //end Promise
 
-        //populate $scope.job with the relevant data
-        $scope.fillInTripRouteData();
-
-        return uiGmapGoogleMapApi;
-      }).then(function(googleMaps) {
-        var gmap = $scope.map.control.getGMap();
-      }); //end Promise
-    }
   }];

@@ -1,5 +1,6 @@
 'use strict';
-
+import cancelTripTemplate from '../templates/popup-cancel-trip.html';
+import notifyLateTemplate from '../templates/popup-notify-late.html';
 export default[
   '$scope',
   '$ionicPopup',
@@ -19,7 +20,7 @@ export default[
     $scope.data = {}
 
     //Phone Number submission
-    $scope.eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
+    $scope.validPhoneNumber = /^[8-9]{1}[0-9]{7}$/;
 
     $scope.showReplaceDriverPopup = function() {
 
@@ -32,7 +33,7 @@ export default[
             template: template,
           })
           if (result){
-            if (result && $scope.eightDigitNumber.test(result)) {
+            if (result && $scope.validPhoneNumber.test(result)) {
               break;
             }
             else {
@@ -45,17 +46,17 @@ export default[
         return result;
       }
 
-      promptForDriver().then(function(phoneNum) {
-        if (phoneNum) {
-          DriverService.assignReplacementDriver(tripData.tripId, phoneNum).then(function(response){
+      promptForDriver().then(function(phoneNumber) {
+        if (phoneNumber) {
+          DriverService.assignReplacementDriver(tripData.tripId, phoneNumber).then(function(response){
             //Success! Show the confirmation popup.
-            $scope.data.replaceDriverNo = phoneNum;
+            $scope.data.replaceDriverNumber = phoneNumber;
             $ionicPopup.alert({
-              template: 'The Trip info has been sent to +65'+ $scope.data.replaceDriverNo+'<br>Driver Ops has been alerted!'
+              template: 'The trip info has been sent to +65'+ $scope.data.replaceDriverNumber+'<br>Driver Ops has been alerted!'
             }).then(function(response){
               if(response){
                 TripService.pingTimer = false;
-                $state.go("app.jobEnded",{status: 1, replacePhoneNo:phoneNum});
+                $state.go('app.jobEnded',{status: "tripReplaced", replacementPhoneNumber:phoneNumber});
               }
             })
           },function(error){
@@ -70,17 +71,10 @@ export default[
     // When button is clicked, the popup will be shown...
     $scope.showCancelTripPopup = function() {
      // Custom popup
-      var template = '<ion-checkbox ng-model="data.cancelTrip">\
-                        Yes, I want to cancel trip.\
-                      </ion-checkbox>\
-                      <p>Slide to cancel trip. This will notify the passengers and ops.</p>\
-                      <ion-toggle ng-model="data.cancelTripConfirm" toggle-class="toggle-assertive">\
-                        Slide to confirm\
-                      </ion-toggle>';
       var cancelTripPopup = $ionicPopup.show({
         title: 'Are you sure?',
         // cssClass: 'driver-cancel',
-        template: template,
+        template: cancelTripTemplate,
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
@@ -108,14 +102,12 @@ export default[
               }).then(function(response){
                 if(response){
                   TripService.pingTimer = false;
-                  $state.go("app.jobEnded",{status: 2});
+                  $state.go('app.jobEnded',{status: "tripCancelled"});
                 }
               })
             } catch(error) {
               console.log(error);
             }
-          } else {
-             console.log('Not sure!');
           }
        });
     };
@@ -123,14 +115,10 @@ export default[
 
     $scope.showNotifyLatePopup = function() {
      // Custom popup
-     var template = '<p>More than 15 mins late. Notify your passengers that you will be late.</p>\
-                      <ion-toggle ng-model="data.tripLate" toggle-class="toggle-assertive">\
-                        Slide to confirm\
-                      </ion-toggle>';
       var tripLatePopup = $ionicPopup.show({
         title: 'Late?',
         // cssClass: 'driver-late',
-        template: template,
+        template: notifyLateTemplate,
         scope: $scope,
         buttons: [
           { text: 'Cancel' },
@@ -159,8 +147,6 @@ export default[
             } catch(error) {
               console.log(error);
             }
-          } else {
-             console.log('Not sure!');
           }
        });
     };

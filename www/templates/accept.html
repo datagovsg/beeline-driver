@@ -1,4 +1,4 @@
-<ion-view id="pg-accept" view-title="Accept the Job?" hide-back-button="true">
+<ion-view class="accept" view-title="Accept the Job?" hide-back-button="true">
   <ion-content>
 	<div class="msg">
 		<div class="tripinfo">
@@ -17,7 +17,7 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div id="tripmap" class="clear">
+			<div class="tripmap" class="clear">
 				<ui-gmap-google-map center="map.center" pan="true" zoom="map.zoom" options="map.options" bounds="map.bounds" dragging="map.dragging" control="map.control" data-tap-disabled="true">
 					<ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" options="'options'"></ui-gmap-markers>
 					<ui-gmap-polyline ng-repeat="p in map.lines" path="p.path" icons="p.icons"></ui-gmap-polyline>

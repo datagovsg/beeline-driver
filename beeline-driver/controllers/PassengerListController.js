@@ -14,12 +14,11 @@ export default[
     $stateParams
   ){
     $scope.$on('$ionicView.afterEnter',()=>{
-      $scope.stopId = parseInt($stateParams.stopId);
-      var tripData = DriverService.getDecodedToken();
+      $scope.stopId = +$stateParams.stopId;
       //Display Stops + Passenger Information
-      TripService.getPassengersByStop(tripData.tripId)
-      .then(function(){
-        $scope.passengersByStop = TripService.passengersByStop;
+      TripService.getPassengersByStop(DriverService.getDecodedToken().tripId)
+      .then(function(response){
+        $scope.passengersByStop = response;
         $scope.passengerList = $scope.passengersByStop[$scope.stopId];
       })
     });

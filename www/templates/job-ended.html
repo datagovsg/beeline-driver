@@ -1,23 +1,23 @@
-<ion-view  view-title="" hide-back-button="true" id="pg-job-ended">
+<ion-view  view-title="" hide-back-button="true" class="job-ended">
   <ion-content>
     <span ng-cloak>{{job.date| date:'d MMM y'}}</span>
-    <p ng-show="job.status===0">
+    <p ng-show="job.status==='tripEnded'">
       {{job.tripId}} Trip Ended<br>
       <br>
       <br>
       Thank you {{job.driver.name}}!<br>
       The customers are happy with your service!<br>
     </p>
-    <p ng-show="job.status===1">
+    <p ng-show="job.status==='tripReplaced'">
       {{job.tripId}} Driver Replaced<br>
-      Sent to +65{{job.replacePhoneNo}}</br>
+      Sent to +65{{job.replacementPhoneNumber}}</br>
       <br>
       <br>
       The job has been forwarded to another driver.<br>
       You will resume your service tomorrow.<br>
       Thank you!<br>
     </p>
-    <p ng-show="job.status===2">
+    <p ng-show="job.status==='tripCancelled'">
       {{job.tripId}} Trip Cancelled<br>
       <br>
       <br>

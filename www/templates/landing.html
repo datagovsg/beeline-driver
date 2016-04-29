@@ -1,4 +1,4 @@
-<ion-view id="pg-landing" hide-back-button="true">
+<ion-view class="landing" hide-back-button="true">
   <ion-content>
   <div class="overlay" ng-class="{hide: landing.overlayHide}">
     <div class="txt">{{landing.checkTxt}}</div>
@@ -17,7 +17,7 @@
     <div class="block"></div>
   </div>
   <div class="redirect" ng-hide="driver.loggedIn">
-    <button id="driverlogin" class="yellow-btn" ng-disabled="!landing.overlayHide" ng-click="landingNext()">{{landing.loginBtnTxt}}</button>
+    <button class="driver-login" class="yellow-btn" ng-disabled="!landing.overlayHide" ng-click="landingNext()">{{landing.loginBtnTxt}}</button>
   </div>
   <div class="redirect" ng-hide="!driver.loggedIn">
     <div class="loginok">

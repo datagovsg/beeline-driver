@@ -43,20 +43,19 @@ export default[
             $interval.cancel(gpsStatusTimer);
           }
           TripService.pingTimer = false;
-          $state.go("app.jobEnded",{status: 0});
+          $state.go('app.jobEnded',{status: "tripEnded"});
         }
       })
     };
 
     //Display Stops + Passenger Information
     TripService.getPassengersByStop(tripData.tripId)
-    .then(function(){
-      console.log(TripService.passengersByStop);
-      $scope.boardstops = TripService.boardstops;
-      $scope.passengersByStop = TripService.passengersByStop;
+    .then(function(response){
+      $scope.boardStops = TripService.boardStops;
+      $scope.passengersByStop = response;
       angular.forEach($scope.passengersByStop, function(value,key){
-        var stop = $scope.boardstops.find(stop => stop.id === parseInt(key));
-        stop.noPassenger = value.length;
+        var stop = $scope.boardStops.find(stop => stop.id === +key);
+        stop.passengerNumber = value.length;
     });
   })
 
@@ -72,11 +71,11 @@ export default[
 
       if (timeSincePing > 30000) {
         $scope.ping.pingStatus = "GPS OFF";
-        $scope.ping.pingStatusSymbol = "<img class='title-image' src='../image/GPSoff.svg' />";
+        $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
       }
       else {
         $scope.ping.pingStatus = "GPS ON";
-        $scope.ping.pingStatusSymbol = "<img class='title-image' src='../image/GPSon.svg' />";
+        $scope.ping.pingStatusSymbol = "image/GPSon.svg";
       }
     }, 5000);
 

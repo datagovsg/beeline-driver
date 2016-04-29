@@ -8,6 +8,9 @@ import JobEndedController from './controllers/JobEndedController.js';
 import DriverService from './services/DriverService.js';
 import TripService from './services/TripService.js';
 import PingService from './services/PingService.js';
+
+// Configuration Imports
+import configureRoutes from './router.js';
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -30,12 +33,13 @@ angular.module('beeline-driver', [
 .service('TripService',TripService)
 .service('PingService',PingService)
 .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        //client: 'gme-infocommunications',
-        key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
-        libraries: 'places'
-    });
+  uiGmapGoogleMapApiProvider.configure({
+    //client: 'gme-infocommunications',
+    key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
+    libraries: 'places'
+  });
 })
+.config(configureRoutes)
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -50,70 +54,4 @@ angular.module('beeline-driver', [
       StatusBar.styleDefault();
     }
   });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/emergency.html',
-    controller: 'JobEmergencyController'
-  })
-  .state('app.landing', {
-    url: '/landing?eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/landing.html',
-        controller: 'AppLandingController'
-      }
-    }
-  })
-  .state('app.jobAccept', {
-    url: '/accept',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/accept.html',
-        controller: 'JobAcceptController'
-      }
-    }
-  })
-  .state('app.jobAccepted', {
-      url: '/jobAccepted',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/job-accepted.html',
-          controller: 'JobAcceptedController'
-        }
-      }
-    })
-  .state('app.jobStarted', {
-    url: '/jobStarted',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/job-started.html',
-        controller: 'JobStartedController'
-      }
-    }
-  })
-  .state('app.passengerList', {
-    url: '/jobStarted/:stopId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/passenger-list.html',
-        controller: 'PassengerListController'
-      }
-    }
-  })
-  .state('app.jobEnded', {
-    url: '/jobEnded/:status?replacePhoneNo',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/job-ended.html',
-        controller: 'JobEndedController'
-      }
-    }
-  });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/landing');
 });

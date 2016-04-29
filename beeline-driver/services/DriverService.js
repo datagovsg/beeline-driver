@@ -6,7 +6,7 @@ export default function($http){
   var self = this;
   var driverId;
 
-  if (typeof localStorage['sessionToken']=='undefined'){
+  if (!localStorage['sessionToken']){
     localStorage['sessionToken'] = sessionToken;
   }
 
@@ -29,7 +29,7 @@ export default function($http){
   };
 
   this.getDriverInfo = function () {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       self.getDecodedToken();
     }
     if (typeof(self.driver)!='undefined'){
@@ -44,7 +44,7 @@ export default function($http){
   };
 
   this.getVehicleInfo = function () {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     if (typeof(self.vehicle)!='undefined'){
@@ -61,12 +61,15 @@ export default function($http){
   this.assignReplacementDriver = function (tripId, replaceTelephone) {
     return this.beeline({
       method: 'POST',
-      url: '/trips/' + tripId + '/send_to_phone?telephone=%2B65'+replaceTelephone,
+      url: '/trips/' + tripId + '/send_to_phone',
+      data: {
+        telephone: "+65"+replaceTelephone,
+      }
     })
   };
 
   this.updateDriverName = function (newName) {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     return this.beeline({
@@ -79,7 +82,7 @@ export default function($http){
   };
 
   this.updateDriverPhone = function (newPhoneNo) {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     return this.beeline({
@@ -92,7 +95,7 @@ export default function($http){
   };
 
   this.updateVehicleNo = async function (newVehileNo) {
-    if (typeof(self.vehicle)=='undefined'){
+    if (typeof(self.vehicle)==='undefined'){
       await this.getVehicleInfo();
     };
     return this.beeline({

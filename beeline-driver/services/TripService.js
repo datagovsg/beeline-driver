@@ -17,7 +17,7 @@ export default [
 
     this.lastPingTime = 0;
     this.pingTimer = false;
-    this.passengersByStop = undefined;
+    var passengersByStop;
 
     this.getTrip = function(id){
       if (typeof(self.trip)!='undefined'){
@@ -58,18 +58,17 @@ export default [
       })
     };
 
-    this.getPassengersByStop = async function(id) {
-      if (typeof this.passengersByStop != 'undefined'){
-        return Promise.resolve(this.passengersByStop);
+    this.getPassengersByStop = async function(id, ignoreCache) {
+      if (passengersByStop  && !ignoreCache){
+        return Promise.resolve(passengersByStop);
       } else{
         await this.getTrip(id);
         console.log(this.trip);
-        this.boardstops = this.trip.tripStops.filter(
+        this.boardStops = this.trip.tripStops.filter(
           stop => stop.canBoard == true);
         await this.getPassengers(id);
-        console.log(this.passengerData);
-        this.passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
-        return Promise.resolve(this.passengersByStop);
+        passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
+        return Promise.resolve(passengersByStop);
       }
     }
 
@@ -121,10 +120,9 @@ export default [
         }
         catch (error) {
           console.log(error.stack);
-          $ionicPopup.alert({
+          await $ionicPopup.alert({
             template: 'Please turn on your GPS Location Service'
           });
-          //TODO think any other good way to do this
           continue;
         }
         try {

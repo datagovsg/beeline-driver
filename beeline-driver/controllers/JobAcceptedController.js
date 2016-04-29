@@ -1,4 +1,4 @@
-'use strict';
+import updatePhoneTemplate from '../templates/popup-update-phone.html';
 
 export default[
   '$scope',
@@ -21,22 +21,18 @@ export default[
 
     $scope.driver = {
       name: '',
-      telephoneNo: '',
+      telephoneNumber: '',
     }
 
-    var tripData = DriverService.getDecodedToken();
-
-    if (typeof(tripData) != 'undefined') {
-      DriverService.getVehicleInfo().then(function(){
-        //find out the driver's vehicle number
-        $scope.vehicle.id = DriverService.vehicle[0].id;
-        $scope.vehicle.vehicleNumber = DriverService.vehicle[0].vehicleNumber;
-      });
-    }
+    DriverService.getVehicleInfo().then(function(){
+      //find out the driver's vehicle number
+      $scope.vehicle.id = DriverService.vehicle[0].id;
+      $scope.vehicle.vehicleNumber = DriverService.vehicle[0].vehicleNumber;
+    });
 
     DriverService.getDriverInfo().then(function(){
       $scope.driver.name = DriverService.driver.name;
-      $scope.driver.telephoneNo = DriverService.driver.telephone;
+      $scope.driver.telephoneNumber = DriverService.driver.telephone;
     })
 
     $scope.popupTelephone = function(initial) {
@@ -45,10 +41,7 @@ export default[
         newTelephone: initial.substr(3)
       }
       var myPopup = $ionicPopup.show({
-         template: `Enter your telephone number:
-         <div class="item-input">
-          +65 <input ng-model="data.newTelephone">
-         </div>`,
+         template: updatePhoneTemplate,
          title: 'Update',
          defaultValue: initial,
          scope: scope,
@@ -67,26 +60,24 @@ export default[
             }
           ]
        });
-       var eightDigitNumber = /^[8-9]{1}[0-9]{7}$/;
+       var validPhoneNumber = /^[8-9]{1}[0-9]{7}$/;
        myPopup.then(async function(res) {
          try{
            if (res){
-               if (eightDigitNumber.test(res)==false){
+               if (validPhoneNumber.test(res)==false){
                  $ionicPopup.alert({
-                   template: 'Wrong phone no. Please try again.'
+                   template: 'Wrong phone number. Please try again.'
                  })
                } else {
                  await DriverService.updateDriverPhone(res);
                  $scope.$apply(() => {
-                   $scope.driver.telephoneNo = "+65"+res;
+                   $scope.driver.telephoneNumber = "+65"+res;
                  })
                }
-           } else {
-              console.log('Not sure!');
            }
          } catch (error) {
            $ionicPopup.alert({
-             template: 'There is error, please try again.'
+             template: 'Error updating phone number, please try again.'
            })
            console.log(error);
          }
@@ -102,23 +93,21 @@ export default[
        myPopup.then(async function(res) {
          try{
            if (res){
-             if (modelName == "name"){
+             if (modelName == "driver name"){
                await DriverService.updateDriverName(res);
                $scope.$apply(() => {
-                 $scope.driver.name = res
+                 $scope.driver.name = res;
                });
-             }else if (modelName == "vehicle"){
+             }else if (modelName == "vehicle number"){
                await DriverService.updateVehicleNo(res);
                $scope.$apply(()=>{
                  $scope.vehicle.vehicleNumber = res;
-               })
+               });
              }
-           } else {
-              console.log('Not sure!');
            }
          } catch (error) {
            $ionicPopup.alert({
-             template: 'There is error, please try again.'
+             template: 'Error processing '+modelName+', please try again.'
            })
            console.log(error);
          }
