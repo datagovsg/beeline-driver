@@ -23,7 +23,7 @@ export default[
 
     $scope.ping ={
       pingStatus : null,
-      pingStausSymbol: null,
+      pingStatusSymbol: null,
       lastPingTime : null
     }
 
@@ -43,35 +43,21 @@ export default[
             $interval.cancel(gpsStatusTimer);
           }
           TripService.pingTimer = false;
-          $state.go("app.jobEnded",{status: 0});
+          $state.go('app.jobEnded',{status: "tripEnded"});
         }
       })
     };
 
     //Display Stops + Passenger Information
-    TripService.getTrip(tripData.tripId)
-    .then(function(){
-      $scope.trip = TripService.trip;
-    })
-    .then(function(){
-      $scope.boardstops = $scope.trip.tripStops.filter(
-        stop => stop.canBoard == true);
-      console.log($scope.boardstops);
-    })
-    .then(function(){
-      return TripService.getPassengers(tripData.tripId);
-    }).then(function(response){
-       $scope.passengerData = response.data;
-
-       // group by
-       $scope.passengersByStop = _.groupBy($scope.passengerData, psg => psg.boardStopId);
-       console.log($scope.passengersByStop);
-
-       angular.forEach($scope.passengersByStop, function(value,key){
-         var stop = $scope.boardstops.find(stop => stop.id === parseInt(key));
-         stop.noPassenger = value.length;
-       });
+    TripService.getPassengersByStop(tripData.tripId)
+    .then(function(response){
+      $scope.boardStops = TripService.boardStops;
+      $scope.passengersByStop = response;
+      angular.forEach($scope.passengersByStop, function(value,key){
+        var stop = $scope.boardStops.find(stop => stop.id === +key);
+        stop.passengerNumber = value.length;
     });
+  })
 
     //get generated trip code
     TripService.getTripCode(tripData.tripId)
@@ -85,11 +71,11 @@ export default[
 
       if (timeSincePing > 30000) {
         $scope.ping.pingStatus = "GPS OFF";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSoff.svg' />";
+        $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
       }
       else {
         $scope.ping.pingStatus = "GPS ON";
-        $scope.ping.pingStausSymbol = "<img class='title-image' src='../image/GPSon.svg' />";
+        $scope.ping.pingStatusSymbol = "image/GPSon.svg";
       }
     }, 5000);
 
@@ -101,4 +87,8 @@ export default[
       TripService.sendPingService(tripData.tripId, vehicleId,
         () => { $scope.$apply() });
     });
+
+    $scope.showPassengerList = function(id){
+      $state.go('app.passengerList',{stopId: id});
+    }
 }];

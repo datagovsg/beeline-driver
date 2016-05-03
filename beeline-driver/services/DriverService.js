@@ -2,9 +2,13 @@ import jwt from 'jsonwebtoken';
 
 export default function($http){
   var driver;
-  var sessionToken = localStorage['sessionToken'] || null;
+  var sessionToken = window.location.search || localStorage['sessionToken'] || null;
   var self = this;
   var driverId;
+
+  if (!localStorage['sessionToken']){
+    localStorage['sessionToken'] = sessionToken;
+  }
 
   this.beeline = function(options) {
     options.url = 'http://staging.beeline.sg' + options.url;
@@ -17,7 +21,7 @@ export default function($http){
 
   this.getDecodedToken = function() {
     //HARDCODE testing token - the token should be taken from the URL
-    localStorage['sessionToken'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk';
+    // localStorage['sessionToken'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk';
 
     var decodedToken = jwt.decode(localStorage['sessionToken']); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
     driverId = decodedToken.driverId;
@@ -25,7 +29,7 @@ export default function($http){
   };
 
   this.getDriverInfo = function () {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       self.getDecodedToken();
     }
     if (typeof(self.driver)!='undefined'){
@@ -40,7 +44,7 @@ export default function($http){
   };
 
   this.getVehicleInfo = function () {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     if (typeof(self.vehicle)!='undefined'){
@@ -56,17 +60,16 @@ export default function($http){
 
   this.assignReplacementDriver = function (tripId, replaceTelephone) {
     return this.beeline({
-      method: 'GET',
+      method: 'POST',
       url: '/trips/' + tripId + '/send_to_phone',
       data: {
-        id: tripId,
-        telephone: '+65' + replaceTelephone
-      },
+        telephone: "+65"+replaceTelephone,
+      }
     })
   };
 
   this.updateDriverName = function (newName) {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     return this.beeline({
@@ -79,7 +82,7 @@ export default function($http){
   };
 
   this.updateDriverPhone = function (newPhoneNo) {
-    if (typeof(driverId)=='undefined') {
+    if (typeof(driverId)==='undefined') {
       driverId = self.getDecodedToken().driverId;
     }
     return this.beeline({
@@ -91,13 +94,13 @@ export default function($http){
     })
   };
 
-  this.updateVehicleNo = function (newVehileNo) {
-    if (typeof(self.vehicle)=='undefined'){
-      this.getVehicleInfo();
+  this.updateVehicleNo = async function (newVehileNo) {
+    if (typeof(self.vehicle)==='undefined'){
+      await this.getVehicleInfo();
     };
     return this.beeline({
       method: 'PUT',
-      url: '/vehicles/'+self.vehicle.id,
+      url: '/vehicles/'+self.vehicle[0].id,
       data: {
         vehicleNumber: newVehileNo
       }

@@ -1,4 +1,4 @@
-<ion-view id="pg-accept" view-title="Accept the Job?" hide-back-button="true">
+<ion-view class="accept" view-title="Accept the Job?" hide-back-button="true">
   <ion-content>
 	<div class="msg">
 		<div class="tripinfo">
@@ -17,7 +17,7 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div id="tripmap" class="clear">
+			<div class="tripmap" class="clear">
 				<ui-gmap-google-map center="map.center" pan="true" zoom="map.zoom" options="map.options" bounds="map.bounds" dragging="map.dragging" control="map.control" data-tap-disabled="true">
 					<ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" options="'options'"></ui-gmap-markers>
 					<ui-gmap-polyline ng-repeat="p in map.lines" path="p.path" icons="p.icons"></ui-gmap-polyline>
@@ -26,16 +26,7 @@
 		</div>
 		<div class="accept">Would you like to take the job?</div>
 	</div>
-	<div id="btnaccept" class="button button-block" ng-disabled="job.acceptoff" ng-click="acceptTheJob()">
-		<div class="resp" ng-hide="job.acceptoff">YES</div>
-		<div class="resp" ng-hide="!job.acceptoff">
-      OPS ALERT SENT
-      <div class="note">You did not accept the job in time</div>
-    </div>
-		<div class="timer" ng-hide="job.acceptoff">
-      {{timer.hh}}<i>h</i> {{timer.mm}}<i>m</i> {{timer.ss}}<i>s</i>
-      <div class="note">Time left to respond</div>
-    </div>
-	</div>
+
+  <div class="button button-block" ui-sref='app.jobAccepted'>YES</div>
   </ion-content>
 </ion-view>

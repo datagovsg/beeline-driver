@@ -1,4 +1,4 @@
-<ion-view id="pg-job-accepted" view-title="Job Accepted!" hide-back-button="true">
+<ion-view class="job-accepted" view-title="Job Accepted!" hide-back-button="true">
   <ion-content>
     <div class="msg">
     	<div class="greet">
@@ -7,24 +7,24 @@
     	</div>
     </div>
       <div class="list">
-        <a class="item item-icon-right" ng-click='popup("name")'>
+        <a class="item item-icon-right" ng-click='popup("driver name", driver.name)'>
           <span class="">Name</span>
           <span class="item-note" ng-bind="driver.name"></span>
           <i class="icon ion-compose"></i>
         </a>
-        <a class="item item-icon-right" ng-click='popup("vehicle")'>
+        <a class="item item-icon-right" ng-click='popup("vehicle number", vehicle.vehicleNumber)'>
           <span class="">Vehicle No.</span>
           <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
           <i class="icon ion-compose"></i>
         </a>
-        <a class="item item-icon-right" ng-click='popup("phoneNo")'>
+        <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNumber)'>
           <span class="">Phone No.</span>
-          <span class="item-note" ng-bind="driver.telephoneNo"></span>
+          <span class="item-note" ng-bind="driver.telephoneNumber"></span>
           <i class="icon ion-compose"></i>
         </a>
     </div>
     <div class="buttons">
-      <div id="btn-correct-bus" class="button button-block" ui-sref='app.jobStarted'>
+      <div class="button button-block" ui-sref='app.jobStarted'>
         <div class="resp"><b>Done</b>Start Trip</div>
       </div>
     </div>

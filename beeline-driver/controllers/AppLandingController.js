@@ -56,8 +56,7 @@ export default[
 
 
   $scope.$on('$ionicView.beforeEnter',()=>{
-    if (typeof(timer)=='undefined'){
-      console.log("beforeenter");
+    if (!timer){
       timer = $timeout(function(){
         $state.go('app.jobAccept');
       }, 2000);
@@ -66,7 +65,6 @@ export default[
 
   $scope.$on('$ionicView.leave',()=>{
     if (timer){
-      console.log("leave");
       timer = undefined;
       $timeout.cancel(timer);
     }

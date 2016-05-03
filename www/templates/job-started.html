@@ -1,28 +1,32 @@
-<ion-view id="pg-jobStarted" view-title="Job in Progress {{ping.pingStatus}} {{ping.pingStausSymbol}}" hide-back-button="true">
+<ion-view class="job-started" hide-back-button="true">
+  <ion-nav-title>
+    Job in Progress {{ping.pingStatus}}
+    <img ng-src="{{ping.pingStatusSymbol}}" class="title-image">
+  </ion-nav-title>
   <ion-content>
     <div class="banner">
       <div>Trip Code</div>
       <div class="code">{{tripCode}}</div>
     </div>
     <ion-list>
-      <ion-item ng-repeat="boardstop in boardstops">
+      <ion-item ng-repeat="boardStop in boardStops" ng-click="showPassengerList(boardStop.id)">
   			<div class="stopIndex">{{$index+1}}</div>
 
         <div class="middle">
-          <div class="time">{{boardstop.time | date:'h:mm a'}}</div>
-          <div class="stopName">{{boardstop.stop.description}}{{boardstop.stop.road}}</div>
-          <div class="stopId">({{boardstop.stop.type}} ID {{boardstop.stop.label}})</div>
+          <div class="time">{{boardStop.time | date:'h:mm a'}}</div>
+          <div class="stopName">{{boardStop.stop.description}}{{boardStop.stop.road}}</div>
+          <div class="stopId">({{boardStop.stop.type}} ID {{boardStop.stop.label}})</div>
         </div>
 
         <span class="right">
   				<!--span class="circle">{{$index+1}} min left</span-->
-  				<span class="passenger">{{boardstop.noPassenger > 0 ? boardstop.noPassenger : 0}}</span>
+  				<span class="passenger">{{boardStop.passengerNumber > 0 ? boardStop.passengerNumber : 0}}</span>
   		  </span>
         <i class="icon ion-android-person"></i>
   		</ion-item>
     </ion-list>
 
-    <div id="btn-stop-pings" class="button button-block" ng-click="endTripClick()">End Trip</div>
+    <div class="button button-block" ng-click="endTripClick()">End Trip</div>
 
   </ion-content>
 </ion-view>

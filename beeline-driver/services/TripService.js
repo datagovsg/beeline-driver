@@ -17,6 +17,7 @@ export default [
 
     this.lastPingTime = 0;
     this.pingTimer = false;
+    var passengersByStop;
 
     this.getTrip = function(id){
       if (typeof(self.trip)!='undefined'){
@@ -52,8 +53,46 @@ export default [
       return DriverService.beeline({
         method: 'GET',
         url: '/trips/'+id+'/get_passengers',
+      }).then(function(response){
+        self.passengerData = response.data;
       })
     };
+
+    this.getPassengersByStop = async function(id, ignoreCache) {
+      if (passengersByStop  && !ignoreCache){
+        return Promise.resolve(passengersByStop);
+      } else{
+        await this.getTrip(id);
+        console.log(this.trip);
+        this.boardStops = this.trip.tripStops.filter(
+          stop => stop.canBoard == true);
+        await this.getPassengers(id);
+        passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
+        return Promise.resolve(passengersByStop);
+      }
+    }
+
+    this.cancelTrip = function(tripId){
+      return DriverService.beeline({
+        method: 'POST',
+        url: '/trips/'+tripId+'/statuses',
+        data: {
+          message: "vehicle break down",
+          status: "cancelled"
+        }
+      })
+    }
+
+    this.notifyTripLate = function(tripId){
+      return DriverService.beeline({
+        method: 'POST',
+        url: '/trips/'+tripId+'/statuses',
+        data: {
+          message: "15 mins late",
+          status: "late"
+        }
+      })
+    }
 
     this.sendPing = function(tripId, vehicleId, lat, lng){
       return DriverService.beeline({
@@ -81,7 +120,7 @@ export default [
         }
         catch (error) {
           console.log(error.stack);
-          $ionicPopup.alert({
+          await $ionicPopup.alert({
             template: 'Please turn on your GPS Location Service'
           });
           continue;

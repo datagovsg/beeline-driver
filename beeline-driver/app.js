@@ -3,10 +3,14 @@ import JobEmergencyController from './controllers/EmergencyController.js';
 import JobAcceptController from './controllers/JobAcceptController.js';
 import JobAcceptedController from './controllers/JobAcceptedController.js';
 import JobStartedController from './controllers/JobStartedController.js';
+import PassengerListController from './controllers/PassengerListController.js';
 import JobEndedController from './controllers/JobEndedController.js';
 import DriverService from './services/DriverService.js';
 import TripService from './services/TripService.js';
 import PingService from './services/PingService.js';
+
+// Configuration Imports
+import configureRoutes from './router.js';
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -23,10 +27,19 @@ angular.module('beeline-driver', [
 .controller('JobAcceptController', JobAcceptController)
 .controller('JobAcceptedController', JobAcceptedController)
 .controller('JobStartedController', JobStartedController)
+.controller('PassengerListController', PassengerListController)
 .controller('JobEndedController', JobEndedController)
 .service('DriverService',DriverService)
 .service('TripService',TripService)
 .service('PingService',PingService)
+.config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    //client: 'gme-infocommunications',
+    key: 'AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M',
+    libraries: 'places'
+  });
+})
+.config(configureRoutes)
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -41,61 +54,4 @@ angular.module('beeline-driver', [
       StatusBar.styleDefault();
     }
   });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/emergency.html',
-    controller: 'JobEmergencyController'
-  })
-  .state('app.landing', {
-    url: '/landing',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/landing.html',
-        controller: 'AppLandingController'
-      }
-    }
-  })
-  .state('app.jobAccept', {
-    url: '/accept',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/accept.html',
-        controller: 'JobAcceptController'
-      }
-    }
-  })
-  .state('app.jobAccepted', {
-      url: '/jobAccepted',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/job-accepted.html',
-          controller: 'JobAcceptedController'
-        }
-      }
-    })
-  .state('app.jobStarted', {
-    url: '/jobStarted',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/job-started.html',
-        controller: 'JobStartedController'
-      }
-    }
-  })
-  .state('app.jobEnded', {
-    url: '/jobEnded/:status',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/job-ended.html',
-        controller: 'JobEndedController'
-      }
-    }
-  });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/landing');
 });
