@@ -1,18 +1,21 @@
 'use strict';
-import cancelTripTemplate from '../templates/popup-cancel-trip.html';
-import notifyLateTemplate from '../templates/popup-notify-late.html';
+import verifiedPromptTemplate from '../templates/verified-prompt.html';
+const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
+
 export default[
   '$scope',
   '$ionicPopup',
   'DriverService',
   '$state',
   'TripService',
+  '$rootScope',
   function(
     $scope,
     $ionicPopup,
     DriverService,
     $state,
-    TripService
+    TripService,
+    $rootScope
   ){
 
     var tripData = DriverService.getDecodedToken();
@@ -22,134 +25,121 @@ export default[
     //Phone Number submission
     $scope.validPhoneNumber = /^[8-9]{1}[0-9]{7}$/;
 
-    $scope.showReplaceDriverPopup = function() {
 
-      async function promptForDriver() {
-        var template = 'Enter replacement driver number';
-
-        while (true) {
-          var result = await $ionicPopup.prompt({
-            title: 'Replacement Driver',
-            template: template,
-          })
-          if (result){
-            if (result && $scope.validPhoneNumber.test(result)) {
-              break;
+    // ////////////////////////////////////////////////////////////////////////////
+    // UI methods
+    // ////////////////////////////////////////////////////////////////////////////
+    var verifiedPrompt = function(verify, options) {
+      var promptScope = $rootScope.$new(true);
+      promptScope.data = {};
+      promptScope.data.phoneNumber = options.phoneNumber || false;
+      promptScope.data.late = options.late || false;
+      promptScope.data.cancelTrip = options.cancelTrip || false;
+      return $ionicPopup.show({
+        template: verifiedPromptTemplate,
+        title: options.title,
+        subTitle: options.subTitle,
+        scope: promptScope,
+        buttons: [
+          { text: 'Cancel',
+            onTap: function(e){
+              return undefined;
             }
-            else {
-              template = 'Invalid number! Enter replacement driver number'
-            }
-          }else {
-             break;
-          }
-        }
-        return result;
-      }
-
-      promptForDriver().then(function(phoneNumber) {
-        if (phoneNumber) {
-          DriverService.assignReplacementDriver(tripData.tripId, phoneNumber).then(function(response){
-            //Success! Show the confirmation popup.
-            $scope.data.replaceDriverNumber = phoneNumber;
-            $ionicPopup.alert({
-              template: 'The trip info has been sent to +65'+ $scope.data.replaceDriverNumber+'<br>Driver Ops has been alerted!'
-            }).then(function(response){
-              if(response){
-                TripService.pingTimer = false;
-                $state.go('app.jobEnded',{status: "tripReplaced", replacementPhoneNumber:phoneNumber});
+          },
+          {
+            text: 'OK',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (verify(promptScope.data.input)) {
+                return promptScope.data.input
               }
-            })
-          },function(error){
-            console.log(error);
-            alert('There was an error submitting the replacement number. Please try again.')
-          });
-        }
+              promptScope.data.error = true;
+              e.preventDefault();
+            }
+          }
+        ]
+      });
+    };
+
+    $scope.showReplaceDriverPopup = function() {
+      return verifiedPrompt((s) => VALID_PHONE_REGEX.test(s),{
+        title: 'Replacement Driver',
+        subTitle: 'Please enter replacement driver 8 digits number',
+        phoneNumber: true
+      })
+      .then(function(phoneNumber) {
+        if (!phoneNumber) return;
+        DriverService.assignReplacementDriver(tripData.tripId, phoneNumber)
+        .then(function(response){
+          //Success! Show the confirmation popup.
+          $scope.data.replaceDriverNumber = phoneNumber;
+          $ionicPopup.alert({
+            template: 'The trip info has been sent to +65'+ $scope.data.replaceDriverNumber+'<br>Driver Ops has been alerted!'
+          }).then(function(response){
+            if(response){
+              TripService.pingTimer = false;
+              $state.go('app.jobEnded',{status: "tripReplaced", replacementPhoneNumber:phoneNumber});
+            }
+          })
+        })
+      })
+      .catch(function(error){
+        $ionicPopup.alert({
+          title: 'There was an error submitting the replacement number. Please try again.',
+          subTitle: error
+        });
       });
     };
 
 
     // When button is clicked, the popup will be shown...
     $scope.showCancelTripPopup = function() {
-     // Custom popup
-      var cancelTripPopup = $ionicPopup.show({
+      return verifiedPrompt((s) => {return (s == true)},{
         title: 'Are you sure?',
-        // cssClass: 'driver-cancel',
-        template: cancelTripTemplate,
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Confirm</b>',
-            // type: 'button-positive',
-            onTap: function(e) {
-             if (!$scope.data.cancelTrip || !$scope.data.cancelTripConfirm) {
-               //don't allow the user to close unless he on toggle
-               e.preventDefault();
-             } else {
-               return $scope.data.cancelTripConfirm;
-             }
-            }
+        subTitle: 'Slide to cancel trip. This will notify the \
+        passsengers and ops.',
+        cancelTrip: true
+      })
+      .then(async function(res) {
+        if (!res) return;
+        await TripService.cancelTrip(tripData.tripId);
+        $ionicPopup.alert({
+          template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
+        }).then(function(response){
+          if(response){
+            TripService.pingTimer = false;
+            $state.go('app.jobEnded',{status: "tripCancelled"});
           }
-        ]
-       });
-       cancelTripPopup.then(async function(res) {
-          if(res) {
-            try {
-              //TODO: send cancel job infor to server
-              await TripService.cancelTrip(tripData.tripId);
-              $ionicPopup.alert({
-                template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
-              }).then(function(response){
-                if(response){
-                  TripService.pingTimer = false;
-                  $state.go('app.jobEnded',{status: "tripCancelled"});
-                }
-              })
-            } catch(error) {
-              console.log(error);
-            }
-          }
+        })
+       })
+       .catch(function(error){
+         $ionicPopup.alert({
+           title: 'There was an error cancelling trip. Please try again.',
+           subTitle: error
+         });
        });
     };
 
 
     $scope.showNotifyLatePopup = function() {
-     // Custom popup
-      var tripLatePopup = $ionicPopup.show({
+      return verifiedPrompt((s) => {return (s == true)},{
         title: 'Late?',
-        // cssClass: 'driver-late',
-        template: notifyLateTemplate,
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Confirm</b>',
-            // type: 'button-positive',
-            onTap: function(e) {
-             if (!$scope.data.tripLate) {
-               //don't allow the user to close unless he enters wifi password
-               e.preventDefault();
-             } else {
-               return $scope.data.tripLate;
-             }
-            }
-          }
-        ]
+        subTitle: 'More than 15 mins late. Notify your passengers that you \
+        will be late.',
+        late: true
+      })
+      .then(async function(res) {
+        if (!res) return;
+        await TripService.notifyTripLate(tripData.tripId);
+        $ionicPopup.alert({
+          template: 'Passengers Notified that you will be more than 15 mins late.'
+        });
+     })
+     .catch(function(error){
+       $ionicPopup.alert({
+         title: 'There was an error notifying late. Please try again.',
+         subTitle: error
        });
-       tripLatePopup.then(async function(res) {
-          if(res) {
-            try {
-              //TODO: send job late infor to server
-              await TripService.notifyTripLate(tripData.tripId);
-              $ionicPopup.alert({
-                template: 'Passengers Notified that you will be more than 15 mins late.'
-              });
-            } catch(error) {
-              console.log(error);
-            }
-          }
-       });
+     });
     };
-
-
 }];
