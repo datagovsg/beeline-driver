@@ -69,5 +69,4 @@ export default[
       $timeout.cancel(timer);
     }
   });
-
 }]

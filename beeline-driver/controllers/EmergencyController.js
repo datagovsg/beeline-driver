@@ -1,4 +1,3 @@
-'use strict';
 import verifiedPromptTemplate from '../templates/verified-prompt.html';
 const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
@@ -22,17 +21,13 @@ export default[
 
     $scope.data = {}
 
-    //Phone Number submission
-    $scope.validPhoneNumber = /^[8-9]{1}[0-9]{7}$/;
-
-
     // ////////////////////////////////////////////////////////////////////////////
     // UI methods
     // ////////////////////////////////////////////////////////////////////////////
     var verifiedPrompt = function(verify, options) {
       var promptScope = $rootScope.$new(true);
       promptScope.data = {};
-      promptScope.data.phoneNumber = options.phoneNumber || false;
+      promptScope.data.text = options.text || false;
       promptScope.data.late = options.late || false;
       promptScope.data.cancelTrip = options.cancelTrip || false;
       return $ionicPopup.show({
@@ -65,7 +60,7 @@ export default[
       return verifiedPrompt((s) => VALID_PHONE_REGEX.test(s),{
         title: 'Replacement Driver',
         subTitle: 'Please enter replacement driver 8 digits number',
-        phoneNumber: true
+        text: true
       })
       .then(function(phoneNumber) {
         if (!phoneNumber) return;

@@ -1,5 +1,5 @@
 <div ng-show="data.error">There is error with input. Please try again.</div>
-<input ng-show="data.phoneNumber" type="text" ng-model="data.input">
+<input ng-show="data.text" placeholder={{data.placeholder}} type="text" ng-model="data.input">
 <ion-toggle ng-show="data.late" ng-model="data.input" toggle-class="toggle-assertive">
   Slide to confirm
 </ion-toggle>
