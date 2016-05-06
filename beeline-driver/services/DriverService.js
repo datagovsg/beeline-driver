@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken';
-window.jwt = jwt
-// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk
+
 export default function($http){
   var driver;
-  var sessionToken = localStorage['sessionToken'] || null;
+  var sessionToken = localStorage['sessionToken'];
   var self = this;
   var driverId;
 
@@ -66,6 +65,9 @@ export default function($http){
         telephone: "+65"+replaceTelephone,
       }
     })
+    .then(function(response){
+      return true;
+    })
   };
 
   this.updateDriverName = function (newName) {
@@ -78,6 +80,9 @@ export default function($http){
       data: {
         name: newName
       }
+    })
+    .then(function(response){
+      return true;
     })
   };
 
@@ -92,6 +97,9 @@ export default function($http){
         telephone: newPhoneNo
       }
     })
+    .then(function(response){
+      return true;
+    })
   };
 
   this.updateVehicleNo = async function (newVehileNo) {
@@ -104,6 +112,9 @@ export default function($http){
       data: {
         vehicleNumber: newVehileNo
       }
+    })
+    .then(function(response){
+      return true;
     })
   };
 }

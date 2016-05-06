@@ -1,8 +1,8 @@
 export default function ($stateProvider, $urlRouterProvider) {
   $stateProvider
   // entry point starting url received from sms
-  .state('x', {
-    url: '/x/:tripToken',
+  .state('launch', {
+    url: '/launch/:tripToken',
     controller($state, $stateParams) {
       localStorage['sessionToken'] = $stateParams.tripToken;
       $state.go('app.landing');
@@ -70,5 +70,5 @@ export default function ($stateProvider, $urlRouterProvider) {
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/x/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk');
+  $urlRouterProvider.otherwise('/launch/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk');
 }

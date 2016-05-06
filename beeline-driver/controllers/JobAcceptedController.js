@@ -65,6 +65,9 @@ export default[
         $scope.$apply(() => {
          $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
         })
+        await $ionicPopup.alert({
+          template: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
+        });
       }
       catch(error){
         $ionicLoading.hide();
@@ -92,17 +95,15 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         if (modelName === "driver name"){
           await DriverService.updateDriverName(promptResponse[modelName]);
-          $ionicLoading.hide();
-          $scope.$apply(() => {
-            $scope.driver.name = promptResponse[modelName];
-          });
+          $scope.driver.name = promptResponse[modelName];
         }else if (modelName === "vehicle number"){
           await DriverService.updateVehicleNo(promptResponse[modelName]);
-          $ionicLoading.hide();
-          $scope.$apply(()=>{
-            $scope.vehicle.vehicleNumber = promptResponse[modelName];
-          });
+          $scope.vehicle.vehicleNumber = promptResponse[modelName];
         }
+        $ionicLoading.hide();
+        await $ionicPopup.alert({
+          template: 'You have updated '+ modelName +' to '+ promptResponse[modelName]
+        });
       }
       catch(error){
         $ionicLoading.hide();

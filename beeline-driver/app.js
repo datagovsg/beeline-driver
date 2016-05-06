@@ -7,7 +7,6 @@ import PassengerListController from './controllers/PassengerListController.js';
 import JobEndedController from './controllers/JobEndedController.js';
 import DriverService from './services/DriverService.js';
 import TripService from './services/TripService.js';
-import PingService from './services/PingService.js';
 import VerifiedPromptService from './services/verifiedPromptService.js';
 
 // Configuration Imports
@@ -32,7 +31,6 @@ angular.module('beeline-driver', [
 .controller('JobEndedController', JobEndedController)
 .service('DriverService',DriverService)
 .service('TripService',TripService)
-.service('PingService',PingService)
 .service('VerifiedPromptService',VerifiedPromptService)
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
