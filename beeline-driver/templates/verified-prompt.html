@@ -1,8 +1,14 @@
-<div ng-show="data.error">There is error with input. Please try again.</div>
-<input ng-show="data.text" placeholder={{data.placeholder}} type="text" ng-model="data.input">
-<ion-toggle ng-show="data.late" ng-model="data.input" toggle-class="toggle-assertive">
-  Slide to confirm
-</ion-toggle>
-<ion-toggle ng-show="data.cancelTrip" ng-model="data.input" toggle-class="toggle-assertive">
-  Slide to confirm
-</ion-toggle>
+<form name="form.verifiedPromptForm">
+  <input  ng-repeat-start="input in data.inputs"
+          placeholder={{input.inputPlaceHolder}}
+          ng-required="true"
+          type="{{input.type}}"
+          ng-pattern="input.pattern"
+          ng-model="data[input.name]"
+          name="{{input.name}}" />
+  <div  ng-repeat-end
+        ng-show="form.verifiedPromptForm[input.name].$invalid
+          && form.verifiedPromptForm[input.name].$dirty">
+          Your {{input.name}} is invalid
+  </div>
+</form>

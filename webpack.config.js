@@ -9,6 +9,9 @@ module.exports = {
                 loader: 'html',
                 exclude: /node_modules/,
                 include: path.resolve('.'),
+                query: {
+                    attrs: false,
+                },
             },
             {
                 test: /\.js$/,
