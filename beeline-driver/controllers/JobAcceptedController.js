@@ -62,9 +62,7 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await DriverService.updateDriverPhone(promptResponse.phone);
         $ionicLoading.hide();
-        $scope.$apply(() => {
-         $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
-        })
+        $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
         await $ionicPopup.alert({
           template: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
         });

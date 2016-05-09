@@ -37,7 +37,7 @@ export default [
         url: '/trips/'+id+'/code',
       })
       .then(function(response){
-  	     self.tripCode = response.data;
+  	    self.tripCode = response.data;
   	  });
     }
 

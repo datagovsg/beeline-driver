@@ -22,7 +22,6 @@ export default function ($stateProvider, $urlRouterProvider) {
         controller: 'AppLandingController'
       }
     },
-    controller() {},
   })
   .state('app.jobAccept', {
     url: '/accept',
