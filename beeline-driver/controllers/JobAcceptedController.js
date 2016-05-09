@@ -1,4 +1,7 @@
 import updatePhoneTemplate from '../templates/popup-update-phone.html';
+import verifiedPromptTemplate from '../templates/verified-prompt.html';
+import loadingTemplate from '../templates/loading.html';
+const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
 export default[
   '$scope',
@@ -6,12 +9,18 @@ export default[
   'DriverService',
   'TripService',
   '$ionicPopup',
+  '$rootScope',
+  'VerifiedPromptService',
+  '$ionicLoading',
   function(
     $scope,
     $state,
     DriverService,
     TripService,
-    $ionicPopup
+    $ionicPopup,
+    $rootScope,
+    VerifiedPromptService,
+    $ionicLoading
   ){
 
     $scope.vehicle = {
@@ -35,83 +44,71 @@ export default[
       $scope.driver.telephoneNumber = DriverService.driver.telephone;
     })
 
-    $scope.popupTelephone = function(initial) {
-      var scope = $scope.$new();
-      scope.data = {
-        newTelephone: initial.substr(3)
-      }
-      var myPopup = $ionicPopup.show({
-         template: updatePhoneTemplate,
-         title: 'Update',
-         defaultValue: initial,
-         scope: scope,
-         buttons: [
-            { text: 'Cancel' },
+    $scope.popupTelephone = async function(initial) {
+      try {
+        var promptResponse = await VerifiedPromptService.verifiedPrompt({
+          title: 'Update Telephone Number',
+          subTitle: 'Enter your 8 digit telephone number',
+          inputs: [
             {
-              text: '<b>Save</b>',
-              onTap: function(e) {
-                if (!scope.data.newTelephone) {
-                  //don't allow the user to close unless he enters wifi password
-                  e.preventDefault();
-                } else {
-                  return scope.data.newTelephone;
-                }
-              }
+              type: 'text',
+              name: 'phone',
+              pattern: VALID_PHONE_REGEX,
+              inputPlaceHolder: initial.slice(3)
             }
           ]
-       });
-       var validPhoneNumber = /^[8-9]{1}[0-9]{7}$/;
-       myPopup.then(async function(res) {
-         try{
-           if (res){
-               if (validPhoneNumber.test(res)==false){
-                 $ionicPopup.alert({
-                   template: 'Wrong phone number. Please try again.'
-                 })
-               } else {
-                 await DriverService.updateDriverPhone(res);
-                 $scope.$apply(() => {
-                   $scope.driver.telephoneNumber = "+65"+res;
-                 })
-               }
-           }
-         } catch (error) {
-           $ionicPopup.alert({
-             template: 'Error updating phone number, please try again.'
-           })
-           console.log(error);
-         }
-       });
+        })
+        if(!promptResponse) return;
+        $ionicLoading.show({template: loadingTemplate});
+        await DriverService.updateDriverPhone(promptResponse.phone);
+        $ionicLoading.hide();
+        $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
+        await $ionicPopup.alert({
+          template: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
+        });
+      }
+      catch(error){
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: 'There was an error updating telephone number. Please try again.',
+          subTitle: error
+        });
+      };
     }
 
-    $scope.popup = function(modelName, initial){
-      var myPopup = $ionicPopup.prompt({
-         template: `Enter your ${modelName}`,
-         title: 'Update',
-         defaultText: initial,
-       });
-       myPopup.then(async function(res) {
-         try{
-           if (res){
-             if (modelName == "driver name"){
-               await DriverService.updateDriverName(res);
-               $scope.$apply(() => {
-                 $scope.driver.name = res;
-               });
-             }else if (modelName == "vehicle number"){
-               await DriverService.updateVehicleNo(res);
-               $scope.$apply(()=>{
-                 $scope.vehicle.vehicleNumber = res;
-               });
-             }
-           }
-         } catch (error) {
-           $ionicPopup.alert({
-             template: 'Error processing '+modelName+', please try again.'
-           })
-           console.log(error);
-         }
-
-       });
-    }
-  }];
+    $scope.popup = async function(modelName, initial){
+      try {
+        var promptResponse = await VerifiedPromptService.verifiedPrompt({
+          title: 'Update '+modelName,
+          subTitle: 'Enter your '+modelName,
+          inputs: [
+            {
+              type: 'text',
+              name: modelName,
+              inputPlaceHolder: initial,
+            }
+          ]
+        })
+        if(!promptResponse) return;
+        $ionicLoading.show({template: loadingTemplate});
+        if (modelName === "driver name"){
+          await DriverService.updateDriverName(promptResponse[modelName]);
+          $scope.driver.name = promptResponse[modelName];
+        }else if (modelName === "vehicle number"){
+          await DriverService.updateVehicleNo(promptResponse[modelName]);
+          $scope.vehicle.vehicleNumber = promptResponse[modelName];
+        }
+        $ionicLoading.hide();
+        await $ionicPopup.alert({
+          template: 'You have updated '+ modelName +' to '+ promptResponse[modelName]
+        });
+      }
+      catch(error){
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: 'There was an error updating '+modelName+'. Please try again.',
+          subTitle: error
+        });
+      };
+  };
+}];

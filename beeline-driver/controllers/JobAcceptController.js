@@ -81,8 +81,7 @@ export default[
         });
       }
 
-//Need to fix the API to give discrete names for start and end locations
-      var routeStartEnd = TripService.routepath.description.split(' to ');
+      var routeStartEnd = TripService.routepath.from.split(' to ');
       var tripStops = TripService.trip.tripStops;
       var startTimeObj = new Date(tripStops[0].time);
       var endTimeObj = new Date(tripStops[tripStops.length-1].time);

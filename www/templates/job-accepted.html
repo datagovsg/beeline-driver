@@ -19,7 +19,7 @@
         </a>
         <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNumber)'>
           <span class="">Phone No.</span>
-          <span class="item-note" ng-bind="driver.telephoneNumber"></span>
+          <span class="item-note" ng-bind="driver.telephoneNumber.slice(3)"></span>
           <i class="icon ion-compose"></i>
         </a>
     </div>

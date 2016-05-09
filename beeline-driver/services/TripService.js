@@ -20,7 +20,7 @@ export default [
     var passengersByStop;
 
     this.getTrip = function(id){
-      if (typeof(self.trip)!='undefined'){
+      if (typeof(self.trip)!=='undefined'){
         return Promise.resolve(self.trip);
       }
       else return DriverService.beeline({
@@ -35,16 +35,18 @@ export default [
       return DriverService.beeline({
         method: 'GET',
         url: '/trips/'+id+'/code',
-      }).then(function(response){
+      })
+      .then(function(response){
   	    self.tripCode = response.data;
-  	});
+  	  });
     }
 
     this.getRoutePath = function(id){
       return DriverService.beeline({
         method: 'GET',
           url: '/routes/'+id,
-      }).then(function(response){
+      })
+      .then(function(response){
         self.routepath = response.data;
       });
     };
@@ -53,7 +55,8 @@ export default [
       return DriverService.beeline({
         method: 'GET',
         url: '/trips/'+id+'/get_passengers',
-      }).then(function(response){
+      })
+      .then(function(response){
         self.passengerData = response.data;
       })
     };
@@ -81,6 +84,9 @@ export default [
           status: "cancelled"
         }
       })
+      .then(function(response){
+        return true;
+      })
     }
 
     this.notifyTripLate = function(tripId){
@@ -91,6 +97,9 @@ export default [
           message: "15 mins late",
           status: "late"
         }
+      })
+      .then(function(response){
+        return true;
       })
     }
 
@@ -103,7 +112,10 @@ export default [
           latitude: lat,
           longitude: lng
         }
-      });
+      })
+      .then(function(response){
+        return true;
+      })
     };
 
     this.sendPingService = async function(id, vehicleId, callback){

@@ -1,5 +1,13 @@
 export default function ($stateProvider, $urlRouterProvider) {
   $stateProvider
+  // entry point starting url received from sms
+  .state('launch', {
+    url: '/launch/:tripToken',
+    controller($state, $stateParams) {
+      localStorage['sessionToken'] = $stateParams.tripToken;
+      $state.go('app.landing');
+    }
+  })
   .state('app', {
     url: '/app',
     abstract: true,
@@ -7,13 +15,13 @@ export default function ($stateProvider, $urlRouterProvider) {
     controller: 'JobEmergencyController'
   })
   .state('app.landing', {
-    url: '/landing?eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk',
+    url: '/landing',
     views: {
       'menu-content': {
         templateUrl: 'templates/landing.html',
         controller: 'AppLandingController'
       }
-    }
+    },
   })
   .state('app.jobAccept', {
     url: '/accept',
@@ -61,5 +69,5 @@ export default function ($stateProvider, $urlRouterProvider) {
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/landing');
+  $urlRouterProvider.otherwise('/launch/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk');
 }

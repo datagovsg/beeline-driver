@@ -6,12 +6,19 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var webpack = require('webpack-stream');
+var sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+function errHandler(err) {
+    console.log(err);
+    this.emit('end');
+}
+
+gulp.task('default', ['sass', 'webpack']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -28,6 +35,17 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(['beeline-driver/**/*.js', 'beeline-driver/**/*.html'], ['webpack']);
+});
+
+gulp.task('webpack', function() {
+    return gulp.src(['beeline-driver/main.js', '!node_modules/**/*.js', '!www/**/*.js'])
+    .pipe(sourcemaps.init())
+    .pipe(webpack(require('./webpack.config.js'))
+        .on('error', errHandler))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('www/lib'))
+    .on('error', errHandler)
 });
 
 gulp.task('install', ['git-check'], function() {
