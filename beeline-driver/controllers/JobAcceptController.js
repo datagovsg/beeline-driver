@@ -2,18 +2,12 @@ import _ from 'lodash';
 
 export default [
   "$scope",
-  "$state",
-  "$interval",
   "DriverService",
   "TripService",
-  "uiGmapGoogleMapApi",
   function(
     $scope,
-    $state,
-    $interval,
     DriverService,
     TripService,
-    uiGmapGoogleMapApi
   ) {
 
     //Gmap default settings
