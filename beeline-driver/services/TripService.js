@@ -27,6 +27,7 @@ export default [
         url: "/trips/"+id
       }).then(function(response){
         self.trip = response.data;
+        return response.data;
       });
     };
 
@@ -47,6 +48,7 @@ export default [
       })
       .then(function(response){
         self.routepath = response.data;
+        return response.data;
       });
     };
 
