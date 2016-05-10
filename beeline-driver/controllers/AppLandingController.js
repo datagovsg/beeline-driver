@@ -44,7 +44,7 @@ export default[
       timer = $timeout(function(){
         $state.go("app.jobAccept");
       }, 2000);
-    });
+    };
   });
 
 
