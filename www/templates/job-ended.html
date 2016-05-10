@@ -1,8 +1,7 @@
 <ion-view  view-title="" hide-back-button="true">
   <ion-content>
 
-    <div class='item'
-         ng-show="job.status==='tripEnded'">
+    <div class='item' ng-show="job.status==='tripEnded'">
       <h1>Trip {{job.tripId}} Ended</h1>
       <h3>{{job.date| date:'d MMM y'}}</h3>
       <p>
@@ -12,7 +11,7 @@
       <p>You will receive your new job via the SMS.</p>
     </div>
 
-    <div ng-show="job.status==='tripReplaced'">
+    <div class='item' ng-show="job.status==='tripReplaced'">
       <h1>Trip {{job.tripId}} Driver Replaced<br></h1>
       <h3>{{job.date| date:'d MMM y'}}</h3>
       <p>
@@ -24,7 +23,7 @@
       <p>You will receive your new job via the SMS.</p>
     </div>
 
-    <div ng-show="job.status==='tripCancelled'">
+    <div class='item' ng-show="job.status==='tripCancelled'">
       <h1>Trip {{job.tripId}} Cancelled</h1>
       <h3>{{job.date| date:'d MMM y'}}</h3>
       <p>
