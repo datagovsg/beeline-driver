@@ -1,2 +1,4 @@
 node_modules/
 .DS_Store
+www/js/bundle.js
+www/css/ionic.app.css
