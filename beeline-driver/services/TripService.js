@@ -67,8 +67,9 @@ export default [
         return Promise.resolve(passengersByStop);
       } else{
         await this.getTrip(id);
-        this.boardStops = _.sortBy(this.trip.tripStops.filter(
-          stop => stop.canBoard == true), function(item){
+        var boardStops = this.trip.tripStops.filter(
+          stop => stop.canBoard == true);
+        this.boardStops = _.sortBy(boardStops, function(item){
             return item.time;
         });
         await this.getPassengers(id);

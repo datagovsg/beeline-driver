@@ -13,15 +13,12 @@ export default[
   ){
 
   $scope.landing = {
-	  greetingTxt: '',
 	  driverTxt: '',
-	  greeting: 'Welcome Back,',
+	  greetingTxt: 'Welcome Back,',
   };
 
 	$scope.driver = {
-	  id: '',
 	  name: '',
-	  telephone: ''
 	};
 
   var timer;
@@ -29,9 +26,6 @@ export default[
   //The JSON Web Token that the driver receives will contain everything needed to verify the trip
   DriverService.getDriverInfo().then(function(){
     $scope.driver.name = DriverService.driver.name;
-    $scope.driver.telephone = DriverService.driver.telephone;
-
-    $scope.landing.greetingTxt = $scope.landing.greeting;
     $scope.landing.driverTxt = $scope.driver.name;
 
     //auto-redirect in 2 seconds
