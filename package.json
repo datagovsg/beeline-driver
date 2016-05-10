@@ -2,6 +2,9 @@
   "name": "beeline-driver",
   "version": "1.1.1",
   "description": "beeline-driver: An Ionic project",
+  "scripts": {
+    "start": "http-server ./www"
+  },
   "dependencies": {
     "angular-google-maps": "^2.3.2",
     "angular-simple-logger": "^0.1.7",
