@@ -1,6 +1,4 @@
-"use strict";
-
-export default[
+export default [
   "$scope",
   "$state",
   "$interval",
@@ -69,7 +67,7 @@ export default[
     };
 
     $scope.fillInTripRouteData = function() {
-//re-organise the DB output into Google Map compatible JSON
+      //re-organise the DB output into Google Map compatible JSON
       var pathTemp = [];
       for (var i = 0; i < TripService.routepath.path.length; i++) {
         pathTemp.push({

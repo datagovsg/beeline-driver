@@ -1,27 +1,58 @@
 <ion-view view-title="Accept the Job?" hide-back-button="true">
   <ion-content>
-	   <div class=" item row row-top">
-			<div class="col col-25">
-        <div class="row"><h2>{{job.tripNumber}}</h2></div>
+    <div class="item item-text-wrap">
+      <div class="row">
+        <div class="col col-25">
+          <h4>Trip Number</h4>
+        </div>
+        <div class="col col-75">
+          <div ng-bind="job.tripNumber"></div>
+        </div>
       </div>
-			<div class="col col-75">
-				<div class="row">
-					<span>{{job.startTime | date:'h:mm a'}} </span>,
+      <div class="row">
+        <div class="col col-25">
+          <h4>Start</h4>
+        </div>
+        <div class="col col-75">
+          <span>{{job.startTime | date:'h:mm a'}} </span>,
           <span>{{ job.startLocation }}</span>
-				</div>
-				<div class="row">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-25">
+          <h4>End</h4>
+        </div>
+        <div class="col col-75">
           <span>{{job.endTime | date:'h:mm a'}} </span>,
           <span> {{job.endLocation}} </span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<ui-gmap-google-map center="map.center" pan="true" zoom="map.zoom" options="map.options" bounds="map.bounds" dragging="map.dragging" control="map.control" data-tap-disabled="true">
-				<ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" options="'options'"></ui-gmap-markers>
-				<ui-gmap-polyline ng-repeat="p in map.lines" path="p.path" icons="p.icons"></ui-gmap-polyline>
-			</ui-gmap-google-map>
-		</div>
-    <p class="text-center">Would you like to take the job?</p>
-    <div class="button button-block button-outline button-royal" ui-sref='app.jobAccepted'>YES</div>
+        </div>
+      </div>
+    </div>
+
+		<ui-gmap-google-map center="map.center" 
+                        pan="true" 
+                        zoom="map.zoom" 
+                        options="map.options" 
+                        bounds="map.bounds" 
+                        dragging="map.dragging" 
+                        control="map.control" 
+                        data-tap-disabled="true">
+			<ui-gmap-markers models="map.markers" 
+                       coords="'self'" 
+                       icon="'icon'" 
+                       options="'options'">
+      </ui-gmap-markers>
+			<ui-gmap-polyline ng-repeat="p in map.lines" 
+                        path="p.path" 
+                        icons="p.icons">
+      </ui-gmap-polyline>
+		</ui-gmap-google-map>
+
+    <h4 class="text-center">Would you like to take the job?</h4>
+    <div class="button button-block button-outline button-royal" 
+         ui-sref='app.jobAccepted'>
+      YES
+    </div>
+
   </ion-content>
 </ion-view>
