@@ -1,28 +1,37 @@
-<ion-view class="job-started" hide-back-button="true">
-  <ion-nav-title>
-    In Progress {{ping.pingStatus}}
-    <img class="title-image" ng-src="{{ping.pingStatusSymbol}}">
-  </ion-nav-title>
+<ion-view hide-back-button="true">
+  <ion-nav-title>In Progress</ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button">
+      {{ping.pingStatus}}
+      <img class="title-image" ng-src="{{ping.pingStatusSymbol}}">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-    <div class="bar-stable">
-      <h1 class="text-center">{{tripCode}}</h1>
-    </div>
-    <ion-list>
-      <a class="item-icon-left item item-icon-right" ng-repeat="boardStop in boardStops" ng-click="showPassengerList(boardStop.id)">
-        <i class="icon">{{$index+1}}</i>
+    <div class="list">
+      <div class="item item-divider">
+        <h1 class="text-center">{{ tripCode }}</h1>
+      </div>
+      <a class="item item-icon-right" 
+         ng-repeat="boardStop in boardStops" 
+         on-tap="showPassengerList(boardStop.id)">
         <div class="row">
-          <span>{{boardStop.time | date:'h:mm a'}}</span>,
-          <span>{{boardStop.stop.description}}</span>
+          <div class="col col-25">
+            {{boardStop.time | date:'h:mm a'}}
+          </div>
+          <div class="col">
+            <strong>{{boardStop.stop.road}}</strong><br>
+            {{boardStop.stop.description}}<br>
+            {{boardStop.stop.type}} ID {{boardStop.stop.label}}
+          </div>
         </div>
-        <div class="row">
-          <span>{{boardStop.stop.road}} </span>
-          <span>({{boardStop.stop.type}} ID {{boardStop.stop.label}})</span>
-        </div>
-        <i class="icon">{{boardStop.passengerNumber > 0 ? boardStop.passengerNumber : 0}}<span class="ion-android-person"></span></i>
+        <i class="icon">
+          <span class="ion-android-person"></span> &nbsp;
+          {{ boardStop.passengerNumber > 0 ? 
+             boardStop.passengerNumber : 0 }} &nbsp;
+        </i>
 		  </a>
-    </ion-list>
-
-    <div class="button button-block button-outline button-royal" ng-click="endTripClick()">End Trip</div>
-
+    </div>
+    <div class="primary-button" 
+         on-tap="confirmEndTrip()">End Trip</div>
   </ion-content>
 </ion-view>

@@ -27,17 +27,13 @@ export default[
       lastPingTime : null
     };
 
-    $scope.endTripClick = function() {
-      //display popup to let driver confirm whether to really end trip
-      this.confirmEndTrip();
-    };
-
     $scope.confirmEndTrip = function() {
       $ionicPopup.confirm({
         title: "Confirm End Trip",
         template: "Are you sure?",
         okType: "button-royal"
-      }).then(function(response){
+      })
+      .then(function(response){
         if(response){
           if (gpsStatusTimer) {
             $interval.cancel(gpsStatusTimer);
@@ -80,12 +76,12 @@ export default[
     }, 5000);
 
     //Start Up the timer to ping GPS location
-    DriverService.getVehicleInfo().then(async function(){
-      var vehicleId = DriverService.vehicle[0].id;
+    DriverService.getVehicleInfo()
+    .then(async function(vehicle){
+      var vehicleId = vehicle.id;
       //start to ping
       TripService.pingTimer = true;
-      TripService.sendPingService(tripData.tripId, vehicleId,
-        () => { $scope.$apply(); });
+      TripService.sendPingService(tripData.tripId, vehicleId);
     });
 
     $scope.showPassengerList = function(id){
