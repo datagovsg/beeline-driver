@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 export default [
-  'DriverService',
-  '$cordovaGeolocation',
-  '$interval',
-  '$ionicPopup',
+  "DriverService",
+  "$cordovaGeolocation",
+  "$interval",
+  "$ionicPopup",
   function(
     DriverService,
     $cordovaGeolocation,
@@ -20,31 +20,31 @@ export default [
     var passengersByStop;
 
     this.getTrip = function(id){
-      if (typeof(self.trip)!=='undefined'){
+      if (typeof(self.trip)!=="undefined"){
         return Promise.resolve(self.trip);
       }
       else return DriverService.beeline({
-        method: 'GET',
-        url: '/trips/'+id,
+        method: "GET",
+        url: "/trips/"+id
       }).then(function(response){
-    	  self.trip = response.data;
-    	});
+    	                                          self.trip = response.data;
+    	                    });
     };
 
     this.getTripCode = function(id){
       return DriverService.beeline({
-        method: 'GET',
-        url: '/trips/'+id+'/code',
+        method: "GET",
+        url: "/trips/"+id+"/code"
       })
       .then(function(response){
-  	    self.tripCode = response.data;
-  	  });
-    }
+  	                                                                self.tripCode = response.data;
+  	                                          });
+    };
 
     this.getRoutePath = function(id){
       return DriverService.beeline({
-        method: 'GET',
-          url: '/routes/'+id,
+        method: "GET",
+        url: "/routes/"+id
       })
       .then(function(response){
         self.routepath = response.data;
@@ -53,12 +53,12 @@ export default [
 
     this.getPassengers = function(id){
       return DriverService.beeline({
-        method: 'GET',
-        url: '/trips/'+id+'/get_passengers',
+        method: "GET",
+        url: "/trips/"+id+"/get_passengers"
       })
       .then(function(response){
         self.passengerData = response.data;
-      })
+      });
     };
 
     this.getPassengersByStop = async function(id, ignoreCache) {
@@ -73,12 +73,12 @@ export default [
         passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         return Promise.resolve(passengersByStop);
       }
-    }
+    };
 
     this.cancelTrip = function(tripId){
       return DriverService.beeline({
-        method: 'POST',
-        url: '/trips/'+tripId+'/statuses',
+        method: "POST",
+        url: "/trips/"+tripId+"/statuses",
         data: {
           message: "vehicle break down",
           status: "cancelled"
@@ -86,13 +86,13 @@ export default [
       })
       .then(function(response){
         return true;
-      })
-    }
+      });
+    };
 
     this.notifyTripLate = function(tripId){
       return DriverService.beeline({
-        method: 'POST',
-        url: '/trips/'+tripId+'/statuses',
+        method: "POST",
+        url: "/trips/"+tripId+"/statuses",
         data: {
           message: "15 mins late",
           status: "late"
@@ -100,13 +100,13 @@ export default [
       })
       .then(function(response){
         return true;
-      })
-    }
+      });
+    };
 
     this.sendPing = function(tripId, vehicleId, lat, lng){
       return DriverService.beeline({
-        method: 'POST',
-        url: '/trips/'+tripId+'/pings',
+        method: "POST",
+        url: "/trips/"+tripId+"/pings",
         data: {
           vehicleId: vehicleId,
           latitude: lat,
@@ -115,14 +115,14 @@ export default [
       })
       .then(function(response){
         return true;
-      })
+      });
     };
 
     this.sendPingService = async function(id, vehicleId, callback){
       function delay(ms) {
         return new Promise((resolve, reject) => {
           setTimeout(resolve, ms);
-        })
+        });
       }
       while (this.pingTimer) {
         console.log("start to send");
@@ -133,7 +133,7 @@ export default [
         catch (error) {
           console.log(error.stack);
           await $ionicPopup.alert({
-            template: 'Please turn on your GPS Location Service'
+            template: "Please turn on your GPS Location Service"
           });
           continue;
         }
@@ -154,4 +154,4 @@ export default [
       }
     };
   }
-]
+];

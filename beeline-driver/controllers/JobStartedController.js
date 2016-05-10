@@ -1,13 +1,13 @@
-'use strict';
-import _ from 'lodash';
+"use strict";
+import _ from "lodash";
 export default[
-  '$scope',
-  '$state',
-  'DriverService',
-  'TripService',
-  '$interval',
-  '$cordovaGeolocation',
-  '$ionicPopup',
+  "$scope",
+  "$state",
+  "DriverService",
+  "TripService",
+  "$interval",
+  "$cordovaGeolocation",
+  "$ionicPopup",
   function(
     $scope,
     $state,
@@ -25,27 +25,27 @@ export default[
       pingStatus : null,
       pingStatusSymbol: null,
       lastPingTime : null
-    }
+    };
 
     $scope.endTripClick = function() {
-      console.log('End Trip clicked');
+      console.log("End Trip clicked");
       //display popup to let driver confirm whether to really end trip
       this.confirmEndTrip();
     };
 
     $scope.confirmEndTrip = function() {
       $ionicPopup.confirm({
-        title: 'Confirm End Trip',
-        template: 'Are you sure you want to end trip?',
+        title: "Confirm End Trip",
+        template: "Are you sure you want to end trip?"
       }).then(function(response){
         if(response){
           if (gpsStatusTimer) {
             $interval.cancel(gpsStatusTimer);
           }
           TripService.pingTimer = false;
-          $state.go('app.jobEnded',{status: "tripEnded"});
+          $state.go("app.jobEnded",{status: "tripEnded"});
         }
-      })
+      });
     };
 
     //Display Stops + Passenger Information
@@ -56,14 +56,14 @@ export default[
       angular.forEach($scope.passengersByStop, function(value,key){
         var stop = $scope.boardStops.find(stop => stop.id === +key);
         stop.passengerNumber = value.length;
+      });
     });
-  })
 
     //get generated trip code
     TripService.getTripCode(tripData.tripId)
     .then(function(){
       $scope.tripCode = TripService.tripCode;
-    })
+    });
 
     gpsStatusTimer = $interval(() => {
       $scope.ping.lastPingTime = TripService.lastPingTime;
@@ -85,10 +85,10 @@ export default[
       //start to ping
       TripService.pingTimer = true;
       TripService.sendPingService(tripData.tripId, vehicleId,
-        () => { $scope.$apply() });
+        () => { $scope.$apply(); });
     });
 
     $scope.showPassengerList = function(id){
-      $state.go('app.passengerList',{stopId: id});
-    }
-}];
+      $state.go("app.passengerList",{stopId: id});
+    };
+  }];

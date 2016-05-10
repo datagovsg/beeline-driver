@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
 export default[
-  '$scope',
-  '$state',
-  '$interval',
-  'DriverService',
-  'TripService',
-  'uiGmapGoogleMapApi',
+  "$scope",
+  "$state",
+  "$interval",
+  "DriverService",
+  "TripService",
+  "uiGmapGoogleMapApi",
   function(
     $scope,
     $state,
@@ -44,28 +44,28 @@ export default[
       },
       markers: [],
       lines: [{
-        id: 'routepath',
+        id: "routepath",
         path: [],
         icons: [{
           icon: {
             path: 1,
             scale: 3,
-            strokeColor: '#333'
+            strokeColor: "#333"
           },
-          offset: '20%',
-          repeat: '50px'
+          offset: "20%",
+          repeat: "50px"
         }]
       }]
     };
 
     $scope.job = {
-      path: '',
-      tripNumber: '',
-      startTime: '',
-      startLocation: '',
-      endTime: '',
-      endLocation: '',
-      acceptoff: false,
+      path: "",
+      tripNumber: "",
+      startTime: "",
+      startLocation: "",
+      endTime: "",
+      endLocation: "",
+      acceptoff: false
     };
 
 
@@ -81,7 +81,7 @@ export default[
         });
       }
 
-      var routeStartEnd = TripService.routepath.from.split(' to ');
+      var routeStartEnd = TripService.routepath.from.split(" to ");
       var tripStops = TripService.trip.tripStops;
       var startTimeObj = new Date(tripStops[0].time);
       var endTimeObj = new Date(tripStops[tripStops.length-1].time);
@@ -89,8 +89,8 @@ export default[
       $scope.job.path = pathTemp;
       $scope.job.startLocation = routeStartEnd[0];
       $scope.job.endLocation = routeStartEnd[1];
-      $scope.job.startTime = startTimeObj.getTime()
-      $scope.job.endTime = endTimeObj.getTime()
+      $scope.job.startTime = startTimeObj.getTime();
+      $scope.job.endTime = endTimeObj.getTime();
 
       $scope.map.lines[0].path = $scope.job.path;
     };

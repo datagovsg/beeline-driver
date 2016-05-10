@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 export default[
-    '$scope',
-    '$stateParams',
-    'DriverService',
-    'TripService',
+  "$scope",
+  "$stateParams",
+  "DriverService",
+  "TripService",
   function(
     $scope,
     $stateParams,
@@ -19,14 +19,14 @@ export default[
       replacementPhoneNumber: undefined
     };
 
-    $scope.$on('$ionicView.beforeEnter',()=>{
+    $scope.$on("$ionicView.beforeEnter",()=>{
       $scope.job.tripId = DriverService.getDecodedToken().tripId;
       TripService.getTrip($scope.job.tripId).then(function(){
         $scope.job.date = TripService.trip.date;
-      })
+      });
     });
-    $scope.$on('$ionicView.afterEnter',()=>{
+    $scope.$on("$ionicView.afterEnter",()=>{
       $scope.job.status = $stateParams.status;
       $scope.job.replacementPhoneNumber = +$stateParams.replacementPhoneNumber;
-    })
-}];
+    });
+  }];

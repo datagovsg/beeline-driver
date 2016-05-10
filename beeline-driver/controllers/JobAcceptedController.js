@@ -1,17 +1,17 @@
-import updatePhoneTemplate from '../templates/popup-update-phone.html';
-import verifiedPromptTemplate from '../templates/verified-prompt.html';
-import loadingTemplate from '../templates/loading.html';
+import updatePhoneTemplate from "../templates/popup-update-phone.html";
+import verifiedPromptTemplate from "../templates/verified-prompt.html";
+import loadingTemplate from "../templates/loading.html";
 const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
 export default[
-  '$scope',
-  '$state',
-  'DriverService',
-  'TripService',
-  '$ionicPopup',
-  '$rootScope',
-  'VerifiedPromptService',
-  '$ionicLoading',
+  "$scope",
+  "$state",
+  "DriverService",
+  "TripService",
+  "$ionicPopup",
+  "$rootScope",
+  "VerifiedPromptService",
+  "$ionicLoading",
   function(
     $scope,
     $state,
@@ -24,14 +24,14 @@ export default[
   ){
 
     $scope.vehicle = {
-      id: '',
-      vehicleNumber: '',
+      id: "",
+      vehicleNumber: ""
     };
 
     $scope.driver = {
-      name: '',
-      telephoneNumber: '',
-    }
+      name: "",
+      telephoneNumber: ""
+    };
 
     DriverService.getVehicleInfo().then(function(){
       //find out the driver's vehicle number
@@ -42,53 +42,53 @@ export default[
     DriverService.getDriverInfo().then(function(){
       $scope.driver.name = DriverService.driver.name;
       $scope.driver.telephoneNumber = DriverService.driver.telephone;
-    })
+    });
 
     $scope.popupTelephone = async function(initial) {
       try {
         var promptResponse = await VerifiedPromptService.verifiedPrompt({
-          title: 'Update Telephone Number',
-          subTitle: 'Enter your 8 digit telephone number',
+          title: "Update Telephone Number",
+          subTitle: "Enter your 8 digit telephone number",
           inputs: [
             {
-              type: 'text',
-              name: 'phone',
+              type: "text",
+              name: "phone",
               pattern: VALID_PHONE_REGEX,
               inputPlaceHolder: initial.slice(3)
             }
           ]
-        })
+        });
         if(!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         await DriverService.updateDriverPhone(promptResponse.phone);
         $ionicLoading.hide();
         $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
         await $ionicPopup.alert({
-          template: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
+          template: "You have updated telephone number to "+ $scope.driver.telephoneNumber
         });
       }
       catch(error){
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: 'There was an error updating telephone number. Please try again.',
+          title: "There was an error updating telephone number. Please try again.",
           subTitle: error
         });
-      };
-    }
+      }
+    };
 
     $scope.popup = async function(modelName, initial){
       try {
         var promptResponse = await VerifiedPromptService.verifiedPrompt({
-          title: 'Update '+modelName,
-          subTitle: 'Enter your '+modelName,
+          title: "Update "+modelName,
+          subTitle: "Enter your "+modelName,
           inputs: [
             {
-              type: 'text',
+              type: "text",
               name: modelName,
-              inputPlaceHolder: initial,
+              inputPlaceHolder: initial
             }
           ]
-        })
+        });
         if(!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         if (modelName === "driver name"){
@@ -100,15 +100,15 @@ export default[
         }
         $ionicLoading.hide();
         await $ionicPopup.alert({
-          template: 'You have updated '+ modelName +' to '+ promptResponse[modelName]
+          template: "You have updated "+ modelName +" to "+ promptResponse[modelName]
         });
       }
       catch(error){
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: 'There was an error updating '+modelName+'. Please try again.',
+          title: "There was an error updating "+modelName+". Please try again.",
           subTitle: error
         });
-      };
-  };
-}];
+      }
+    };
+  }];

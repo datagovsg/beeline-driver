@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import verifiedPromptTemplate from '../templates/verified-prompt.html';
+import _ from "lodash";
+import verifiedPromptTemplate from "../templates/verified-prompt.html";
 
 export default[
-  '$ionicPopup',
-  '$rootScope',
+  "$ionicPopup",
+  "$rootScope",
   function(
     $ionicPopup,
     $rootScope
@@ -20,13 +20,13 @@ export default[
       promptScope.data.inputs = options.inputs || [];
       _.defaultsDeep(options,{
         template: verifiedPromptTemplate,
-        title: '',
-        subTitle: '',
+        title: "",
+        subTitle: "",
         scope: promptScope,
         buttons: [
-          { text: 'Cancel'},
+          { text: "Cancel"},
           {
-            text: 'OK',
+            text: "OK",
             onTap: function(e) {
               if (promptScope.form.verifiedPromptForm.$valid) {
                 return promptScope.data;
@@ -39,4 +39,4 @@ export default[
       return $ionicPopup.show(options);
     };
   }
-]
+];
