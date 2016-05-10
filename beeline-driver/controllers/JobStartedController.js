@@ -28,7 +28,6 @@ export default[
     };
 
     $scope.endTripClick = function() {
-      console.log("End Trip clicked");
       //display popup to let driver confirm whether to really end trip
       this.confirmEndTrip();
     };
@@ -36,7 +35,8 @@ export default[
     $scope.confirmEndTrip = function() {
       $ionicPopup.confirm({
         title: "Confirm End Trip",
-        template: "Are you sure you want to end trip?"
+        template: "Are you sure?",
+        okType: "button-royal"
       }).then(function(response){
         if(response){
           if (gpsStatusTimer) {

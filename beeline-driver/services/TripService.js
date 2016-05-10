@@ -1,4 +1,5 @@
 "use strict";
+import _ from "lodash";
 
 export default [
   "DriverService",
@@ -27,8 +28,8 @@ export default [
         method: "GET",
         url: "/trips/"+id
       }).then(function(response){
-    	                                          self.trip = response.data;
-    	                    });
+    	                                                                                  self.trip = response.data;
+    	                                        });
     };
 
     this.getTripCode = function(id){
@@ -37,8 +38,8 @@ export default [
         url: "/trips/"+id+"/code"
       })
       .then(function(response){
-  	                                                                self.tripCode = response.data;
-  	                                          });
+  	                                                                                                                            self.tripCode = response.data;
+  	                                                                                  });
     };
 
     this.getRoutePath = function(id){
@@ -66,9 +67,11 @@ export default [
         return Promise.resolve(passengersByStop);
       } else{
         await this.getTrip(id);
-        console.log(this.trip);
-        this.boardStops = this.trip.tripStops.filter(
+        var boardStops = this.trip.tripStops.filter(
           stop => stop.canBoard == true);
+        this.boardStops = _.sortBy(boardStops, function(item){
+          return item.time;
+        });
         await this.getPassengers(id);
         passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         return Promise.resolve(passengersByStop);
