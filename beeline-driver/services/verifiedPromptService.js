@@ -27,6 +27,7 @@ export default[
           { text: 'Cancel'},
           {
             text: 'OK',
+            type: 'button-royal',
             onTap: function(e) {
               if (promptScope.form.verifiedPromptForm.$valid) {
                 return promptScope.data;

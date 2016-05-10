@@ -51,7 +51,7 @@ export default[
           subTitle: 'Enter your 8 digit telephone number',
           inputs: [
             {
-              type: 'text',
+              type: 'number',
               name: 'phone',
               pattern: VALID_PHONE_REGEX,
               inputPlaceHolder: initial.slice(3)
@@ -64,7 +64,7 @@ export default[
         $ionicLoading.hide();
         $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
         await $ionicPopup.alert({
-          template: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
+          title: 'You have updated telephone number to '+ $scope.driver.telephoneNumber
         });
       }
       catch(error){
@@ -100,7 +100,7 @@ export default[
         }
         $ionicLoading.hide();
         await $ionicPopup.alert({
-          template: 'You have updated '+ modelName +' to '+ promptResponse[modelName]
+          title: 'You have updated '+ modelName +' to '+ promptResponse[modelName]
         });
       }
       catch(error){
