@@ -80,7 +80,7 @@ export default[
         //Success! Show the confirmation popup.
         $scope.data.replaceDriverNumber = phoneNumber;
         await $ionicPopup.alert({
-          template: 'The trip info has been sent to +65'+ $scope.data.replaceDriverNumber+'<br>Driver Ops has been alerted!'
+          title: 'The trip info has been sent to +65'+ $scope.data.replaceDriverNumber+'<br>Driver Ops has been alerted!'
         });
         TripService.pingTimer = false;
         $state.go('app.jobEnded',{status: "tripReplaced", replacementPhoneNumber:phoneNumber});
@@ -88,8 +88,7 @@ export default[
       catch(error){
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: 'There was an error submitting the replacement number. Please try again.',
-          subTitle: error
+          title: 'There was an error submitting the replacement number. Please try again.'+ error
         });
       };
     };
@@ -107,7 +106,7 @@ export default[
         await TripService.cancelTrip(tripData.tripId);
         $ionicLoading.hide();
         await $ionicPopup.alert({
-          template: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
+          title: 'Trip is cancelled.<br>Passengers and Ops are alerted!'
         });
         TripService.pingTimer = false;
         $state.go('app.jobEnded',{status: "tripCancelled"});
@@ -134,13 +133,13 @@ export default[
         await TripService.notifyTripLate(tripData.tripId);
         $ionicLoading.hide();
         $ionicPopup.alert({
-          template: 'Passengers Notified that you will be more than 15 mins late.'
+          title: 'Passengers Notified that you will be more than 15 mins late.'
         });
       }
       catch(error){
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: 'There was an error notifying late. Please try again.',
+          title: 'There was an error notifying late. Please try again. ',
           subTitle: error
         });
       };
