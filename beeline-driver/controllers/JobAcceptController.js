@@ -7,7 +7,7 @@ export default [
   function(
     $scope,
     DriverService,
-    TripService,
+    TripService
   ) {
 
     //Gmap default settings

@@ -3,43 +3,29 @@ const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
 export default[
   "$scope",
-  "$state",
   "DriverService",
   "TripService",
   "$ionicPopup",
-  "$rootScope",
   "VerifiedPromptService",
   "$ionicLoading",
   function(
     $scope,
-    $state,
     DriverService,
     TripService,
     $ionicPopup,
-    $rootScope,
     VerifiedPromptService,
     $ionicLoading
   ){
 
-    $scope.vehicle = {
-      id: "",
-      vehicleNumber: ""
-    };
-
-    $scope.driver = {
-      name: "",
-      telephoneNumber: ""
-    };
-
-    DriverService.getVehicleInfo().then(function(){
-      //find out the driver's vehicle number
-      $scope.vehicle.id = DriverService.vehicle[0].id;
-      $scope.vehicle.vehicleNumber = DriverService.vehicle[0].vehicleNumber;
+    DriverService.getVehicleInfo()
+    .then(function(vehicle){
+      $scope.vehicle = vehicle;
     });
 
-    DriverService.getDriverInfo().then(function(){
-      $scope.driver.name = DriverService.driver.name;
-      $scope.driver.telephoneNumber = DriverService.driver.telephone;
+    DriverService.getDriverInfo()
+    .then(function(driver){
+      $scope.driver = driver;
+      console.log(driver);
     });
 
     $scope.popupTelephone = async function(initial) {
@@ -60,7 +46,7 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await DriverService.updateDriverPhone(promptResponse.phone);
         $ionicLoading.hide();
-        $scope.driver.telephoneNumber = "+65"+promptResponse.phone;
+        $scope.driver.telephoneNumber = "+65" + promptResponse.phone;
         await $ionicPopup.alert({
           title: "You have updated telephone number to "+ $scope.driver.telephoneNumber
         });
@@ -77,8 +63,8 @@ export default[
     $scope.popup = async function(modelName, initial){
       try {
         var promptResponse = await VerifiedPromptService.verifiedPrompt({
-          title: "Update "+modelName,
-          subTitle: "Enter your "+modelName,
+          title: "Update " + modelName,
+          subTitle: "Enter your " + modelName,
           inputs: [
             {
               type: "text",
@@ -92,7 +78,7 @@ export default[
         if (modelName === "driver name"){
           await DriverService.updateDriverName(promptResponse[modelName]);
           $scope.driver.name = promptResponse[modelName];
-        }else if (modelName === "vehicle number"){
+        } else if (modelName === "vehicle number"){
           await DriverService.updateVehicleNo(promptResponse[modelName]);
           $scope.vehicle.vehicleNumber = promptResponse[modelName];
         }
@@ -104,9 +90,10 @@ export default[
       catch(error){
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: "There was an error updating "+modelName+". Please try again.",
+          title: "There was an error updating " + modelName + ". Please try again.",
           subTitle: error
         });
       }
     };
+
   }];

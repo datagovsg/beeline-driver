@@ -38,6 +38,7 @@ export default function($http){
       url: "/drivers/" + driverId
     }).then(function (response) {
       self.driver = response.data;
+      return response.data;
     });
   };
 
@@ -53,6 +54,7 @@ export default function($http){
       url: "/vehicles"
     }).then(function (response) {
       self.vehicle = response.data;
+      return response.data[0];
     });
   };
 

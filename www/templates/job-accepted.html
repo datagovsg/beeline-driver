@@ -5,19 +5,22 @@
         Please check the following details.<br>
         If wrong, tap to edit.
       </div>
-      <a class="item item-icon-right" ng-click='popup("driver name", driver.name)'>
+      <a class="item item-icon-right" 
+         on-tap='popup("driver name", driver.name)'>
         <span class="">Name</span>
         <span class="item-note" ng-bind="driver.name"></span>
         <i class="icon ion-compose"></i>
       </a>
-      <a class="item item-icon-right" ng-click='popup("vehicle number", vehicle.vehicleNumber)'>
+      <a class="item item-icon-right" 
+         on-tap='popup("vehicle number", vehicle.vehicleNumber)'>
         <span class="">Vehicle No.</span>
         <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
         <i class="icon ion-compose"></i>
       </a>
-      <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNumber)'>
+      <a class="item item-icon-right" 
+         on-tap='popupTelephone(driver.telephone)'>
         <span class="">Phone No.</span>
-        <span class="item-note" ng-bind="driver.telephoneNumber.slice(3)"></span>
+        <span class="item-note" ng-bind="driver.telephone.slice(3)"></span>
         <i class="icon ion-compose"></i>
       </a>
     </div>
