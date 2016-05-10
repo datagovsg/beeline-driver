@@ -1,4 +1,5 @@
 'use strict';
+import _ from 'lodash';
 
 export default [
   'DriverService',
@@ -66,9 +67,10 @@ export default [
         return Promise.resolve(passengersByStop);
       } else{
         await this.getTrip(id);
-        console.log(this.trip);
-        this.boardStops = this.trip.tripStops.filter(
-          stop => stop.canBoard == true);
+        this.boardStops = _.sortBy(this.trip.tripStops.filter(
+          stop => stop.canBoard == true), function(item){
+            return item.time;
+        });
         await this.getPassengers(id);
         passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         return Promise.resolve(passengersByStop);

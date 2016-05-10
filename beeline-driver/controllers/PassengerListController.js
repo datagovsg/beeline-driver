@@ -21,8 +21,7 @@ export default[
         $scope.passengersByStop = response;
         $scope.passengerList = $scope.passengersByStop[$scope.stopId];
         $scope.stopObject = TripService.boardStops
-                      .filter(stop=>stop.id === $scope.stopId)[0];
-        console.log($scope.stopObject);
+          .filter(stop=>stop.id === $scope.stopId)[0];
         $scope.stopDescription = $scope.stopObject.stop.description+', '
           +$scope.stopObject.stop.road;
       })
