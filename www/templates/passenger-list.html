@@ -1,9 +1,10 @@
 <ion-view class="passenger-list" view-title="Passenger List">
   <ion-content>
+    <p>{{stopDescription}}</p>
     <div ng-repeat="passenger in passengerList">
-      <a class="item" ng-cloak>
+      <a class="item">
         {{$index+1}}
-        <p class="item-note">{{passenger.name}}</p>
+        <span class="h4">{{passenger.name}}</span>
       </a>
     </div>
   </ion-content>

@@ -51,7 +51,7 @@ export default[
           subTitle: 'Enter your 8 digit telephone number',
           inputs: [
             {
-              type: 'text',
+              type: 'number',
               name: 'phone',
               pattern: VALID_PHONE_REGEX,
               inputPlaceHolder: initial.slice(3)

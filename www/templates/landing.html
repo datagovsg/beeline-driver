@@ -1,28 +1,12 @@
-<ion-view class="landing" hide-back-button="true">
-  <ion-content>
-  <div class="overlay" ng-class="{hide: landing.overlayHide}">
-    <div class="txt">{{landing.checkTxt}}</div>
-  </div>
-  <div class="ver">Ver 0.1</div>
-  <div class="header">
-    <div class="logo"></div>
-    <div>Driver App</div>
-  </div>
-  <div class="welcome">
-    <div class="block"></div>
-    <div class="block">
-      <h3 class="txt"><i>{{landing.greetingTxt}}</i></h3>
-      <h1 class="name">{{landing.driverTxt}}</h1>
+<ion-view hide-back-button="true">
+  <ion-content class="item item-royal landing">
+    <div class="text-center">
+      <img ng-src="image/banner_logo.png"/>
+      <h3>{{landing.greetingTxt}}</h3>
+      <h1>{{landing.driverTxt}}</h1>
     </div>
-    <div class="block"></div>
-  </div>
-  <div class="redirect" ng-hide="driver.loggedIn">
-    <button class="driver-login" class="yellow-btn" ng-disabled="!landing.overlayHide" ng-click="landingNext()">{{landing.loginBtnTxt}}</button>
-  </div>
-  <div class="redirect" ng-hide="!driver.loggedIn">
-    <div class="loginok">
-      <div class="txt">Redirecting to Trip info page...</div>
-    </div>
-  </div>
   </ion-content>
+  <div class="bar bar-footer bar-royal">
+    <div class="title">Redirecting to Trip info page...</div>
+  </div>
 </ion-view>

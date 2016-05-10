@@ -16,12 +16,10 @@ export default[
     overlayHide: false,
 	  greetingTxt: '',
 	  driverTxt: '',
-    loginBtnTxt:'Please Log In',
 	  greetingLoggedIn: 'Welcome Back,',
 	  greetingNotLoggedIn: 'Hello Driver,',
 	  driverNotLoggedIn: 'Please Log In to Accept your Job.',
     proceedBtnTxt: 'Proceed',
-    checkTxt: 'Checking for login information...',
     initTxt: 'Initialising job data...'
   };
 
@@ -42,8 +40,6 @@ export default[
     $scope.landing.greetingTxt = $scope.landing.greetingLoggedIn;
     $scope.landing.driverTxt = $scope.driver.name;
 
-    //enable the button at the bottom
-    $scope.landing.loginBtnTxt = $scope.landing.proceedBtnTxt;
 
     //remove overlay
     $scope.landing.overlayHide = true;

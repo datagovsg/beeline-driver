@@ -41,6 +41,7 @@ export default[
           { text: 'Cancel'},
           {
             text: 'OK',
+            type: 'button-royal',
             onTap: function(e) {
               if (promptScope.data.toggle){
                 return true;
@@ -59,7 +60,7 @@ export default[
         subTitle: subtitle,
         inputs: [
           {
-            type: 'text',
+            type: 'number',
             name: 'phone',
             pattern: VALID_PHONE_REGEX
           }
