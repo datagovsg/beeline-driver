@@ -75,7 +75,6 @@ export default[
         if (!phoneResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         var phoneNumber = phoneResponse.phone;
-        var replacementDriver = await DriverService.assignReplacementDriver(tripData.tripId, phoneNumber);
         $ionicLoading.hide();
         //Success! Show the confirmation popup.
         $scope.data.replaceDriverNumber = phoneNumber;

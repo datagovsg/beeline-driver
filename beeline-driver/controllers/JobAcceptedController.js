@@ -1,5 +1,3 @@
-import updatePhoneTemplate from "../templates/popup-update-phone.html";
-import verifiedPromptTemplate from "../templates/verified-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 

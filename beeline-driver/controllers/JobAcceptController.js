@@ -68,9 +68,6 @@ export default[
       acceptoff: false
     };
 
-
-    var countdownTimer;
-
     $scope.fillInTripRouteData = function() {
 //re-organise the DB output into Google Map compatible JSON
       var pathTemp = [];
@@ -106,7 +103,6 @@ export default[
       $scope.fillInTripRouteData();
       return uiGmapGoogleMapApi;
     }).then(function(googleMaps) {
-      var gmap = $scope.map.control.getGMap();
     }); //end Promise
 
   }];

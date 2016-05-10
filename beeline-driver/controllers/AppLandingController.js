@@ -13,13 +13,13 @@ export default[
   ){
 
     $scope.landing = {
-	                                                            driverTxt: "",
-	  greetingTxt: 'Welcome Back,',
+      driverTxt: "",
+      greetingTxt: "Welcome Back,"
     };
 
-	                                        $scope.driver = {
-	                      name: "",
-	};
+    $scope.driver = {
+      name: ""
+    };
 
     var timer;
 
@@ -29,23 +29,23 @@ export default[
       $scope.driver.telephone = DriverService.driver.telephone;
 
       $scope.landing.greetingTxt = $scope.landing.greetingLoggedIn;
-    timer = $timeout(function(){
-      $scope.landing.driverTxt = $scope.driver.name;
-    }, 2000);
-  });
+      timer = $timeout(function(){
+        $scope.landing.driverTxt = $scope.driver.name;
+      }, 2000);
+    });
 
     //enable the button at the bottom
-      $scope.landing.loginBtnTxt = $scope.landing.proceedBtnTxt;
+    $scope.landing.loginBtnTxt = $scope.landing.proceedBtnTxt;
 
-  $scope.$on('$ionicView.beforeEnter',()=>{
+    $scope.$on("$ionicView.beforeEnter",()=>{
       $scope.landing.overlayHide = true;
 
-    if (!timer){
-      timer = $timeout(function(){
-        $state.go("app.jobAccept");
-      }, 2000);
-    };
-  });
+      if (!timer){
+        timer = $timeout(function(){
+          $state.go("app.jobAccept");
+        }, 2000);
+      }
+    });
 
 
     $scope.$on("$ionicView.beforeEnter",()=>{

@@ -1,3 +1,4 @@
+/* global angular, cordova, StatusBar */
 import "babel-polyfill";
 import AppLandingController from "./controllers/AppLandingController.js";
 import JobEmergencyController from "./controllers/EmergencyController.js";

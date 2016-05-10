@@ -13,8 +13,6 @@ export default [
     $ionicPopup
   ){
     var self = this;
-    var latlng = [1.38, 103.8];
-    var routepath;
 
     this.lastPingTime = 0;
     this.pingTimer = false;
@@ -28,8 +26,8 @@ export default [
         method: "GET",
         url: "/trips/"+id
       }).then(function(response){
-    	                                                                                  self.trip = response.data;
-    	                                        });
+        self.trip = response.data;
+      });
     };
 
     this.getTripCode = function(id){
@@ -38,8 +36,8 @@ export default [
         url: "/trips/"+id+"/code"
       })
       .then(function(response){
-  	                                                                                                                            self.tripCode = response.data;
-  	                                                                                  });
+        self.tripCode = response.data;
+      });
     };
 
     this.getRoutePath = function(id){

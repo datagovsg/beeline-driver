@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 export default function($http){
-  var driver;
   var sessionToken = localStorage["sessionToken"];
   var self = this;
   var driverId;

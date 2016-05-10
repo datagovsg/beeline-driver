@@ -53,7 +53,7 @@ export default[
     .then(function(response){
       $scope.boardStops = TripService.boardStops;
       $scope.passengersByStop = response;
-      angular.forEach($scope.passengersByStop, function(value,key){
+      _.forEach($scope.passengersByStop, function(value,key){
         var stop = $scope.boardStops.find(stop => stop.id === +key);
         stop.passengerNumber = value.length;
       });
