@@ -1,32 +1,29 @@
-<ion-view class="job-accepted" view-title="Job Accepted!" hide-back-button="true">
+<ion-view view-title="Job Accepted!" hide-back-button="true">
   <ion-content>
-    <div class="msg">
-    	<div class="greet">
-    		<p>Please check the following details.<br>
-        If wrong, tap to edit.</p>
-    	</div>
-    </div>
-      <div class="list">
-        <a class="item item-icon-right" ng-click='popup("driver name", driver.name)'>
-          <span class="">Name</span>
-          <span class="item-note" ng-bind="driver.name"></span>
-          <i class="icon ion-compose"></i>
-        </a>
-        <a class="item item-icon-right" ng-click='popup("vehicle number", vehicle.vehicleNumber)'>
-          <span class="">Vehicle No.</span>
-          <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
-          <i class="icon ion-compose"></i>
-        </a>
-        <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNumber)'>
-          <span class="">Phone No.</span>
-          <span class="item-note" ng-bind="driver.telephoneNumber.slice(3)"></span>
-          <i class="icon ion-compose"></i>
-        </a>
-    </div>
-    <div class="buttons">
-      <div class="button button-block button-outline button-royal" ui-sref='app.jobStarted'>
-        <div class="resp">Start Trip</div>
+    <div class="list">
+      <div class="item item-divier">
+        Please check the following details.<br>
+        If wrong, tap to edit.
       </div>
+      <a class="item item-icon-right" ng-click='popup("driver name", driver.name)'>
+        <span class="">Name</span>
+        <span class="item-note" ng-bind="driver.name"></span>
+        <i class="icon ion-compose"></i>
+      </a>
+      <a class="item item-icon-right" ng-click='popup("vehicle number", vehicle.vehicleNumber)'>
+        <span class="">Vehicle No.</span>
+        <span class="item-note" ng-bind="vehicle.vehicleNumber"></span>
+        <i class="icon ion-compose"></i>
+      </a>
+      <a class="item item-icon-right" ng-click='popupTelephone(driver.telephoneNumber)'>
+        <span class="">Phone No.</span>
+        <span class="item-note" ng-bind="driver.telephoneNumber.slice(3)"></span>
+        <i class="icon ion-compose"></i>
+      </a>
+    </div>
+    <div class="primary-button" 
+         ui-sref='app.jobStarted'>
+      Start Trip
     </div>
   </ion-content>
 </ion-view>
