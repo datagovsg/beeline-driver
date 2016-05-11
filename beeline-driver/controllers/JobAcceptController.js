@@ -52,15 +52,7 @@ export default [
       }]
     };
 
-    $scope.job = {
-      path: "",
-      tripNumber: "",
-      startTime: "",
-      startLocation: "",
-      endTime: "",
-      endLocation: "",
-      acceptoff: false
-    };
+    $scope.job = {};
 
     //Use the token to grab the trip info
     TripService.getTrip(DriverService.getDecodedToken().tripId)

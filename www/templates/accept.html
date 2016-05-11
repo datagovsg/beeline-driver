@@ -1,30 +1,32 @@
-<ion-view view-title="Accept the Job?" hide-back-button="true">
-  <ion-content>
+<ion-view class="accept-view"
+          view-title="Accept the Job?" 
+          hide-back-button="true">
+  <ion-content scroll=false>
     <div class="item item-text-wrap">
       <div class="row">
-        <div class="col col-25">
-          <h4>Trip Number</h4>
+        <div class="col col-33 text-right">
+          Trip Number
         </div>
-        <div class="col col-75">
-          <div ng-bind="job.tripNumber"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col col-25">
-          <h4>Start</h4>
-        </div>
-        <div class="col col-75">
-          <span>{{ job.startTime | date:'h:mm a' }} </span>,
-          <span>{{ job.startLocation }}</span>
+        <div class="col col-67">
+          <strong ng-bind="job.tripNumber"></strong>
         </div>
       </div>
       <div class="row">
-        <div class="col col-25">
-          <h4>End</h4>
+        <div class="col col-33 text-right">
+          Start
         </div>
-        <div class="col col-75">
-          <span>{{ job.endTime | date:'h:mm a' }}</span>,
-          <span>{{ job.endLocation }}</span>
+        <div class="col col-67">
+          <strong>{{ job.startTime | date:'h:mm a' }}</strong>,
+          <strong>{{ job.startLocation }}</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33 text-right">
+          End
+        </div>
+        <div class="col col-67">
+          <strong>{{ job.endTime | date:'h:mm a' }}</strong>,
+          <strong>{{ job.endLocation }}</strong>
         </div>
       </div>
     </div>
@@ -48,10 +50,9 @@
       </ui-gmap-polyline>
 		</ui-gmap-google-map>
 
-    <h4 class="text-center">Would you like to take the job?</h4>
-    <div class="primary-button" 
-         ui-sref='app.jobAccepted'>
-      Yes
+    <div class="item">
+      <h2 class="text-center">Would you like to take the job?</h2>
+      <div class="primary-button" ui-sref='app.jobAccepted'>Yes</div>
     </div>
 
   </ion-content>

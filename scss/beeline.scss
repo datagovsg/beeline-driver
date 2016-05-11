@@ -1,3 +1,5 @@
+@import "variables";
+
 .item-divider {
   text-transform: uppercase;
   font-size: $font-size-small;
@@ -32,43 +34,6 @@
   @include box-shadow($card-box-shadow);
 }
 
-.primary-button {
-  padding: 20px 20px;
-  font-size: 16px;
-  line-height: 0px;
-  background-color: #ffe76e; // FIXME: variables?
-  border: 0px;
-  border-bottom: 4px solid #f7c639;
-  border-radius: 20px;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
-  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-  color: #333;
-  z-index: 3;
-
-  &:active {
-    border-bottom: 1px solid #f7c639;
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
-  }
-
-  &[disabled="disabled"] {
-    background-color: #d6d6d6;
-    border-bottom: 4px solid #b9b9b9;
-    color: #6f6f6f;
-  }
-}
-
-.primary-button-fixed {
-  margin-left: -130px; /* Can we work around this hack? */
-  width: 260px;
-  left: 50%;
-  position: fixed;
-}
-
-.primary-button-centered {
-  display: block;
-  margin: 0 auto;
-}
-
 .angular-google-map-container {
   height: 300px
 }
@@ -83,16 +48,4 @@ span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-//landing page
-.landing {
-  background-color: $royal;
-  height: 100%;
-  img {
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
 }

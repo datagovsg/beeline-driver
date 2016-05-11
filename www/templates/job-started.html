@@ -7,10 +7,10 @@
     </button>
   </ion-nav-buttons>
   <ion-content>
-<!-- Play a white noise video on this page to stop it to sleep,
-so GPS pinging is kept running. This does not works on ios , access
-from browser has no way to stop safari to go sleep. Android works
-fine -->
+    <!-- Play a white noise video on this page to stop it to sleep,
+    so GPS pinging is kept running. This does not works on ios , access
+    from browser has no way to stop safari to go sleep. Android works
+    fine -->
     <video width="0" height="0" autoplay>
       <source ng-src="{{media | trusted}}" type="video/mp4">
     </video>
@@ -38,7 +38,9 @@ fine -->
         </i>
 		  </a>
     </div>
-    <div class="primary-button"
-         on-tap="confirmEndTrip()">End Trip</div>
+    <div class="item">
+      <button class="primary-button"
+              on-tap="confirmEndTrip()">End Trip</button>
+     </div>
   </ion-content>
 </ion-view>
