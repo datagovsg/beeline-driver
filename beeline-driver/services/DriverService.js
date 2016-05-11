@@ -4,6 +4,7 @@ export default function($http){
   var sessionToken = localStorage["sessionToken"];
   var self = this;
   var driverId;
+  var driverCache = null;
 
   if (!localStorage["sessionToken"]){
     localStorage["sessionToken"] = sessionToken;
@@ -26,19 +27,17 @@ export default function($http){
     }
   };
 
-  this.getDriverInfo = function () {
-    if (typeof(driverId)==="undefined") {
-      self.getDecodedToken();
+  this.getDriverInfo = function(ignoreCache) {
+    if (driverCache && !ignoreCache) {
+      return Promise.resolve(driverCache);
     }
-    if (typeof(self.driver)!="undefined"){
-      return Promise.resolve(self.driver);
-    }
-    else return this.beeline({
+    return this.beeline({
       method: "GET",
       url: "/drivers/" + driverId
-    }).then(function (response) {
-      self.driver = response.data;
-      return response.data;
+    })
+    .then((response) => {
+      driverCache = response.data;
+      return driverCache;
     });
   };
 

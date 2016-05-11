@@ -25,7 +25,6 @@ export default[
     DriverService.getDriverInfo()
     .then(function(driver){
       $scope.driver = driver;
-      console.log(driver);
     });
 
     $scope.popupTelephone = async function(initial) {

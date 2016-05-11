@@ -24,10 +24,9 @@ export default[
     var timer;
 
   //The JSON Web Token that the driver receives will contain everything needed to verify the trip
-    DriverService.getDriverInfo().then(function(){
-      $scope.driver.name = DriverService.driver.name;
-      $scope.driver.telephone = DriverService.driver.telephone;
-
+    DriverService.getDriverInfo()
+    .then(function(driver){
+      $scope.driver = driver;
       $scope.landing.greetingTxt = $scope.landing.greetingLoggedIn;
       timer = $timeout(function(){
         $scope.landing.driverTxt = $scope.driver.name;
