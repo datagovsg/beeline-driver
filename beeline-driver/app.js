@@ -34,6 +34,11 @@ angular.module("beeline-driver", [
 .service("DriverService",DriverService)
 .service("TripService",TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
+.filter('trusted', ['$sce', function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+}])
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     //client: 'gme-infocommunications',

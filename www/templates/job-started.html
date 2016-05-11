@@ -7,12 +7,19 @@
     </button>
   </ion-nav-buttons>
   <ion-content>
+<!-- Play a white noise video on this page to stop it to sleep,
+so GPS pinging is kept running. This does not works on ios , access
+from browser has no way to stop safari to go sleep. Android works
+fine -->
+    <video width="0" height="0" autoplay>
+      <source ng-src="{{media | trusted}}" type="video/mp4">
+    </video>
     <div class="list">
       <div class="item item-divider">
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <a class="item item-icon-right" 
-         ng-repeat="boardStop in boardStops" 
+      <a class="item item-icon-right"
+         ng-repeat="boardStop in boardStops"
          on-tap="showPassengerList(boardStop.id)">
         <div class="row">
           <div class="col col-25">
@@ -26,12 +33,12 @@
         </div>
         <i class="icon">
           <span class="ion-android-person"></span> &nbsp;
-          {{ boardStop.passengerNumber > 0 ? 
+          {{ boardStop.passengerNumber > 0 ?
              boardStop.passengerNumber : 0 }} &nbsp;
         </i>
 		  </a>
     </div>
-    <div class="primary-button" 
+    <div class="primary-button"
          on-tap="confirmEndTrip()">End Trip</div>
   </ion-content>
 </ion-view>
