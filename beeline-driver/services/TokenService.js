@@ -1,3 +1,4 @@
+// Managing the token passed to the driver app
 import jwt from "jsonwebtoken";
 export default function() {
   var token = localStorage['token'];

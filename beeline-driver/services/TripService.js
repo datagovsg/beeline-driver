@@ -4,7 +4,8 @@ export default function(
   DriverService,
   $cordovaGeolocation,
   $interval,
-  $ionicPopup
+  $ionicPopup,
+  BeelineService
 ){
   var self = this;
 
@@ -16,7 +17,7 @@ export default function(
     if (typeof(self.trip)!=="undefined"){
       return Promise.resolve(self.trip);
     }
-    else return DriverService.beeline({
+    else return BeelineService.request({
       method: "GET",
       url: "/trips/"+id
     }).then(function(response){
@@ -26,7 +27,7 @@ export default function(
   };
 
   this.getTripCode = function(id){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "GET",
       url: "/trips/"+id+"/code"
     })
@@ -36,7 +37,7 @@ export default function(
   };
 
   this.getRoutePath = function(id){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "GET",
       url: "/routes/"+id
     })
@@ -47,7 +48,7 @@ export default function(
   };
 
   this.getPassengers = function(id){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "GET",
       url: "/trips/"+id+"/get_passengers"
     })
@@ -73,7 +74,7 @@ export default function(
   };
 
   this.cancelTrip = function(tripId){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "POST",
       url: "/trips/"+tripId+"/statuses",
       data: {
@@ -87,7 +88,7 @@ export default function(
   };
 
   this.notifyTripLate = function(tripId){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "POST",
       url: "/trips/"+tripId+"/statuses",
       data: {
@@ -101,7 +102,7 @@ export default function(
   };
 
   this.sendPing = function(tripId, vehicleId, lat, lng){
-    return DriverService.beeline({
+    return BeelineService.request({
       method: "POST",
       url: "/trips/"+tripId+"/pings",
       data: {

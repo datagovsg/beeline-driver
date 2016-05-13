@@ -8,6 +8,7 @@ import JobStartedController from "./controllers/JobStartedController.js";
 import PassengerListController from "./controllers/PassengerListController.js";
 import JobEndedController from "./controllers/JobEndedController.js";
 import TokenService from "./services/TokenService.js";
+import BeelineService from "./services/BeelineService.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import VerifiedPromptService from "./services/verifiedPromptService.js";
@@ -33,6 +34,7 @@ angular.module("beeline-driver", [
 .controller("PassengerListController", PassengerListController)
 .controller("JobEndedController", JobEndedController)
 .service("TokenService", TokenService)
+.service("BeelineService", BeelineService)
 .service("DriverService", DriverService)
 .service("TripService", TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
