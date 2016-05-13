@@ -5,72 +5,86 @@ export default function(
   $cordovaGeolocation,
   $interval,
   $ionicPopup,
-  BeelineService
+  BeelineService,
+  TokenService
 ){
   var self = this;
-
   this.lastPingTime = 0;
   this.pingTimer = false;
   var passengersByStop;
+  var tripCache = null;
+  var tripCodeCache = null;
+  var routeCache = null;
+  var passengerCache = null;
 
-  this.getTrip = function(id){
-    if (typeof(self.trip)!=="undefined"){
-      return Promise.resolve(self.trip);
+
+  this.getTrip = function(ignoreCache) {
+    if (tripCache && !ignoreCache) { 
+      return Promise.resolve(tripCache);
     }
-    else return BeelineService.request({
-      method: "GET",
-      url: "/trips/"+id
-    }).then(function(response){
-      self.trip = response.data;
-      return response.data;
-    });
-  };
-
-  this.getTripCode = function(id){
     return BeelineService.request({
       method: "GET",
-      url: "/trips/"+id+"/code"
+      url: "/trips/" + TokenService.get("tripId")
     })
-    .then(function(response){
-      self.tripCode = response.data;
+    .then(function(response) {
+      tripCache = response.data;
+      return tripCache;
     });
   };
 
-  this.getRoutePath = function(id){
-    return BeelineService.request({
-      method: "GET",
-      url: "/routes/"+id
-    })
-    .then(function(response){
-      self.routepath = response.data;
-      return response.data;
-    });
-  };
-
-  this.getPassengers = function(id){
-    return BeelineService.request({
-      method: "GET",
-      url: "/trips/"+id+"/get_passengers"
-    })
-    .then(function(response){
-      self.passengerData = response.data;
-    });
-  };
-
-  this.getPassengersByStop = async function(id, ignoreCache) {
-    if (passengersByStop  && !ignoreCache){
-      return Promise.resolve(passengersByStop);
-    } else{
-      await this.getTrip(id);
-      var boardStops = this.trip.tripStops.filter(
-        stop => stop.canBoard == true);
-      this.boardStops = _.sortBy(boardStops, function(item){
-        return item.time;
-      });
-      await this.getPassengers(id);
-      passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
-      return Promise.resolve(passengersByStop);
+  this.getTripCode = function(ignoreCache) {
+    if (tripCodeCache && !ignoreCache) {
+      return Promise.resolve(tripCodeCache);
     }
+    return BeelineService.request({
+      method: "GET",
+      url: "/trips/" + TokenService.get('tripId') + "/code"
+    })
+    .then(function(response){
+      tripCodeCache = response.data;
+      return tripCodeCache;
+    });
+  };
+
+  this.getRoute = async function(ignoreCache) {
+    if (routeCache && !ignoreCache) {
+      return Promise.resolve(routeCache);
+    }
+    var trip = await self.getTrip();
+    return BeelineService.request({
+      method: "GET",
+      url: "/routes/" + trip.routeId
+    })
+    .then(function(response) {
+      routeCache = response.data;
+      return routeCache;
+    });
+  };
+
+  this.getPassengers = function(ignoreCache) {
+    if (passengerCache && !ignoreCache) {
+      return passengerCache
+    }
+    return BeelineService.request({
+      method: "GET",
+      url: "/trips/" + TokenService.get('tripId') + "/get_passengers"
+    })
+    .then(function(response){
+      passengerCache = response.data;
+      return passengerCache;
+    });
+  };
+
+  this.getPassengersByStop = async function(ignoreCache) {
+    if (passengersByStop  && !ignoreCache) {
+      return Promise.resolve(passengersByStop);
+    } 
+    var trip = await self.getTrip();
+    var boardStops = trip.tripStops.filter( stop => stop.canBoard );
+    boardStops = _.sortBy(boardStops, item => item.time );
+    var passengerData = await this.getPassengers(TokenService.get("tripId"));
+    passengersByStop = _.groupBy(passengerData, psg => psg.boardStopId);
+    return Promise.resolve(passengersByStop);
   };
 
   this.cancelTrip = function(tripId){

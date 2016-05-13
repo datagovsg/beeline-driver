@@ -23,7 +23,8 @@ export default[
 
     $scope.$on("$ionicView.beforeEnter",()=>{
       $scope.job.tripId = TokenService.get("tripId");
-      TripService.getTrip($scope.job.tripId).then(function(){
+      TripService.getTrip()
+      .then(function(){
         $scope.job.date = TripService.trip.date;
       });
     });

@@ -4,14 +4,12 @@ const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 export default[
   "$scope",
   "DriverService",
-  "TripService",
   "$ionicPopup",
   "VerifiedPromptService",
   "$ionicLoading",
   function(
     $scope,
     DriverService,
-    TripService,
     $ionicPopup,
     VerifiedPromptService,
     $ionicLoading

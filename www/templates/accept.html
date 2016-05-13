@@ -8,7 +8,7 @@
           Trip Number
         </div>
         <div class="col col-67">
-          <strong ng-bind="job.tripNumber"></strong>
+          <strong ng-bind="tripNumber"></strong>
         </div>
       </div>
       <div class="row">
@@ -16,8 +16,8 @@
           Start
         </div>
         <div class="col col-67">
-          <strong>{{ job.startTime | date:'h:mm a' }}</strong>,
-          <strong>{{ job.startLocation }}</strong>
+          <strong>{{ startTime | date:'h:mm a' }}</strong>,
+          <strong>{{ startLocation }}</strong>
         </div>
       </div>
       <div class="row">
@@ -25,8 +25,8 @@
           End
         </div>
         <div class="col col-67">
-          <strong>{{ job.endTime | date:'h:mm a' }}</strong>,
-          <strong>{{ job.endLocation }}</strong>
+          <strong>{{ endTime | date:'h:mm a' }}</strong>,
+          <strong>{{ endLocation }}</strong>
         </div>
       </div>
     </div>
