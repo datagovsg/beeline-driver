@@ -1,13 +1,15 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 export default [
   "$scope",
   "DriverService",
   "TripService",
+  "TokenService",
   function(
     $scope,
     DriverService,
-    TripService
+    TripService,
+    TokenService
   ) {
 
     //Gmap default settings
@@ -55,7 +57,7 @@ export default [
     $scope.job = {};
 
     //Use the token to grab the trip info
-    TripService.getTrip(DriverService.getDecodedToken().tripId)
+    TripService.getTrip(TokenService.get("tripId"))
     //Use the trip to grab the route info
     .then(function(trip){ 
       $scope.job.tripNumber = trip.id;

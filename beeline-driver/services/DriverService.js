@@ -1,30 +1,17 @@
 import jwt from "jsonwebtoken";
 
-export default function($http){
-  var sessionToken = localStorage["sessionToken"];
+export default function($http, TokenService) {
   var self = this;
   var driverId;
   var driverCache = null;
 
-  if (!localStorage["sessionToken"]){
-    localStorage["sessionToken"] = sessionToken;
-  }
-
   this.beeline = function(options) {
     options.url = "http://staging.beeline.sg" + options.url;
-    if (sessionToken) {
+    if (TokenService.token) {
       options.headers = options.headers || {};
-      options.headers.authorization = "Bearer " + sessionToken;
+      options.headers.authorization = "Bearer " + TokenService.token;
     }
     return $http(options);
-  };
-
-  this.getDecodedToken = function() {
-    var decodedToken = jwt.decode(localStorage["sessionToken"]); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
-    if (decodedToken) {
-      driverId = decodedToken.driverId;
-      return decodedToken;
-    }
   };
 
   this.getDriverInfo = function(ignoreCache) {
@@ -43,7 +30,7 @@ export default function($http){
 
   this.getVehicleInfo = function () {
     if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+      driverId = TokenService.get('driverId');
     }
     if (typeof(self.vehicle)!="undefined"){
       return Promise.resolve(self.vehicle);
@@ -72,7 +59,7 @@ export default function($http){
 
   this.updateDriverName = function (newName) {
     if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+      driverId = TokenService.get('driverId');
     }
     return this.beeline({
       method: "PUT",
@@ -88,7 +75,7 @@ export default function($http){
 
   this.updateDriverPhone = function (newPhoneNo) {
     if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+      driverId = TokenService.get('driverId');
     }
     return this.beeline({
       method: "PUT",
@@ -117,4 +104,5 @@ export default function($http){
       return true;
     });
   };
+
 }

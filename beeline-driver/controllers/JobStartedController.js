@@ -8,6 +8,7 @@ export default[
   "$interval",
   "$cordovaGeolocation",
   "$ionicPopup",
+  "TokenService",
   function(
     $scope,
     $state,
@@ -15,10 +16,10 @@ export default[
     TripService,
     $interval,
     $cordovaGeolocation,
-    $ionicPopup
+    $ionicPopup,
+    TokenService
   ){
 
-    var tripData = DriverService.getDecodedToken();
     var gpsStatusTimer;
 
     $scope.media = "data:video/mp4;base64,AAAAHGZ0eXBpc29tAAACAGlzb21pc28ybXA0MQAAAAhmcmVlAAAAG21kYXQAAAGzABAHAAABthADAowdbb9/AAAC6W1vb3YAAABsbXZoZAAAAAB8JbCAfCWwgAAAA+gAAAAAAAEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIVdHJhawAAAFx0a2hkAAAAD3wlsIB8JbCAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAIAAAACAAAAAABsW1kaWEAAAAgbWRoZAAAAAB8JbCAfCWwgAAAA+gAAAAAVcQAAAAAAC1oZGxyAAAAAAAAAAB2aWRlAAAAAAAAAAAAAAAAVmlkZW9IYW5kbGVyAAAAAVxtaW5mAAAAFHZtaGQAAAABAAAAAAAAAAAAAAAkZGluZgAAABxkcmVmAAAAAAAAAAEAAAAMdXJsIAAAAAEAAAEcc3RibAAAALhzdHNkAAAAAAAAAAEAAACobXA0dgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAgASAAAAEgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABj//wAAAFJlc2RzAAAAAANEAAEABDwgEQAAAAADDUAAAAAABS0AAAGwAQAAAbWJEwAAAQAAAAEgAMSNiB9FAEQBFGMAAAGyTGF2YzUyLjg3LjQGAQIAAAAYc3R0cwAAAAAAAAABAAAAAQAAAAAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAAAEwAAAAEAAAAUc3RjbwAAAAAAAAABAAAALAAAAGB1ZHRhAAAAWG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAAK2lsc3QAAAAjqXRvbwAAABtkYXRhAAAAAQAAAABMYXZmNTIuNzguMw==";
@@ -47,7 +48,7 @@ export default[
     };
 
     //Display Stops + Passenger Information
-    TripService.getPassengersByStop(tripData.tripId)
+    TripService.getPassengersByStop(TokenService.get("tripId"))
     .then(function(response){
       $scope.boardStops = TripService.boardStops;
       $scope.passengersByStop = response;
@@ -58,7 +59,7 @@ export default[
     });
 
     //get generated trip code
-    TripService.getTripCode(tripData.tripId)
+    TripService.getTripCode(TokenService.get("tripId"))
     .then(function(){
       $scope.tripCode = TripService.tripCode;
     });
@@ -83,7 +84,7 @@ export default[
       var vehicleId = vehicle.id;
       //start to ping
       TripService.pingTimer = true;
-      TripService.sendPingService(tripData.tripId, vehicleId);
+      TripService.sendPingService(TokenService.get("tripId"), vehicleId);
     });
 
     $scope.showPassengerList = function(id){

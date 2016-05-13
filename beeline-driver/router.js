@@ -3,8 +3,8 @@ export default function ($stateProvider, $urlRouterProvider) {
   // entry point starting url received from sms
   .state("launch", {
     url: "/launch/:tripToken",
-    controller($state, $stateParams) {
-      localStorage["sessionToken"] = $stateParams.tripToken;
+    controller($state, $stateParams, TokenService) {
+      TokenService.token = $stateParams.tripToken;
       $state.go("app.landing");
     }
   })

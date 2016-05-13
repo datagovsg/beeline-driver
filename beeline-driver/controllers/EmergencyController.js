@@ -12,6 +12,7 @@ export default[
   "$rootScope",
   "VerifiedPromptService",
   "$ionicLoading",
+  "TokenService",
   function(
     $scope,
     $ionicPopup,
@@ -20,10 +21,9 @@ export default[
     TripService,
     $rootScope,
     VerifiedPromptService,
-    $ionicLoading
+    $ionicLoading,
+    TokenService
   ){
-
-    var tripData = DriverService.getDecodedToken();
 
     $scope.data = {};
 
@@ -102,7 +102,7 @@ export default[
         });
         if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
-        await TripService.cancelTrip(tripData.tripId);
+        await TripService.cancelTrip(TokenService.get("tripId"));
         $ionicLoading.hide();
         await $ionicPopup.alert({
           title: "Trip is cancelled.<br>Passengers and Ops are alerted!"
@@ -129,7 +129,7 @@ export default[
         });
         if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
-        await TripService.notifyTripLate(tripData.tripId);
+        await TripService.notifyTripLate(TokenService.get("tripId"));
         $ionicLoading.hide();
         $ionicPopup.alert({
           title: "Passengers Notified that you will be more than 15 mins late."

@@ -5,17 +5,19 @@ export default[
   "DriverService",
   "TripService",
   "$stateParams",
+  "TokenService",
   function(
     $scope,
     $state,
     DriverService,
     TripService,
-    $stateParams
+    $stateParams,
+    TokenService
   ){
     $scope.$on("$ionicView.afterEnter",()=>{
       $scope.stopId = +$stateParams.stopId;
       //Display Stops + Passenger Information
-      TripService.getPassengersByStop(DriverService.getDecodedToken().tripId)
+      TripService.getPassengersByStop(TokenService.get("tripId"))
       .then(function(response){
         $scope.passengersByStop = response;
         $scope.passengerList = $scope.passengersByStop[$scope.stopId];

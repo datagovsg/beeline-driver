@@ -7,6 +7,7 @@ import JobAcceptedController from "./controllers/JobAcceptedController.js";
 import JobStartedController from "./controllers/JobStartedController.js";
 import PassengerListController from "./controllers/PassengerListController.js";
 import JobEndedController from "./controllers/JobEndedController.js";
+import TokenService from "./services/TokenService.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import VerifiedPromptService from "./services/verifiedPromptService.js";
@@ -31,10 +32,11 @@ angular.module("beeline-driver", [
 .controller("JobStartedController", JobStartedController)
 .controller("PassengerListController", PassengerListController)
 .controller("JobEndedController", JobEndedController)
-.service("DriverService",DriverService)
-.service("TripService",TripService)
+.service("TokenService", TokenService)
+.service("DriverService", DriverService)
+.service("TripService", TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
-.filter('trusted', ['$sce', function ($sce) {
+.filter("trusted", ["$sce", function ($sce) {
   return function(url) {
     return $sce.trustAsResourceUrl(url);
   };

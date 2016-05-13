@@ -5,11 +5,13 @@ export default[
   "$stateParams",
   "DriverService",
   "TripService",
+  "TokenService",
   function(
     $scope,
     $stateParams,
     DriverService,
-    TripService
+    TripService,
+    TokenService
   ){
     $scope.job = {
       // date: new Date(),
@@ -20,7 +22,7 @@ export default[
     };
 
     $scope.$on("$ionicView.beforeEnter",()=>{
-      $scope.job.tripId = DriverService.getDecodedToken().tripId;
+      $scope.job.tripId = TokenService.get("tripId");
       TripService.getTrip($scope.job.tripId).then(function(){
         $scope.job.date = TripService.trip.date;
       });
