@@ -68,6 +68,5 @@ export default function ($stateProvider, $urlRouterProvider) {
       }
     }
   });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise("/launch/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk");
+  $urlRouterProvider.otherwise("/landing");
 }
