@@ -1,8 +1,6 @@
 // Wrapper for making requests to the beeline api
 export default function(TokenService, BeelineService, DriverService, 
                         $cordovaGeolocation, $interval) {
-  var self = this;
-
   var sendPing = async function() {
     try {
       var userPosition = await $cordovaGeolocation.getCurrentPosition({
@@ -28,7 +26,8 @@ export default function(TokenService, BeelineService, DriverService,
   };
 
   var pingInterval;
-
+  
+  var self = this;
   this.start = function() {
     $interval.cancel(pingInterval);
     pingInterval = $interval(async function() {

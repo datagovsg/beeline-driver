@@ -1,35 +1,19 @@
-"use strict";
-
 export default[
   "$scope",
   "$stateParams",
-  "DriverService",
   "TripService",
-  "TokenService",
   function(
     $scope,
     $stateParams,
-    DriverService,
-    TripService,
-    TokenService
+    TripService
   ){
-    $scope.job = {
-      // date: new Date(),
-      date: undefined,
-      status: undefined,
-      tripId: null,
-      replacementPhoneNumber: undefined
-    };
-
-    $scope.$on("$ionicView.beforeEnter",()=>{
-      $scope.job.tripId = TokenService.get("tripId");
-      TripService.getTrip()
-      .then(function(){
-        $scope.job.date = TripService.trip.date;
-      });
+    $scope.job = {};
+    TripService.getTrip()
+    .then(function(trip){
+      $scope.job.tripId = trip.id;
+      $scope.job.date = trip.date;
     });
-    $scope.$on("$ionicView.afterEnter",()=>{
-      $scope.job.status = $stateParams.status;
-      $scope.job.replacementPhoneNumber = +$stateParams.replacementPhoneNumber;
-    });
-  }];
+    $scope.job.status = $stateParams.status;
+    $scope.job.replacementPhoneNumber = +$stateParams.replacementPhoneNumber;
+  }
+];

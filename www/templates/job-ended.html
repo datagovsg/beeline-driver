@@ -1,9 +1,9 @@
 <ion-view  view-title="" hide-back-button="true">
   <ion-content>
 
-    <div class='item' ng-show="job.status==='tripEnded'">
+    <div class='item text-center' ng-show="job.status==='tripEnded'">
       <h1>Trip {{job.tripId}} Ended</h1>
-      <h3>{{job.date| date:'d MMM y'}}</h3>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
       <p>
         Thank you {{job.driver.name}}!<br>
         The customers are happy with your service!<br>
@@ -11,9 +11,9 @@
       <p>You will receive your new job via the SMS.</p>
     </div>
 
-    <div class='item' ng-show="job.status==='tripReplaced'">
+    <div class='item text-center' ng-show="job.status==='tripReplaced'">
       <h1>Trip {{job.tripId}} Driver Replaced<br></h1>
-      <h3>{{job.date| date:'d MMM y'}}</h3>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
       <p>
         Sent to +65{{job.replacementPhoneNumber}}</br>
         The job has been forwarded to another driver.<br>
@@ -23,9 +23,9 @@
       <p>You will receive your new job via the SMS.</p>
     </div>
 
-    <div class='item' ng-show="job.status==='tripCancelled'">
+    <div class='item text-center' ng-show="job.status==='tripCancelled'">
       <h1>Trip {{job.tripId}} Cancelled</h1>
-      <h3>{{job.date| date:'d MMM y'}}</h3>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
       <p>
         The trip has been cancelled.<br>
         Service will resumed tomorrow.<br>
