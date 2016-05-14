@@ -20,8 +20,7 @@
     <div class="list">
       <a class="item item-icon-right"
          ng-repeat="boardStop in boardStops"
-         ui-sref="app.passengerList"
-         ui-sref-opts="{stopId: id}">
+         ui-sref="app.passengerList({stopId: boardStop.id})">
         <div class="row">
           <div class="col col-25">
             {{boardStop.time | date:'h:mm a'}}

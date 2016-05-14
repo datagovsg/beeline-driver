@@ -67,6 +67,7 @@ export default[
       $timeout.cancel(GPSOffTimeout);
     });
 
+    // Prompt to avoid accidental trip ending
     $scope.confirmEndTrip = function() {
       $ionicPopup.confirm({
         title: "Confirm End Trip",
