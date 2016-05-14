@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-
 export default function(TokenService, BeelineService) {
   var self = this;
   var driverId;
@@ -21,7 +19,7 @@ export default function(TokenService, BeelineService) {
 
   this.getVehicleInfo = function () {
     if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get('driverId');
+      driverId = TokenService.get("driverId");
     }
     if (typeof(self.vehicle)!="undefined"){
       return Promise.resolve(self.vehicle);
@@ -50,7 +48,7 @@ export default function(TokenService, BeelineService) {
 
   this.updateDriverName = function (newName) {
     if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get('driverId');
+      driverId = TokenService.get("driverId");
     }
     return BeelineService.request({
       method: "PUT",
@@ -66,7 +64,7 @@ export default function(TokenService, BeelineService) {
 
   this.updateDriverPhone = function (newPhoneNo) {
     if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get('driverId');
+      driverId = TokenService.get("driverId");
     }
     return BeelineService.request({
       method: "PUT",

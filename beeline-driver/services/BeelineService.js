@@ -8,4 +8,4 @@ export default function($http, TokenService) {
     }
     return $http(options);
   };
-};
+}

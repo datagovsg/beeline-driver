@@ -1,3 +1,4 @@
+import _ from "lodash";
 export default ["$scope", "TripService", async function($scope, TripService) {
 
   //Gmap default settings

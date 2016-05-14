@@ -1,4 +1,4 @@
-"use strict";
+import _ from "lodash";
 export default[
   "$scope",
   "$stateParams",

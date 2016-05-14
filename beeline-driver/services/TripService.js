@@ -38,7 +38,7 @@ export default function(
     }
     return BeelineService.request({
       method: "GET",
-      url: "/trips/" + TokenService.get('tripId') + "/code"
+      url: "/trips/" + TokenService.get("tripId") + "/code"
     })
     .then(function(response){
       tripCodeCache = response.data;
@@ -63,11 +63,11 @@ export default function(
 
   this.getPassengers = function(ignoreCache) {
     if (passengerCache && !ignoreCache) {
-      return passengerCache
+      return passengerCache;
     }
     return BeelineService.request({
       method: "GET",
-      url: "/trips/" + TokenService.get('tripId') + "/get_passengers"
+      url: "/trips/" + TokenService.get("tripId") + "/get_passengers"
     })
     .then(function(response){
       passengerCache = response.data;
@@ -115,4 +115,4 @@ export default function(
     });
   };
 
-};
+}
