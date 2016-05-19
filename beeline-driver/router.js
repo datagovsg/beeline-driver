@@ -48,6 +48,9 @@ export default function ($stateProvider, $urlRouterProvider) {
         templateUrl: "templates/job-started.html",
         controller: "JobStartedController"
       }
+    },
+    data: {
+      sendPings: true,
     }
   })
   .state("app.passengerList", {
@@ -57,6 +60,9 @@ export default function ($stateProvider, $urlRouterProvider) {
         templateUrl: "templates/passenger-list.html",
         controller: "PassengerListController"
       }
+    },
+    data: {
+      sendPings: true,
     }
   })
   .state("app.jobEnded", {
@@ -68,5 +74,5 @@ export default function ($stateProvider, $urlRouterProvider) {
       }
     }
   });
-  $urlRouterProvider.otherwise("/landing");
+  $urlRouterProvider.otherwise("/app/landing");
 }

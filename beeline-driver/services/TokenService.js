@@ -11,5 +11,7 @@ export default function() {
       localStorage["token"] = token;
     }
   });
-  this.get = (propertyName) => decodedToken[propertyName];
+  this.get = (propertyName) => {
+    return decodedToken[propertyName];
+  }
 }

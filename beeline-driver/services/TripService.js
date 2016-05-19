@@ -19,7 +19,7 @@ export default function(
 
 
   this.getTrip = function(ignoreCache) {
-    if (tripCache && !ignoreCache) { 
+    if (tripCache && !ignoreCache) {
       return Promise.resolve(tripCache);
     }
     return BeelineService.request({
@@ -78,7 +78,7 @@ export default function(
   this.getPassengersByStop = async function(ignoreCache) {
     if (passengersByStop  && !ignoreCache) {
       return Promise.resolve(passengersByStop);
-    } 
+    }
     var trip = await self.getTrip();
     var boardStops = trip.tripStops.filter( stop => stop.canBoard );
     boardStops = _.sortBy(boardStops, item => item.time );
@@ -114,5 +114,21 @@ export default function(
       return true;
     });
   };
+
+  this.acceptJob = function() {
+    return DriverService.getVehicleInfo()
+      .then((vehicle) => {
+        var tripId = TokenService.get('tripId')
+        console.log(vehicle)
+        return BeelineService.request({
+          method: 'POST',
+          url: `/trips/${tripId}/set_vehicle2`,
+          data: {
+            tripToken: TokenService.token,
+            vehicleId: vehicle.id,
+          }
+        })
+      })
+  }
 
 }

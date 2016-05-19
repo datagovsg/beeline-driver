@@ -7,6 +7,9 @@ export default function(TokenService, BeelineService) {
     if (driverCache && !ignoreCache) {
       return Promise.resolve(driverCache);
     }
+    if (typeof(driverId)==="undefined") {
+      driverId = TokenService.get("driverId");
+    }
     return BeelineService.request({
       method: "GET",
       url: "/drivers/" + driverId
@@ -18,19 +21,35 @@ export default function(TokenService, BeelineService) {
   };
 
   this.getVehicleInfo = function () {
-    if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get("driverId");
-    }
-    if (typeof(self.vehicle)!="undefined"){
+    if (typeof(self.vehicle) != "undefined"){
       return Promise.resolve(self.vehicle);
     }
-    else return BeelineService.request({
-      method: "GET",
-      url: "/vehicles"
-    }).then(function (response) {
-      self.vehicle = response.data;
-      return response.data[0];
-    });
+    else {
+
+      return BeelineService.request({
+        method: "GET",
+        url: "/vehicles"
+      }).then(function (response) {
+        if (response.data.length == 0) {
+          // Create a vehicle if it has not been created before
+          return BeelineService.request({
+            method: 'POST',
+            url: '/vehicles',
+            data: {
+              vehicleNumber: 'SJKXXXXL'
+            }
+          })
+          .then((response) => {
+            self.vehicle = response.data
+            return response.data
+          })
+        }
+        else {
+          self.vehicle = response.data[0];
+          return response.data[0];
+        }
+      });
+    }
   };
 
   this.assignReplacementDriver = function (tripId, replaceTelephone) {

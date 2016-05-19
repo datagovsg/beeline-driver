@@ -7,6 +7,7 @@ export default[
   "TokenService",
   "PingService",
   "$timeout",
+  "$rootScope",
   async function(
     $scope,
     $state,
@@ -14,7 +15,8 @@ export default[
     $ionicPopup,
     TokenService,
     PingService,
-    $timeout
+    $timeout,
+    $rootScope
   ){
 
     // Dummy media file which stops the page from going to sleep
@@ -41,17 +43,10 @@ export default[
     // Get the stop info and count the passengers per stop
     var trip = await TripService.getTrip();
     var boardStops = trip.tripStops.filter( stop => stop.canBoard );
-    var passengersByStopId = await TripService.getPassengersByStop();
-    _.forEach(passengersByStopId, function(value, key) {
-      var stop = boardStops.find(stop => stop.id === +key);
-      stop.passengerNumber = value.length;
-    });
-    $scope.boardStops = boardStops;
 
-    //Start Up the timer to ping GPS location
-    PingService.start();
     var GPSOffTimeout;
-    $scope.$watch("PingService.lastPingTime", (lastPingTime) => {
+
+    $scope.$watch(() => PingService.lastPingTime, (lastPingTime) => {
       $timeout.cancel(GPSOffTimeout);
       $scope.pingStatus = "GPS ON";
       $scope.pingStatusSymbol = "image/GPSon.svg";
@@ -61,11 +56,6 @@ export default[
       }, 30000);
     });
 
-    // Turn off timers when done with this view
-    $scope.$on("$destroy", function() {
-      PingService.stop();
-      $timeout.cancel(GPSOffTimeout);
-    });
 
     // Prompt to avoid accidental trip ending
     $scope.confirmEndTrip = function() {
@@ -80,5 +70,35 @@ export default[
         }
       });
     };
+
+    var reloadPassengerTimeout;
+    //reload passenger list with ignoreCache=true to update
+    //passenger list per stop is updated automatically
+    var reloadPassengersList = async function(){
+      $timeout.cancel(reloadPassengerTimeout);
+      var passengersByStopId = await TripService.getPassengersByStop(true);
+
+      _.forEach(passengersByStopId, function(value, key) {
+        var stop = boardStops.find(stop => stop.id === +key);
+        stop.passengerNumber = value.length;
+      });
+      $scope.$apply(()=>{
+        $scope.boardStops = boardStops;
+      });
+
+      reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
+    };
+
+    //1st time run
+    reloadPassengersList();
+
+    $scope.$on('$ionicView.afterEnter',()=>{
+      reloadPassengersList();
+    });
+
+    $scope.$on("$ionicView.leave", function() {
+      $timeout.cancel(GPSOffTimeout);
+      $timeout.cancel(reloadPassengerTimeout);
+    });
 
   }];

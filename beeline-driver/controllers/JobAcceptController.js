@@ -1,5 +1,6 @@
 import _ from "lodash";
-export default ["$scope", "TripService", async function($scope, TripService) {
+export default ["$scope", "TripService", "$state",
+async function($scope, TripService, $state) {
 
   //Gmap default settings
   $scope.map = {
@@ -64,5 +65,11 @@ export default ["$scope", "TripService", async function($scope, TripService) {
     latitude: point.lat,
     longitude: point.lng
   }));
+
+  // acceptJob()
+  $scope.acceptJob = function() {
+    TripService.acceptJob()
+    .then(() => $state.go('app.jobAccepted'))
+  }
 
 }];
