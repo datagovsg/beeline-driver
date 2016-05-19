@@ -1,63 +1,59 @@
-import jwt from "jsonwebtoken";
-
-export default function($http){
-  var sessionToken = localStorage["sessionToken"];
+export default function(TokenService, BeelineService) {
   var self = this;
   var driverId;
+  var driverCache = null;
 
-  if (!localStorage["sessionToken"]){
-    localStorage["sessionToken"] = sessionToken;
-  }
-
-  this.beeline = function(options) {
-    options.url = "http://staging.beeline.sg" + options.url;
-    if (sessionToken) {
-      options.headers = options.headers || {};
-      options.headers.authorization = "Bearer " + sessionToken;
+  this.getDriverInfo = function(ignoreCache) {
+    if (driverCache && !ignoreCache) {
+      return Promise.resolve(driverCache);
     }
-    return $http(options);
-  };
-
-  this.getDecodedToken = function() {
-    var decodedToken = jwt.decode(localStorage["sessionToken"]); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
-    if (decodedToken) {
-      driverId = decodedToken.driverId;
-      return decodedToken;
-    }
-  };
-
-  this.getDriverInfo = function () {
     if (typeof(driverId)==="undefined") {
-      self.getDecodedToken();
+      driverId = TokenService.get("driverId");
     }
-    if (typeof(self.driver)!="undefined"){
-      return Promise.resolve(self.driver);
-    }
-    else return this.beeline({
+    return BeelineService.request({
       method: "GET",
       url: "/drivers/" + driverId
-    }).then(function (response) {
-      self.driver = response.data;
+    })
+    .then((response) => {
+      driverCache = response.data;
+      return driverCache;
     });
   };
 
   this.getVehicleInfo = function () {
-    if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
-    }
-    if (typeof(self.vehicle)!="undefined"){
+    if (typeof(self.vehicle) != "undefined"){
       return Promise.resolve(self.vehicle);
     }
-    else return this.beeline({
-      method: "GET",
-      url: "/vehicles"
-    }).then(function (response) {
-      self.vehicle = response.data;
-    });
+    else {
+
+      return BeelineService.request({
+        method: "GET",
+        url: "/vehicles"
+      }).then(function (response) {
+        if (response.data.length == 0) {
+          // Create a vehicle if it has not been created before
+          return BeelineService.request({
+            method: 'POST',
+            url: '/vehicles',
+            data: {
+              vehicleNumber: 'SJKXXXXL'
+            }
+          })
+          .then((response) => {
+            self.vehicle = response.data
+            return response.data
+          })
+        }
+        else {
+          self.vehicle = response.data[0];
+          return response.data[0];
+        }
+      });
+    }
   };
 
   this.assignReplacementDriver = function (tripId, replaceTelephone) {
-    return this.beeline({
+    return BeelineService.request({
       method: "POST",
       url: "/trips/" + tripId + "/send_to_phone",
       data: {
@@ -71,9 +67,9 @@ export default function($http){
 
   this.updateDriverName = function (newName) {
     if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+      driverId = TokenService.get("driverId");
     }
-    return this.beeline({
+    return BeelineService.request({
       method: "PUT",
       url: "/drivers/"+driverId,
       data: {
@@ -87,9 +83,9 @@ export default function($http){
 
   this.updateDriverPhone = function (newPhoneNo) {
     if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+      driverId = TokenService.get("driverId");
     }
-    return this.beeline({
+    return BeelineService.request({
       method: "PUT",
       url: "/drivers/"+driverId,
       data: {
@@ -105,7 +101,7 @@ export default function($http){
     if (typeof(self.vehicle)==="undefined"){
       await this.getVehicleInfo();
     }
-    return this.beeline({
+    return BeelineService.request({
       method: "PUT",
       url: "/vehicles/"+self.vehicle[0].id,
       data: {
@@ -116,4 +112,5 @@ export default function($http){
       return true;
     });
   };
+
 }

@@ -9,7 +9,7 @@
     "webpack": "webpack",
     "webpack-watch": "webpack --watch -d",
     "build": "npm run sass && npm run webpack",
-    "watch": "npm run sass-watch & npm run webpack-watch",
+    "watch": "npm run start & npm run sass-watch & npm run webpack-watch",
     "prestart": "npm run build",
     "start": "http-server www/"
   },

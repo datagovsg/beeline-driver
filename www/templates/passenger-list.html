@@ -1,11 +1,10 @@
-<ion-view class="passenger-list" view-title="Passenger List">
+<ion-view view-title="Passenger List">
   <ion-content>
-    <p>{{stopDescription}}</p>
+    <div class="item item-divider" ng-bind="stopDescription"></div>
     <div ng-repeat="passenger in passengerList">
-      <a class="item">
-        {{$index+1}}
-        <span class="h4">{{passenger.name}}</span>
-      </a>
+      <div class="item">
+        <h2>{{$index+1}}. {{passenger.name}}</h2>
+      </div>
     </div>
   </ion-content>
 </ion-view>

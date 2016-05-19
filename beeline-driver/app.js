@@ -7,8 +7,11 @@ import JobAcceptedController from "./controllers/JobAcceptedController.js";
 import JobStartedController from "./controllers/JobStartedController.js";
 import PassengerListController from "./controllers/PassengerListController.js";
 import JobEndedController from "./controllers/JobEndedController.js";
+import TokenService from "./services/TokenService.js";
+import BeelineService from "./services/BeelineService.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
+import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/verifiedPromptService.js";
 
 // Configuration Imports
@@ -31,9 +34,17 @@ angular.module("beeline-driver", [
 .controller("JobStartedController", JobStartedController)
 .controller("PassengerListController", PassengerListController)
 .controller("JobEndedController", JobEndedController)
-.service("DriverService",DriverService)
-.service("TripService",TripService)
+.service("TokenService", TokenService)
+.service("BeelineService", BeelineService)
+.service("DriverService", DriverService)
+.service("TripService", TripService)
+.service("PingService", PingService)
 .service("VerifiedPromptService",VerifiedPromptService)
+.filter("trusted", ["$sce", function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+}])
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     //client: 'gme-infocommunications',

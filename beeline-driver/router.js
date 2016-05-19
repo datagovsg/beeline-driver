@@ -3,8 +3,8 @@ export default function ($stateProvider, $urlRouterProvider) {
   // entry point starting url received from sms
   .state("launch", {
     url: "/launch/:tripToken",
-    controller($state, $stateParams) {
-      localStorage["sessionToken"] = $stateParams.tripToken;
+    controller($state, $stateParams, TokenService) {
+      TokenService.token = $stateParams.tripToken;
       $state.go("app.landing");
     }
   })
@@ -48,6 +48,9 @@ export default function ($stateProvider, $urlRouterProvider) {
         templateUrl: "templates/job-started.html",
         controller: "JobStartedController"
       }
+    },
+    data: {
+      sendPings: true,
     }
   })
   .state("app.passengerList", {
@@ -57,6 +60,9 @@ export default function ($stateProvider, $urlRouterProvider) {
         templateUrl: "templates/passenger-list.html",
         controller: "PassengerListController"
       }
+    },
+    data: {
+      sendPings: true,
     }
   })
   .state("app.jobEnded", {
@@ -68,6 +74,5 @@ export default function ($stateProvider, $urlRouterProvider) {
       }
     }
   });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise("/launch/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZHJpdmVyIiwiZHJpdmVySWQiOjgsInRyaXBJZCI6MTQ1LCJ0cmFuc3BvcnRDb21wYW55SWQiOiIzIiwiaWF0IjoxNDYxMTQzMzI2fQ.XyaLl0rkYWF6XI_AOxFQNB0QNq0_v-EN-bS-TWX-Pdk");
+  $urlRouterProvider.otherwise("/app/landing");
 }

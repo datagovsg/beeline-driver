@@ -1,27 +1,60 @@
-<ion-view view-title="Accept the Job?" hide-back-button="true">
-  <ion-content>
-	   <div class=" item row row-top">
-			<div class="col col-25">
-        <div class="row"><h2>{{job.tripNumber}}</h2></div>
+<ion-view class="accept-view"
+          view-title="Accept the Job?"
+          hide-back-button="true">
+  <ion-content scroll=false>
+    <div class="item item-text-wrap">
+      <div class="row">
+        <div class="col col-33 text-right">
+          Trip Number
+        </div>
+        <div class="col col-67">
+          <strong ng-bind="tripNumber"></strong>
+        </div>
       </div>
-			<div class="col col-75">
-				<div class="row">
-					<span>{{job.startTime | date:'h:mm a'}} </span>,
-          <span>{{ job.startLocation }}</span>
-				</div>
-				<div class="row">
-          <span>{{job.endTime | date:'h:mm a'}} </span>,
-          <span> {{job.endLocation}} </span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<ui-gmap-google-map center="map.center" pan="true" zoom="map.zoom" options="map.options" bounds="map.bounds" dragging="map.dragging" control="map.control" data-tap-disabled="true">
-				<ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" options="'options'"></ui-gmap-markers>
-				<ui-gmap-polyline ng-repeat="p in map.lines" path="p.path" icons="p.icons"></ui-gmap-polyline>
-			</ui-gmap-google-map>
-		</div>
-    <p class="text-center">Would you like to take the job?</p>
-    <div class="button button-block button-outline button-royal" ui-sref='app.jobAccepted'>YES</div>
+      <div class="row">
+        <div class="col col-33 text-right">
+          Start
+        </div>
+        <div class="col col-67">
+          <strong>{{ startTime | date:'h:mm a' }}</strong>,
+          <strong>{{ startLocation }}</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33 text-right">
+          End
+        </div>
+        <div class="col col-67">
+          <strong>{{ endTime | date:'h:mm a' }}</strong>,
+          <strong>{{ endLocation }}</strong>
+        </div>
+      </div>
+    </div>
+
+		<ui-gmap-google-map center="map.center"
+                        pan="true"
+                        zoom="map.zoom"
+                        options="map.options"
+                        bounds="map.bounds"
+                        dragging="map.dragging"
+                        control="map.control"
+                        data-tap-disabled="true">
+			<ui-gmap-markers models="map.markers"
+                       coords="'self'"
+                       icon="'icon'"
+                       options="'options'">
+      </ui-gmap-markers>
+			<ui-gmap-polyline ng-repeat="p in map.lines"
+                        path="p.path"
+                        icons="p.icons">
+      </ui-gmap-polyline>
+		</ui-gmap-google-map>
+
+    <div class="item">
+      <h2 class="text-center">Would you like to take the job?</h2>
+      <div class="primary-button"
+          ng-click="acceptJob()">Yes</div>
+    </div>
+
   </ion-content>
 </ion-view>

@@ -1,28 +1,38 @@
-<ion-view  view-title="" hide-back-button="true" class="job-ended">
+<ion-view  view-title="" hide-back-button="true">
   <ion-content>
-    <p>{{job.date| date:'d MMM y'}}</p>
-    <p ng-show="job.status==='tripEnded'">
-      {{job.tripId}} Trip Ended<br>
-      <br>
-      Thank you {{job.driver.name}}!<br>
-      The customers are happy with your service!<br>
-    </p>
-    <p ng-show="job.status==='tripReplaced'">
-      {{job.tripId}} Driver Replaced<br>
-      Sent to +65{{job.replacementPhoneNumber}}</br>
-      <br>
-      The job has been forwarded to another driver.<br>
-      You will resume your service tomorrow.<br>
-      Thank you!<br>
-    </p>
-    <p ng-show="job.status==='tripCancelled'">
-      {{job.tripId}} Trip Cancelled<br>
-      <br>
-      The trip has been cancelled.<br>
-      Service will resumed tomorrow.<br>
-      Thank you!<br>
-    </p>
-    <br>
-    <p>You will receive your new job via the SMS.</p>
+
+    <div class='item text-center' ng-show="job.status==='tripEnded'">
+      <h1>Trip {{job.tripId}} Ended</h1>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
+      <p>
+        Thank you {{job.driver.name}}!<br>
+        The customers are happy with your service!<br>
+      </p>
+      <p>You will receive your new job via the SMS.</p>
+    </div>
+
+    <div class='item text-center' ng-show="job.status==='tripReplaced'">
+      <h1>Trip {{job.tripId}} Driver Replaced<br></h1>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
+      <p>
+        Sent to +65{{job.replacementPhoneNumber}}</br>
+        The job has been forwarded to another driver.<br>
+        You will resume your service tomorrow.<br>
+        Thank you!<br>
+      </p>
+      <p>You will receive your new job via the SMS.</p>
+    </div>
+
+    <div class='item text-center' ng-show="job.status==='tripCancelled'">
+      <h1>Trip {{job.tripId}} Cancelled</h1>
+      <h2>{{job.date| date:'d MMM y'}}</h2>
+      <p>
+        The trip has been cancelled.<br>
+        Service will resumed tomorrow.<br>
+        Thank you!<br>
+      </p>
+      <p>You will receive your new job via the SMS.</p>
+    </div>
+
   </ion-content>
 </ion-view>

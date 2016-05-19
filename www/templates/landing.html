@@ -1,12 +1,10 @@
-<ion-view hide-back-button="true">
-  <ion-content class="landing">
-    <div class="text-center">
-      <img ng-src="image/banner_logo.png"/>
-      <h3>{{landing.greetingTxt}}</h3>
-      <h1>{{landing.driverTxt}}</h1>
-    </div>
+<ion-view class="landing-view" hide-back-button="true">
+  <ion-content scroll=false>
+    <img ng-src="image/banner_logo.png"/>
+    <h3 class="text-center light">Welcome Back</h3>
+    <h1 class="text-center light">{{ driver.name }}</h1>
+    <button class="primary-button" ui-sref='app.jobAccept'>
+      Next
+    </button>
   </ion-content>
-  <div class="bar bar-footer bar-royal">
-    <div class="title">Redirecting to Trip info page...</div>
-  </div>
 </ion-view>

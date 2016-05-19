@@ -1,0 +1,17 @@
+.landing-view {
+  ion-content {
+    background-color: $royal;
+    img {
+      display: block;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 200px;
+    }
+    .primary-button {
+      position: absolute;
+      bottom: $padding-large-vertical;
+    }
+  }
+}

@@ -1,7 +1,9 @@
-@import "scss/variables";
+@import "variables";
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts";
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-@import "scss/beeline";
+@import "beeline";
+@import "landing";
+@import "accept";
