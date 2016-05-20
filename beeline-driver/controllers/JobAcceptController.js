@@ -48,17 +48,18 @@ async function($scope, TripService, $state) {
   var route = await TripService.getRoute();
 
   // Extract the start and end descriptions
-  $scope.tripNumber = trip.id;
-  var routeStartEnd = route.from.split(" to ");
-  $scope.startLocation = routeStartEnd[0];
-  $scope.endLocation = routeStartEnd[1];
+  $scope.$apply(()=>{
+    $scope.tripNumber = trip.id;
+    $scope.startLocation = route.from;
+    $scope.endLocation = route.to;
 
-  // Extract the start and end times
-  var tripStops = trip.tripStops;
-  var startTimeObj = new Date(tripStops[0].time);
-  var endTimeObj = new Date(tripStops[tripStops.length-1].time);
-  $scope.startTime = startTimeObj.getTime();
-  $scope.endTime = endTimeObj.getTime();
+    // Extract the start and end times
+    var tripStops = trip.tripStops;
+    var startTimeObj = new Date(tripStops[0].time);
+    var endTimeObj = new Date(tripStops[tripStops.length-1].time);
+    $scope.startTime = startTimeObj.getTime();
+    $scope.endTime = endTimeObj.getTime();
+  })
 
   // Draw the path
   $scope.map.lines[0].path = _.map(route.path, (point) => ({

@@ -15,4 +15,17 @@ export default[
     $scope.stopDescription = stop.description + ", " + stop.road;
     var passengersByStop = await TripService.getPassengersByStop();
     $scope.passengerList = passengersByStop[+$stateParams.stopId];
+
+    //wrs user name {name:, email:, telephone:}
+    if ($scope.passengerList !== 'undefined') {
+      for (let p of $scope.passengerList) {
+        try {
+          let jsonObj = JSON.parse(p.name);
+          _.assign(p, jsonObj)
+        }catch (err) {
+          console.log(err.stack);
+        }
+      }
+    }
+
   }];
