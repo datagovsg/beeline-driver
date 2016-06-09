@@ -1,24 +1,14 @@
 import jwt from "jsonwebtoken";
 
-export default function($http){
+export default function($http, BeelineService){
   var sessionToken;
   var self = this;
   var driverId;
 
-  this.beeline = function(options) {
-    // options.url = "http://staging.beeline.sg" + options.url;
-    options.url="http://localhost:8081"+options.url;
-    if (sessionToken) {
-      options.headers = options.headers || {};
-      options.headers.authorization = "Bearer " + sessionToken;
-    }
-    return $http(options);
-  };
-
   // Requests a verification code to be sent to a mobile number
   // Verification code is used to log in
   this.sendTelephoneVerificationCode = function(number) {
-    return this.beeline({
+    return BeelineService.request({
       method: 'POST',
       url: '/drivers/sendTelephoneVerification',
       data: {telephone: '+65' + number},
@@ -30,7 +20,7 @@ export default function($http){
 
   // Submit the received code and number for verification to the server
   this.verifyTelephone = function(number, code) {
-    return this.beeline({
+    return BeelineService.request({
       method: 'POST',
       url: '/drivers/verifyTelephone',
       data: {
@@ -63,7 +53,7 @@ export default function($http){
     if (typeof(self.driver)!="undefined"){
       return Promise.resolve(self.driver);
     }
-    else return this.beeline({
+    else return BeelineService.request({
       method: "GET",
       url: "/drivers/" + driverId
     }).then(function (response) {
@@ -80,7 +70,7 @@ export default function($http){
     if (typeof(self.vehicle)!="undefined"){
       return Promise.resolve(self.vehicle);
     }
-    else return this.beeline({
+    else return BeelineService.request({
       method: "GET",
       url: "/vehicles"
     }).then(function (response) {
@@ -93,7 +83,7 @@ export default function($http){
     if (typeof(driverId)==="undefined") {
       driverId = self.getDecodedToken().driverId;
     }
-    return this.beeline({
+    return BeelineService.request({
       method: "PUT",
       url: "/drivers/"+driverId,
       data: {
@@ -109,7 +99,7 @@ export default function($http){
     if (typeof(self.vehicle)==="undefined"){
       await this.getVehicleInfo();
     }
-    return this.beeline({
+    return BeelineService.request({
       method: "PUT",
       url: "/vehicles/"+self.vehicle[0].id,
       data: {

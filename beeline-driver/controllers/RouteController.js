@@ -2,48 +2,29 @@ import _ from 'lodash';
 
 export default [
   "$scope",
-  "DriverService",
   "TripService",
+  "$state",
   function(
     $scope,
-    DriverService,
-    TripService
+    TripService,
+    $state
   ) {
 
-    $scope.job = {
-      path: "",
-      tripNumber: "",
-      startTime: "",
-      startLocation: "",
-      endTime: "",
-      endLocation: "",
-      acceptoff: false
+    $scope.data = {
+      routeId: undefined,
+      tripId: undefined
     };
 
-    // //Use the token to grab the trip info
-    // TripService.getTrip(DriverService.getDecodedToken().tripId)
-    // //Use the trip to grab the route info
-    // .then(function(trip){
-    //   $scope.job.tripNumber = trip.id;
-    //   return TripService.getRoutePath(trip.routeId);
-    // })
-    // //re-organise the DB output into Google Map compatible JSON
-    // .then(function(routePath) {
-    //   // Draw the path
-    //   $scope.map.lines[0].path = _.map(routePath.path, (point) => ({
-    //     latitude: point.lat,
-    //     longitude: point.lng
-    //   }));
-    //   // Extract the start and end descriptions
-    //   var routeStartEnd = TripService.routepath.from.split(" to ");
-    //   $scope.job.startLocation = routeStartEnd[0];
-    //   $scope.job.endLocation = routeStartEnd[1];
-    //   // Extract the start and end times
-    //   var tripStops = TripService.trip.tripStops;
-    //   var startTimeObj = new Date(tripStops[0].time);
-    //   var endTimeObj = new Date(tripStops[tripStops.length-1].time);
-    //   $scope.job.startTime = startTimeObj.getTime();
-    //   $scope.job.endTime = endTimeObj.getTime();
-    // });
+    $scope.start = async function() {
+      try {
+        // await TripService.getTripFromRouteId($scope.data.routeId);
+        console.log($scope.data.routeId);
+        await TripService.assignTrip($scope.data.routeId);
+        // $state.go("app.start",{"tripId": data.tripId})
+      }
+      catch(error) {
+        console.log(error.stack);
+      }
+    }
   }
 ];

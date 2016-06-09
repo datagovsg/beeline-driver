@@ -32,7 +32,7 @@ export default[
         console.log(no);
         console.log(code);
         await DriverService.verifyTelephone(no, code);
-        $state.go("driver");
+        $state.go("app.route");
       }
       catch(err){
         console.log(err);

@@ -12,11 +12,6 @@ export default function ($stateProvider, $urlRouterProvider) {
     templateUrl: "templates/SMS.html",
     controller: "LoginController"
   })
-  .state("driver", {
-    url: "/driver",
-    templateUrl: "templates/driver.html",
-    controller: "DriverController"
-  })
   .state("app", {
     url: "/app",
     abstract: true,
@@ -33,7 +28,7 @@ export default function ($stateProvider, $urlRouterProvider) {
     }
   })
   .state("app.start", {
-    url: "/start",
+    url: "/start/:tripId",
     views: {
       "menu-content": {
         templateUrl: "templates/start.html",

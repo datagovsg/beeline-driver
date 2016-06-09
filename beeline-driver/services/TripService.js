@@ -1,17 +1,20 @@
 import _ from "lodash";
+import assert from "assert";
+import qs from "querystring";
 
 export default [
-  "DriverService",
+  "BeelineService",
   "$cordovaGeolocation",
   "$interval",
   "$ionicPopup",
   function(
-    DriverService,
+    BeelineService,
     $cordovaGeolocation,
     $interval,
     $ionicPopup
   ){
     var self = this;
+
 
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
@@ -19,11 +22,57 @@ export default [
     this.pingTimer = false;
     var passengersByStop;
 
+    this.getTripFromRouteId = async function(routeId) {
+      var now = new Date();
+      this.today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      var trips = await BeelineService.request({
+        method: "GET",
+        url: '/routes/'+routeId+'?' + qs.stringify({
+          //midnight to midnight
+          start_date: this.today,
+          end_date: this.today + 24*60*60*1000,
+          include_trips: true
+        }),
+      })
+      //assume route only has one trip per day
+      if (trips !== undefined)
+      {
+        self.trip= trips[0];
+        return true;
+      }
+      return false;
+    }
+
+    this.assignTrip = async function(routeId) {
+      var now = new Date();
+      this.today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      var trips = await BeelineService.request({
+        method: "GET",
+        url: '/routes/'+routeId+'?' + qs.stringify({
+          //midnight to midnight
+          start_date: this.today,
+          end_date: this.today + 24*60*60*1000,
+          include_trips: true
+        }),
+      });
+      //assume route only has one trip per day
+      if (trips !== undefined)
+      {
+        self.trip= trips.data.trips[0];
+      }
+
+      var response = await BeelineService.request({
+        method: "PUT",
+        url: '/trips/'+self.trip.id+'/setDriver'
+      })
+      self.trip = response.data;
+    }
+
     this.getTrip = function(id){
       if (typeof(self.trip)!=="undefined"){
         return Promise.resolve(self.trip);
       }
-      else return DriverService.beeline({
+      else return BeelineService.request({
         method: "GET",
         url: "/trips/"+id
       }).then(function(response){
@@ -33,7 +82,7 @@ export default [
     };
 
     this.getTripCode = function(id){
-      return DriverService.beeline({
+      return BeelineService.request({
         method: "GET",
         url: "/trips/"+id+"/code"
       })
@@ -42,19 +91,8 @@ export default [
       });
     };
 
-    this.getRoutePath = function(id){
-      return DriverService.beeline({
-        method: "GET",
-        url: "/routes/"+id
-      })
-      .then(function(response){
-        self.routepath = response.data;
-        return response.data;
-      });
-    };
-
     this.getPassengers = function(id){
-      return DriverService.beeline({
+      return BeelineService.request({
         method: "GET",
         url: "/trips/"+id+"/get_passengers"
       })
@@ -80,7 +118,7 @@ export default [
     };
 
     this.cancelTrip = function(tripId){
-      return DriverService.beeline({
+      return BeelineService.request({
         method: "POST",
         url: "/trips/"+tripId+"/statuses",
         data: {
@@ -95,7 +133,7 @@ export default [
 
     //link to driver instead of vehicle
     this.sendPing = function(tripId, vehicleId, lat, lng){
-      return DriverService.beeline({
+      return BeelineService.request({
         method: "POST",
         url: "/trips/"+tripId+"/pings",
         data: {

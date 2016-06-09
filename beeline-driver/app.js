@@ -1,16 +1,17 @@
 /* global angular, cordova, StatusBar */
 import "babel-polyfill";
 import CancelController from "./controllers/CancelController.js";
-import DriverController from "./controllers/DriverController.js";
 import LoginController from "./controllers/LoginController.js";
 import RouteController from "./controllers/RouteController.js";
 import SidebarController from "./controllers/SidebarController.js";
 import PassengerListController from "./controllers/PassengerListController.js";
 import StartController from "./controllers/StartController.js";
+import BeelineService from "./services/BeelineService.js";
+import TokenService from "./services/TokenService.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
-import VerifiedPromptService from "./services/verifiedPromptService.js";
+import VerifiedPromptService from "./services/VerifiedPromptService.js";
 
 // Configuration Imports
 import configureRoutes from "./router.js";
@@ -25,12 +26,13 @@ angular.module("beeline-driver", [
   "ngCordova"
 ])
 .controller("CancelController", CancelController)
-.controller("DriverController", DriverController)
 .controller("LoginController", LoginController)
 .controller("RouteController", RouteController)
 .controller("SidebarController", SidebarController)
 .controller("PassengerListController", PassengerListController)
 .controller("StartController", StartController)
+.service("BeelineService",BeelineService)
+.service("TokenService",TokenService)
 .service("DriverService",DriverService)
 .service("TripService",TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
