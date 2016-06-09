@@ -1,75 +1,99 @@
-export default function(TokenService, BeelineService) {
+import jwt from "jsonwebtoken";
+
+export default function($http){
+  var sessionToken;
   var self = this;
   var driverId;
-  var driverCache = null;
 
-  this.getDriverInfo = function(ignoreCache) {
-    if (driverCache && !ignoreCache) {
-      return Promise.resolve(driverCache);
+  this.beeline = function(options) {
+    // options.url = "http://staging.beeline.sg" + options.url;
+    options.url="http://localhost:8081"+options.url;
+    if (sessionToken) {
+      options.headers = options.headers || {};
+      options.headers.authorization = "Bearer " + sessionToken;
     }
-    if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get("driverId");
-    }
-    return BeelineService.request({
-      method: "GET",
-      url: "/drivers/" + driverId
-    })
-    .then((response) => {
-      driverCache = response.data;
-      return driverCache;
+    return $http(options);
+  };
+
+  // Requests a verification code to be sent to a mobile number
+  // Verification code is used to log in
+  this.sendTelephoneVerificationCode = function(number) {
+    return this.beeline({
+      method: 'POST',
+      url: '/drivers/sendTelephoneVerification',
+      data: {telephone: '+65' + number},
+      headers: {'Content-Type': 'application/json'}
+    }).then(function() {
+      return true;
     });
   };
 
-  this.getVehicleInfo = function () {
-    if (typeof(self.vehicle) != "undefined"){
-      return Promise.resolve(self.vehicle);
-    }
-    else {
+  // Submit the received code and number for verification to the server
+  this.verifyTelephone = function(number, code) {
+    return this.beeline({
+      method: 'POST',
+      url: '/drivers/verifyTelephone',
+      data: {
+        telephone: '+65' + number,
+        code: code
+      }
+    })
+    .then(function(response) {
+      sessionToken = response.data.sessionToken;
+      window.localStorage.setItem('sessionToken', sessionToken);
+      var driver = response.data.driver;
+      window.localStorage.setItem('beelineDriver', JSON.stringify(driver));
+      return driver;
+    });
+  };
 
-      return BeelineService.request({
-        method: "GET",
-        url: "/vehicles"
-      }).then(function (response) {
-        if (response.data.length == 0) {
-          // Create a vehicle if it has not been created before
-          return BeelineService.request({
-            method: 'POST',
-            url: '/vehicles',
-            data: {
-              vehicleNumber: 'SJKXXXXL'
-            }
-          })
-          .then((response) => {
-            self.vehicle = response.data
-            return response.data
-          })
-        }
-        else {
-          self.vehicle = response.data[0];
-          return response.data[0];
-        }
-      });
+  this.getDecodedToken = function() {
+    //phone no. company id
+    var decodedToken = jwt.decode(localStorage["sessionToken"]); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
+    if (decodedToken) {
+      driverId = decodedToken.driverId;
+      return decodedToken;
     }
   };
 
-  this.assignReplacementDriver = function (tripId, replaceTelephone) {
-    return BeelineService.request({
-      method: "POST",
-      url: "/trips/" + tripId + "/send_to_phone",
-      data: {
-        telephone: "+65"+replaceTelephone
-      }
-    })
-    .then(function(response){
-      return true;
+  this.getDriverInfo = function () {
+    if (typeof(driverId)==="undefined") {
+      self.getDecodedToken();
+    }
+    if (typeof(self.driver)!="undefined"){
+      return Promise.resolve(self.driver);
+    }
+    else return this.beeline({
+      method: "GET",
+      url: "/drivers/" + driverId
+    }).then(function (response) {
+      self.driver = response.data;
+      return response.data;
+    });
+  };
+
+  //vehicle is property for driver (current using vehicle)
+  this.getVehicleInfo = function () {
+    if (typeof(driverId)==="undefined") {
+      driverId = self.getDecodedToken().driverId;
+    }
+    if (typeof(self.vehicle)!="undefined"){
+      return Promise.resolve(self.vehicle);
+    }
+    else return this.beeline({
+      method: "GET",
+      url: "/vehicles"
+    }).then(function (response) {
+      self.vehicle = response.data;
+      return response.data[0];
     });
   };
 
   this.updateDriverName = function (newName) {
     if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get("driverId");
+      driverId = self.getDecodedToken().driverId;
     }
-    return BeelineService.request({
+    return this.beeline({
       method: "PUT",
       url: "/drivers/"+driverId,
       data: {
@@ -81,27 +105,11 @@ export default function(TokenService, BeelineService) {
     });
   };
 
-  this.updateDriverPhone = function (newPhoneNo) {
-    if (typeof(driverId)==="undefined") {
-      driverId = TokenService.get("driverId");
-    }
-    return BeelineService.request({
-      method: "PUT",
-      url: "/drivers/"+driverId,
-      data: {
-        telephone: newPhoneNo
-      }
-    })
-    .then(function(response){
-      return true;
-    });
-  };
-
   this.updateVehicleNo = async function (newVehileNo) {
     if (typeof(self.vehicle)==="undefined"){
       await this.getVehicleInfo();
     }
-    return BeelineService.request({
+    return this.beeline({
       method: "PUT",
       url: "/vehicles/"+self.vehicle[0].id,
       data: {
@@ -112,5 +120,4 @@ export default function(TokenService, BeelineService) {
       return true;
     });
   };
-
 }

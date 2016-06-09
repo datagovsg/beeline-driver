@@ -1,0 +1,19 @@
+<ion-view>
+  <ion-nav-title>
+    Enter Your Phone No.
+  </ion-nav-title>
+  <ion-content>
+    <h4 class="text-center">Welcome to Beeline Driver</h4>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
+        <input type="text" ng-model="data.number">
+      </label>
+    </div>
+    <p class="err_container" ng-if="err">{{err}}</p>
+    <div class="primary-button"
+         ng-click='login()'>
+      NEXT
+    </div>
+  </ion-content>
+</ion-view>

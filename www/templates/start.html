@@ -1,0 +1,39 @@
+<ion-view hide-back-button="true">
+  <ion-nav-title>In Progress</ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button">
+      {{ping.pingStatus}}
+      <img class="title-image" ng-src="{{ping.pingStatusSymbol}}">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        <h1 class="text-center">{{ tripCode }}</h1>
+      </div>
+      <a class="item item-icon-right"
+         ng-repeat="boardStop in boardStops"
+         on-tap="showPassengerList(boardStop.id)">
+        <div class="row">
+          <div class="col col-25">
+            {{boardStop.time | date:'h:mm a'}}
+          </div>
+          <div class="col">
+            <strong>{{boardStop.stop.road}}</strong><br>
+            {{boardStop.stop.description}}<br>
+            {{boardStop.stop.type}} ID {{boardStop.stop.label}}
+          </div>
+        </div>
+        <i class="icon">
+          <span class="ion-android-person"></span> &nbsp;
+          {{ boardStop.passengerNumber > 0 ?
+             boardStop.passengerNumber : 0 }} &nbsp;
+        </i>
+		  </a>
+    </div>
+    <div class="primary-button"
+         oui-sref='app.cancel'>CANCEL</div>
+    <div class="primary-button"
+         oui-sref='app.route'>STOP</div>
+  </ion-content>
+</ion-view>

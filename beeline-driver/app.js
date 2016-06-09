@@ -1,14 +1,12 @@
 /* global angular, cordova, StatusBar */
 import "babel-polyfill";
-import AppLandingController from "./controllers/AppLandingController.js";
-import JobEmergencyController from "./controllers/EmergencyController.js";
-import JobAcceptController from "./controllers/JobAcceptController.js";
-import JobAcceptedController from "./controllers/JobAcceptedController.js";
-import JobStartedController from "./controllers/JobStartedController.js";
+import CancelController from "./controllers/CancelController.js";
+import DriverController from "./controllers/DriverController.js";
+import LoginController from "./controllers/LoginController.js";
+import RouteController from "./controllers/RouteController.js";
+import SidebarController from "./controllers/SidebarController.js";
 import PassengerListController from "./controllers/PassengerListController.js";
-import JobEndedController from "./controllers/JobEndedController.js";
-import TokenService from "./services/TokenService.js";
-import BeelineService from "./services/BeelineService.js";
+import StartController from "./controllers/StartController.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
@@ -24,34 +22,18 @@ import configureRoutes from "./router.js";
 // 'starter.controllers' is found in controllers.js
 angular.module("beeline-driver", [
   "ionic",
-  "ngCordova",
-  "uiGmapgoogle-maps"
+  "ngCordova"
 ])
-.controller("AppLandingController", AppLandingController)
-.controller("JobEmergencyController", JobEmergencyController)
-.controller("JobAcceptController", JobAcceptController)
-.controller("JobAcceptedController", JobAcceptedController)
-.controller("JobStartedController", JobStartedController)
+.controller("CancelController", CancelController)
+.controller("DriverController", DriverController)
+.controller("LoginController", LoginController)
+.controller("RouteController", RouteController)
+.controller("SidebarController", SidebarController)
 .controller("PassengerListController", PassengerListController)
-.controller("JobEndedController", JobEndedController)
-.service("TokenService", TokenService)
-.service("BeelineService", BeelineService)
-.service("DriverService", DriverService)
-.service("TripService", TripService)
-.service("PingService", PingService)
+.controller("StartController", StartController)
+.service("DriverService",DriverService)
+.service("TripService",TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
-.filter("trusted", ["$sce", function ($sce) {
-  return function(url) {
-    return $sce.trustAsResourceUrl(url);
-  };
-}])
-.config(function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    //client: 'gme-infocommunications',
-    key: "AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M",
-    libraries: "places"
-  });
-})
 .config(configureRoutes)
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

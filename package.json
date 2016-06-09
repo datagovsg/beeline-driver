@@ -14,7 +14,6 @@
     "start": "http-server www/"
   },
   "dependencies": {
-    "angular-google-maps": "^2.3.2",
     "angular-simple-logger": "^0.1.7",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
