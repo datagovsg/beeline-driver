@@ -22,27 +22,6 @@ export default [
     this.pingTimer = false;
     var passengersByStop;
 
-    this.getTripFromRouteId = async function(routeId) {
-      var now = new Date();
-      this.today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-      var trips = await BeelineService.request({
-        method: "GET",
-        url: '/routes/'+routeId+'?' + qs.stringify({
-          //midnight to midnight
-          start_date: this.today,
-          end_date: this.today + 24*60*60*1000,
-          include_trips: true
-        }),
-      })
-      //assume route only has one trip per day
-      if (trips !== undefined)
-      {
-        self.trip= trips[0];
-        return true;
-      }
-      return false;
-    }
-
     this.assignTrip = async function(routeId) {
       var now = new Date();
       this.today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -59,6 +38,7 @@ export default [
       if (trips !== undefined)
       {
         self.trip= trips.data.trips[0];
+        console.log(self.trip);
       }
 
       var response = await BeelineService.request({
@@ -66,10 +46,11 @@ export default [
         url: '/trips/'+self.trip.id+'/setDriver'
       })
       self.trip = response.data;
+      return self.trip.id;
     }
 
     this.getTrip = function(id){
-      if (typeof(self.trip)!=="undefined"){
+      if ( self.trip !== undefined ){
         return Promise.resolve(self.trip);
       }
       else return BeelineService.request({
@@ -87,7 +68,7 @@ export default [
         url: "/trips/"+id+"/code"
       })
       .then(function(response){
-        self.tripCode = response.data;
+        return self.tripCode = response.data;
       });
     };
 

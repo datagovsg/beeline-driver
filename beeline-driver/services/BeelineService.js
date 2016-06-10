@@ -5,7 +5,7 @@ export default function($http, TokenService) {
     options.url="http://localhost:8081"+options.url;
     if (TokenService.token) {
       options.headers = options.headers || {};
-      options.headers.authorization = "Bearer " + TokenService.token;
+      options.headers.Authorization = "Bearer " + TokenService.token;
     }
     return $http(options);
   };

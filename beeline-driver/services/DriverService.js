@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export default function($http, BeelineService){
-  var sessionToken;
+export default function($http, BeelineService, TokenService){
   var self = this;
   var driverId;
 
@@ -11,8 +10,9 @@ export default function($http, BeelineService){
     return BeelineService.request({
       method: 'POST',
       url: '/drivers/sendTelephoneVerification',
-      data: {telephone: '+65' + number},
-      headers: {'Content-Type': 'application/json'}
+      data: {
+        telephone: '+65' + number
+      },
     }).then(function() {
       return true;
     });
@@ -29,8 +29,7 @@ export default function($http, BeelineService){
       }
     })
     .then(function(response) {
-      sessionToken = response.data.sessionToken;
-      window.localStorage.setItem('sessionToken', sessionToken);
+      TokenService.token = response.data.sessionToken;
       var driver = response.data.driver;
       window.localStorage.setItem('beelineDriver', JSON.stringify(driver));
       return driver;

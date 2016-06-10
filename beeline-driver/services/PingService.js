@@ -2,17 +2,19 @@
 export default function(TokenService, BeelineService, DriverService,
                         $cordovaGeolocation, $interval, $rootScope,
                       $state) {
-  var sendPing = async function() {
+  var sendPing = async function(tripId) {
     var userPosition = await $cordovaGeolocation.getCurrentPosition({
       timeout: 5000,
       enableHighAccuracy: true
     });
-    var vehicle = await DriverService.getVehicleInfo();
+    //FIXME enable driver to add/update vehicle
+    // var vehicle = await DriverService.getVehicleInfo();
     return BeelineService.request({
       method: "POST",
-      url: "/trips/" + TokenService.get("tripId") + "/pings",
+      url: "/trips/" + tripId + "/pings",
       data: {
-        vehicleId: vehicle.id,
+        //Fixme vehicle is dynamic
+        vehicleId: 0,
         latitude: userPosition.coords.latitude,
         longitude: userPosition.coords.longitude
       }

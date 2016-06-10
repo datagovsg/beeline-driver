@@ -40,7 +40,7 @@ export default function ($stateProvider, $urlRouterProvider) {
     }
   })
   .state("app.passengerList", {
-    url: "/start/:stopId",
+    url: "/start/:tripId/:stopId",
     views: {
       "menu-content": {
         templateUrl: "templates/passenger-list.html",
