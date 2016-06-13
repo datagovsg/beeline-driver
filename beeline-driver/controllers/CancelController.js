@@ -18,10 +18,11 @@ export default[
 
     $scope.$on("$ionicView.afterEnter",async ()=>{
       $scope.job.tripId = $stateParams.tripId;
-      await TripService.cancelTrip($scope.job.tripId);
       var trip = await TripService.getTrip($scope.job.tripId);
-      $scope.job.date = trip.date;
-      $scope.job.routeId = trip.routeId;
+      $scope.$apply(()=>{
+        $scope.job.date = trip.date;
+        $scope.job.routeId = trip.routeId;
+      })
       console.log($scope.job.date);
     });
   }];

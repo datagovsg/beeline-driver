@@ -36,6 +36,7 @@ export default function($http, BeelineService, TokenService){
     });
   };
 
+  //FIXME: need this?
   this.getDecodedToken = function() {
     //phone no. company id
     var decodedToken = jwt.decode(localStorage["sessionToken"]); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
@@ -45,6 +46,7 @@ export default function($http, BeelineService, TokenService){
     }
   };
 
+  //FIXME: need this?
   this.getDriverInfo = function () {
     if (typeof(driverId)==="undefined") {
       self.getDecodedToken();
@@ -75,22 +77,6 @@ export default function($http, BeelineService, TokenService){
     }).then(function (response) {
       self.vehicle = response.data;
       return response.data[0];
-    });
-  };
-
-  this.updateDriverName = function (newName) {
-    if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
-    }
-    return BeelineService.request({
-      method: "PUT",
-      url: "/drivers/"+driverId,
-      data: {
-        name: newName
-      }
-    })
-    .then(function(response){
-      return true;
     });
   };
 

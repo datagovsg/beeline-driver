@@ -24,9 +24,6 @@ export default[
     $ionicLoading,
     TokenService
   ){
-
-    var tripData = DriverService.getDecodedToken();
-
     $scope.data = {};
 
     var confirmPrompt = function(options) {
@@ -125,9 +122,10 @@ export default[
     }
 
     $scope.logout = async function() {
-      var promptResponse = await confirmPrompt({
+      var promptResponse = $ionicPopup.confirm ({
         title: "Log Out",
-        subtitle: "Are you sure you want to log out?"
+        template: "Are you sure you want to log out?",
+        okType: "button-royal"
       });
       if (!promptResponse) return;
       TokenService.token = null;

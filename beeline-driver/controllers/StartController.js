@@ -1,4 +1,6 @@
 import _ from "lodash";
+import confirmPromptTemplate from "../templates/confirm-prompt.html";
+import loadingTemplate from "../templates/loading.html";
 export default[
   "$scope",
   "$state",
@@ -7,6 +9,8 @@ export default[
   "$timeout",
   "$stateParams",
   "PingService",
+  "$ionicLoading",
+  "$rootScope",
   async function(
     $scope,
     $state,
@@ -14,7 +18,9 @@ export default[
     $ionicPopup,
     $timeout,
     $stateParams,
-    PingService
+    PingService,
+    $ionicLoading,
+    $rootScope
   ){
     $scope.data ={
       tripId: $stateParams.tripId || undefined,
@@ -78,19 +84,53 @@ export default[
       }, 30000);
     });
 
+    var confirmPrompt = function(options) {
+      var promptScope = $rootScope.$new(true);
+      promptScope.data = {
+        toggle: false
+      };
+      _.defaultsDeep(options,{
+        template: confirmPromptTemplate,
+        title: "",
+        subTitle: "",
+        scope: promptScope,
+        buttons: [
+          { text: "Cancel"},
+          {
+            text: "OK",
+            type: "button-royal",
+            onTap: function(e) {
+              if (promptScope.data.toggle){
+                return true;
+              }
+              e.preventDefault();
+            }
+          }
+        ]
+      });
+      return $ionicPopup.show(options);
+    };
 
     // Prompt to avoid accidental trip ending
-    $scope.confirmCancelTrip = function() {
-      $ionicPopup.confirm({
-        title: "Confirm Cancel Trip",
-        template: "Are you sure?",
-        okType: "button-royal"
-      })
-      .then(function(response) {
-        if (response) {
-          $state.go("cancel",{tripId: $scope.data.tripId});
-        }
-      });
+    $scope.confirmCancelTrip = async function() {
+      try {
+        var promptResponse = await confirmPrompt({
+          title: "Are you sure?",
+          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
+        });
+        if (!promptResponse) return;
+        $ionicLoading.show({template: loadingTemplate});
+        await TripService.cancelTrip($scope.data.tripId);
+        $ionicLoading.hide();
+        $state.go("cancel",{tripId: $scope.data.tripId});
+      }
+      catch(error){
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: "There was an error cancelling trip. Please try again.",
+          subTitle: error
+        });
+      }
     };
 
     $scope.stopPing = function() {
