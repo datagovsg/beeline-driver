@@ -41,20 +41,6 @@ export default function ($stateProvider, $urlRouterProvider) {
       sendPings: true,
     }
   })
-  .state("passengerList", {
-    url: "/start/:tripId/:stopId",
-    // views: {
-    //   "trip-start": {
-    //     templateUrl: "templates/passenger-list.html",
-    //     controller: "PassengerListController"
-    //   }
-    // },
-    templateUrl: "templates/passenger-list.html",
-    controller: "PassengerListController",
-    data: {
-      sendPings: true,
-    }
-  })
   .state("cancel", {
     url: "/cancel",
     // views: {

@@ -4,7 +4,6 @@ import CancelController from "./controllers/CancelController.js";
 import LoginController from "./controllers/LoginController.js";
 import RouteController from "./controllers/RouteController.js";
 import SidebarController from "./controllers/SidebarController.js";
-import PassengerListController from "./controllers/PassengerListController.js";
 import StartController from "./controllers/StartController.js";
 import BeelineService from "./services/BeelineService.js";
 import TokenService from "./services/TokenService.js";
@@ -33,7 +32,6 @@ angular.module("beeline-driver", [
 .controller("LoginController", LoginController)
 .controller("RouteController", RouteController)
 .controller("SidebarController", SidebarController)
-.controller("PassengerListController", PassengerListController)
 .controller("StartController", StartController)
 .service("BeelineService",BeelineService)
 .service("TokenService",TokenService)

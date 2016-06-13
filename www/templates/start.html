@@ -11,25 +11,34 @@
       <div class="item item-divider">
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <a class="item item-icon-right"
-         ng-repeat="boardStop in boardStops"
-         on-tap="showPassengerList(boardStop.id)">
+      <div class="item"
+         ng-repeat-start="boardStop in boardStops"
+         ng-click="showPassengerList = !showPassengerList">
+         <!-- on-tap="showPassengerList(boardStop.id)"> -->
         <div class="row">
           <div class="col col-25">
             {{boardStop.time | date:'h:mm a'}}
           </div>
           <div class="col">
             <strong>{{boardStop.stop.road}}</strong><br>
-            {{boardStop.stop.description}}<br>
-            {{boardStop.stop.type}} ID {{boardStop.stop.label}}
           </div>
+          <i class="icon">
+            <span class="ion-android-person"></span> &nbsp;
+            {{ boardStop.passengerNumber > 0 ?
+               boardStop.passengerNumber : 0 }} &nbsp;
+          </i>
         </div>
-        <i class="icon">
-          <span class="ion-android-person"></span> &nbsp;
-          {{ boardStop.passengerNumber > 0 ?
-             boardStop.passengerNumber : 0 }} &nbsp;
-        </i>
-		  </a>
+		  </div>
+      <div
+         ng-repeat-end="boardStop in boardStops"
+         ng-if="!showPassengerList">
+         <div class="item item-divider">{{boardStop.stopDescription}}</div>
+         <div ng-repeat="passenger in boardStop.passengerList">
+           <div class="item">
+             <h2>{{$index+1}}. {{passenger.name}}</h2>
+           </div>
+         </div>
+      </div>
     </div>
     <div class="primary-button"
          oui-sref='app.cancel'>CANCEL</div>

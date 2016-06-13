@@ -24,8 +24,13 @@ export default[
     $scope.tripCode = await TripService.getTripCode($scope.data.tripId);
 
     // Get the stop info and count the passengers per stop
-    var trip = await TripService.getTrip($scope.data.tripId, true);
-    var boardStops = trip.tripStops.filter( stop => stop.canBoard );
+    $scope.trip = await TripService.getTrip($scope.data.tripId, true);
+    $scope.boardStops = $scope.trip.tripStops.filter( stop => stop.canBoard );
+
+    //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
+    _.forEach($scope.boardStops, function(value, key) {
+      value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
+    });
 
     var GPSOffTimeout;
 
@@ -59,12 +64,18 @@ export default[
     //passenger list per stop is updated automatically
     var reloadPassengersList = async function(){
       $timeout.cancel(reloadPassengerTimeout);
+
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
 
+      var boardStops = $scope.trip.tripStops.filter( stop => stop.canBoard );
+
       _.forEach(passengersByStopId, function(value, key) {
+
         var stop = boardStops.find(stop => stop.id === +key);
         stop.passengerNumber = value.length;
+        stop.passengerList = value;
       });
+
       $scope.$apply(()=>{
         $scope.boardStops = boardStops;
       });
