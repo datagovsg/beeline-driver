@@ -27,38 +27,44 @@ export default function ($stateProvider, $urlRouterProvider) {
       }
     }
   })
-  .state("app.start", {
+  .state("start", {
     url: "/start/:tripId",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/start.html",
-        controller: "StartController"
-      }
-    },
+    // views: {
+    //   "trip-start": {
+    //     templateUrl: "templates/start.html",
+    //     controller: "StartController"
+    //   }
+    // },
+    templateUrl: "templates/start.html",
+    controller: "StartController",
     data: {
       sendPings: true,
     }
   })
-  .state("app.passengerList", {
+  .state("passengerList", {
     url: "/start/:tripId/:stopId",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/passenger-list.html",
-        controller: "PassengerListController"
-      }
-    },
+    // views: {
+    //   "trip-start": {
+    //     templateUrl: "templates/passenger-list.html",
+    //     controller: "PassengerListController"
+    //   }
+    // },
+    templateUrl: "templates/passenger-list.html",
+    controller: "PassengerListController",
     data: {
       sendPings: true,
     }
   })
-  .state("app.cancel", {
+  .state("cancel", {
     url: "/cancel",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/cancel.html",
-        controller: "CancelController"
-      }
-    }
+    // views: {
+    //   "menu-content": {
+    //     templateUrl: "templates/cancel.html",
+    //     controller: "CancelController"
+    //   }
+    // }
+    templateUrl: "templates/cancel.html",
+    controller: "CancelController",
   });
   // if none of the above states are matched, use this as the fallback
   if (window.localStorage['sessionToken'] && window.localStorage['sessionToken'] != null) {

@@ -12,10 +12,14 @@ import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/VerifiedPromptService.js";
+import loadingTemplate from "./templates/version-too-old.html";
 
 // Configuration Imports
 import configureRoutes from "./router.js";
 // Ionic Starter App
+
+// version for this distribution
+var appVersion = "1.0.0";
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -37,7 +41,7 @@ angular.module("beeline-driver", [
 .service("TripService",TripService)
 .service("VerifiedPromptService",VerifiedPromptService)
 .config(configureRoutes)
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -50,5 +54,31 @@ angular.module("beeline-driver", [
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    //version no in config.xml only readable from android and ios
+    if (window.cordova) {
+      cordova.getAppVersion(function(version) {
+        appVersion = version;
+      });
+    }
+
+    console.log(appVersion);
+    localStorage["version"] = appVersion;
+    // "0.0.1" becomes 0.1
+    var versionNo = +(appVersion.replace(".", ""));
+    console.log(versionNo);
+
+    //enable overlay if verion too old
+    //server API return least version to allow access
+    // e.g. "0.0.2"
+    if (versionNo <= 0.1){
+      $ionicLoading.show({template: loadingTemplate});
+    }
   });
 });
+
+//current is appVersion, least is returned from API
+//if return true, ionicLoading is popped up to disallow interactivity
+var checkVerison = function(current, least) {
+  return (+(current.replace(".", "")) < +(least.replace(".", "")))
+}

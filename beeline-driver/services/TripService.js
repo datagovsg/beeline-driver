@@ -49,8 +49,8 @@ export default [
       return self.trip.id;
     }
 
-    this.getTrip = function(id){
-      if ( self.trip !== undefined ){
+    this.getTrip = function(id, reload){
+      if ( self.trip !== undefined && !reload ){
         return Promise.resolve(self.trip);
       }
       else return BeelineService.request({

@@ -24,7 +24,7 @@ export default[
     $scope.tripCode = await TripService.getTripCode($scope.data.tripId);
 
     // Get the stop info and count the passengers per stop
-    var trip = await TripService.getTrip($scope.data.tripId);
+    var trip = await TripService.getTrip($scope.data.tripId, true);
     var boardStops = trip.tripStops.filter( stop => stop.canBoard );
 
     var GPSOffTimeout;
@@ -85,7 +85,7 @@ export default[
     });
 
     $scope.showPassengerList = function(stopId) {
-      $state.go("app.passengerList",{
+      $state.go("passengerList",{
         tripId: $scope.data.tripId,
         stopId: stopId
       })

@@ -20,7 +20,7 @@ export default [
         // await TripService.getTripFromRouteId($scope.data.routeId);
         console.log($scope.data.routeId);
         $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
-        $state.go("app.start",{"tripId": $scope.data.tripId});
+        $state.go("start",{"tripId": $scope.data.tripId});
       }
       catch(error) {
         console.log(error.stack);
