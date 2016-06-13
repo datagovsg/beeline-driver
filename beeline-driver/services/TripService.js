@@ -19,7 +19,7 @@ export default [
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
-    this.pingTimer = false;
+    this.isPinging = false;
     var passengersByStop;
 
     this.assignTrip = async function(routeId) {
@@ -135,7 +135,7 @@ export default [
           setTimeout(resolve, ms);
         });
       }
-      while (this.pingTimer) {
+      while (this.isPinging) {
         console.log("start to send");
         var positionOptions = {timeout: 5000, enableHighAccuracy: true};
         try {

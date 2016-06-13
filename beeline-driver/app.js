@@ -37,6 +37,7 @@ angular.module("beeline-driver", [
 .service("TokenService",TokenService)
 .service("DriverService",DriverService)
 .service("TripService",TripService)
+.service("PingService",PingService)
 .service("VerifiedPromptService",VerifiedPromptService)
 .config(configureRoutes)
 .run(function($ionicPlatform, $ionicLoading) {

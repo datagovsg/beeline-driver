@@ -14,7 +14,6 @@
       <div class="item"
          ng-repeat-start="boardStop in boardStops"
          ng-click="showPassengerList = !showPassengerList">
-         <!-- on-tap="showPassengerList(boardStop.id)"> -->
         <div class="row">
           <div class="col col-25">
             {{boardStop.time | date:'h:mm a'}}
@@ -31,7 +30,7 @@
 		  </div>
       <div class="item"
          ng-repeat-end="boardStop in boardStops"
-         ng-if="!showPassengerList">
+         ng-if="showPassengerList">
          <div class="item item-divider">{{boardStop.stopDescription}}</div>
          <div ng-repeat="passenger in boardStop.passengerList">
            <div class="item">
@@ -43,6 +42,6 @@
     <div class="primary-button"
          oui-sref='app.cancel'>CANCEL</div>
     <div class="primary-button"
-         oui-sref='app.route'>STOP</div>
+         ng-click="stopPing()">STOP</div>
   </ion-content>
 </ion-view>
