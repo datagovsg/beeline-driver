@@ -39,6 +39,9 @@ export default [
       {
         self.trip= trips.data.trips[0];
         console.log(self.trip);
+        if (self.trip.status == "cancelled") {
+          throw new Error("tripCancelled");
+        }
       }
 
       var response = await BeelineService.request({
@@ -49,8 +52,13 @@ export default [
       return self.trip.id;
     }
 
+    this.getCacheTrip = function() {
+      return self.trip;
+    }
+
     this.getTrip = function(id, reload){
       if ( self.trip !== undefined && !reload ){
+        console.log(self.trip);
         return Promise.resolve(self.trip);
       }
       else return BeelineService.request({
@@ -103,7 +111,6 @@ export default [
         method: "POST",
         url: "/trips/"+tripId+"/statuses",
         data: {
-          message: "vehicle break down",
           status: "cancelled"
         }
       })
@@ -112,57 +119,5 @@ export default [
       });
     };
 
-    //link to driver instead of vehicle
-    this.sendPing = function(tripId, vehicleId, lat, lng){
-      return BeelineService.request({
-        method: "POST",
-        url: "/trips/"+tripId+"/pings",
-        data: {
-          vehicleId: vehicleId,
-          latitude: lat,
-          longitude: lng
-        }
-      })
-      .then(function(response){
-        return true;
-      });
-    };
-
-    //function to send ping with setInterval
-    this.sendPingService = async function(id, vehicleId, callback){
-      function delay(ms) {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, ms);
-        });
-      }
-      while (this.isPinging) {
-        console.log("start to send");
-        var positionOptions = {timeout: 5000, enableHighAccuracy: true};
-        try {
-          var userPosition = await $cordovaGeolocation.getCurrentPosition(positionOptions);
-        }
-        catch (error) {
-          console.log(error.stack);
-          await $ionicPopup.alert({
-            template: "Please turn on your GPS Location Service"
-          });
-          continue;
-        }
-        try {
-          //trip id and vehicle id are hardcoded
-          var response = await this.sendPing(id, vehicleId, userPosition.coords.latitude, userPosition.coords.longitude);
-          if (response) {
-            self.lastPingTime = new Date().getTime();
-            if (callback) {
-              callback(self.lastPingTime);
-            }
-          }
-        }
-        catch (error) {
-          console.log(error.stack);
-        }
-        await delay(10000);
-      }
-    };
   }
 ];

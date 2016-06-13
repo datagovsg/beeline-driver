@@ -17,13 +17,15 @@ export default [
 
     $scope.start = async function() {
       try {
-        // await TripService.getTripFromRouteId($scope.data.routeId);
-        console.log($scope.data.routeId);
         $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
         $state.go("start",{"tripId": $scope.data.tripId});
       }
       catch(error) {
         console.log(error.stack);
+        if (error.message=="tripCancelled") {
+          var trip = TripService.getCacheTrip();
+          $state.go("cancel",{tripId: trip.id})
+        }
       }
     }
   }

@@ -3,30 +3,25 @@
 export default[
   "$scope",
   "$stateParams",
-  "DriverService",
   "TripService",
   function(
     $scope,
     $stateParams,
-    DriverService,
     TripService
   ){
     $scope.job = {
       // date: new Date(),
-      date: undefined,
-      status: undefined,
+      date: null,
       tripId: null,
-      replacementPhoneNumber: undefined
+      routeId: null,
     };
 
-    $scope.$on("$ionicView.beforeEnter",()=>{
-      // $scope.job.tripId = DriverService.getDecodedToken().tripId;
-      // TripService.getTrip($scope.job.tripId).then(function(){
-      //   $scope.job.date = TripService.trip.date;
-      // });
-    });
-    $scope.$on("$ionicView.afterEnter",()=>{
-      $scope.job.status = $stateParams.status;
-      $scope.job.replacementPhoneNumber = +$stateParams.replacementPhoneNumber;
+    $scope.$on("$ionicView.afterEnter",async ()=>{
+      $scope.job.tripId = $stateParams.tripId;
+      await TripService.cancelTrip($scope.job.tripId);
+      var trip = await TripService.getTrip($scope.job.tripId);
+      $scope.job.date = trip.date;
+      $scope.job.routeId = trip.routeId;
+      console.log($scope.job.date);
     });
   }];

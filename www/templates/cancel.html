@@ -1,15 +1,17 @@
 <ion-view  view-title="" hide-back-button="true">
   <ion-content>
-    <div class='item'>
-      <h1>Trip {{job.tripId}} Cancelled</h1>
-      <h3>{{job.date| date:'d MMM y'}}</h3>
-      <p>
-        The trip has been cancelled.<br>
-        Service will resumed tomorrow.<br>
-        Thank you!<br>
-      </p>
+    <div class="text-center">
+      <br>
+      <h1>{{job.date| date:'d MMM y'}}</h1>
+      <h3>Route {{job.routeId}} Cancelled</h3>
+      The trip has been cancelled.<br>
+      Service will resumed tomorrow.<br>
+      Thank you!<br>
+      <br>
+      <br>
+      <br>
       <div class="primary-button"
-           oui-sref='app.route'>OK</div>
+           ui-sref='app.route'>OK</div>
     </div>
   </ion-content>
 </ion-view>

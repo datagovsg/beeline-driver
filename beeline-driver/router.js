@@ -42,7 +42,7 @@ export default function ($stateProvider, $urlRouterProvider) {
     }
   })
   .state("cancel", {
-    url: "/cancel",
+    url: "/cancel/:tripId",
     // views: {
     //   "menu-content": {
     //     templateUrl: "templates/cancel.html",

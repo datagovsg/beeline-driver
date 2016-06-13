@@ -12,6 +12,7 @@ export default[
   "$rootScope",
   "VerifiedPromptService",
   "$ionicLoading",
+  "TokenService",
   function(
     $scope,
     $ionicPopup,
@@ -20,7 +21,8 @@ export default[
     TripService,
     $rootScope,
     VerifiedPromptService,
-    $ionicLoading
+    $ionicLoading,
+    TokenService
   ){
 
     var tripData = DriverService.getDecodedToken();
@@ -68,6 +70,19 @@ export default[
       });
     };
 
+    var promptVehicleNumber = function(title, subtitle){
+      return VerifiedPromptService.verifiedPrompt({
+        title: title,
+        subTitle: subtitle,
+        inputs: [
+          {
+            type: "string",
+            name: "vehicleNumber",
+          }
+        ]
+      });
+    };
+
     // When button is clicked, the popup will be shown...
     $scope.showCancelTripPopup = async function() {
       try {
@@ -93,5 +108,34 @@ export default[
         });
       }
     };
+
+    $scope.updateVehicleNo = async function() {
+      try {
+        var response = await promptVehicleNumber("Your Vehicle No");
+        if (response && response.vehicleNumber) {
+          console.log(response.vehicleNumber);
+          await DriverService.updateVehicleNo(response.vehicleNumber);
+          $state.go("app.route");
+        }
+      }
+      catch(error) {
+        console.log(error.stack);
+      }
+
+    }
+
+    $scope.logout = async function() {
+      var promptResponse = await confirmPrompt({
+        title: "Log Out",
+        subtitle: "Are you sure you want to log out?"
+      });
+      if (!promptResponse) return;
+      TokenService.token = null;
+      //FIXME need to do this?
+      window.localStorage.removeItem('sessionToken');
+      window.localStorage.removeItem('beelineDriver');
+      $state.go("login");
+    }
+
 
   }];
