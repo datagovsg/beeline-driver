@@ -12,16 +12,16 @@
     <ion-nav-view name="menu-content"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" class="emerg">
+  <ion-side-menu side="left">
     <ion-header-bar class="bar-royal">
       <h1 class="title"></h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="updateVehicleNo()">
-          Update Vehicle
+        <ion-item menu-close class="text-center">
+          {{data.vehicleNo}} <br><div class="button button-royal button-outline" ng-click="updateVehicleNo()">Update Vehicle</div>
         </ion-item>
-        <ion-item menu-close ng-click="logout()">
+        <ion-item menu-close class="text-center" ng-click="logout()">
           Log out
         </ion-item>
       </ion-list>

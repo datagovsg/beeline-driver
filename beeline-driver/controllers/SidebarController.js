@@ -24,7 +24,26 @@ export default[
     $ionicLoading,
     TokenService
   ){
-    $scope.data = {};
+    $scope.data = {
+      vehicleNo: null
+    };
+
+    $scope.$on('$ionicView.enter',async ()=>{
+      if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
+        var vehicle = await DriverService.getVehicleInfo(false);
+      }
+      else {
+        var vehicle = await DriverService.getVehicleInfo(true);
+      }
+      console.log(vehicle);
+      if (vehicle){
+        $scope.data.vehicleNo = vehicle.vehicleNumber;
+      }
+    });
+
+    $scope.$watch(() => DriverService.vehicle, (vehicle) => {
+      $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber : null;
+    });
 
     var confirmPrompt = function(options) {
       var promptScope = $rootScope.$new(true);
@@ -53,20 +72,6 @@ export default[
       return $ionicPopup.show(options);
     };
 
-    var promptTelephoneNumber = function(title, subtitle){
-      return VerifiedPromptService.verifiedPrompt({
-        title: title,
-        subTitle: subtitle,
-        inputs: [
-          {
-            type: "number",
-            name: "phone",
-            pattern: VALID_PHONE_REGEX
-          }
-        ]
-      });
-    };
-
     var promptVehicleNumber = function(title, subtitle){
       return VerifiedPromptService.verifiedPrompt({
         title: title,
@@ -80,38 +85,15 @@ export default[
       });
     };
 
-    // When button is clicked, the popup will be shown...
-    $scope.showCancelTripPopup = async function() {
-      try {
-        var promptResponse = await confirmPrompt({
-          title: "Are you sure?",
-          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
-        });
-        if (!promptResponse) return;
-        $ionicLoading.show({template: loadingTemplate});
-        await TripService.cancelTrip(tripData.tripId);
-        $ionicLoading.hide();
-        await $ionicPopup.alert({
-          title: "Trip is cancelled.<br>Passengers and Ops are alerted!"
-        });
-        TripService.pingTimer = false;
-        $state.go("app.jobEnded",{status: "tripCancelled"});
-      }
-      catch(error){
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: "There was an error cancelling trip. Please try again.",
-          subTitle: error
-        });
-      }
-    };
-
     $scope.updateVehicleNo = async function() {
       try {
         var response = await promptVehicleNumber("Your Vehicle No");
         if (response && response.vehicleNumber) {
           console.log(response.vehicleNumber);
           await DriverService.updateVehicleNo(response.vehicleNumber);
+          await $ionicPopup.alert({
+            title: "Vehicle is updated to " + response.vehicleNumber
+          });
           $state.go("app.route");
         }
       }
@@ -122,7 +104,7 @@ export default[
     }
 
     $scope.logout = async function() {
-      var promptResponse = $ionicPopup.confirm ({
+      var promptResponse = await $ionicPopup.confirm ({
         title: "Log Out",
         template: "Are you sure you want to log out?",
         okType: "button-royal"
@@ -131,7 +113,7 @@ export default[
       TokenService.token = null;
       //FIXME need to do this?
       window.localStorage.removeItem('sessionToken');
-      window.localStorage.removeItem('beelineDriver');
+      window.localStorage.removeItem('vehicleId');
       $state.go("login");
     }
 

@@ -22,8 +22,7 @@ export default[
         method: "POST",
         url: "/trips/" + tripId + "/pings",
         data: {
-          // FIXME vehicle is dynamic set to 1 to make ping work
-          vehicleId: 0,
+          vehicleId: window.localStorage["vehicleId"]!==undefined ? window.localStorage["vehicleId"] : 0,
           latitude: userPosition.coords.latitude,
           longitude: userPosition.coords.longitude
         }

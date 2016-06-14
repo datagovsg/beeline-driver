@@ -11,7 +11,7 @@ export default[
   "PingService",
   "$ionicLoading",
   "$rootScope",
-  async function(
+  function(
     $scope,
     $state,
     TripService,
@@ -30,7 +30,8 @@ export default[
       pingStatusSymbol: "image/GPSoff.svg"
     }
     //get generated trip code
-    $scope.tripCode = await TripService.getTripCode($scope.data.tripId);
+    TripService.getTripCode($scope.data.tripId)
+    .then((tripCode) => $scope.tripCode = tripCode)
 
     var reloadPassengerTimeout;
     //reload passenger list with ignoreCache=true to update
@@ -52,24 +53,24 @@ export default[
       reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
     };
 
-    $scope.$on('$ionicView.enter',()=>{
+    $scope.$on('$ionicView.enter', async () => {
       $scope.data.tripId = $stateParams.tripId;
       console.log("before enter "+$scope.data.tripId);
 
-      $scope.$apply(async ()=>{
-        $scope.trip = await TripService.getTrip($scope.data.tripId, true);
-        $scope.boardStops = $scope.trip.tripStops.filter( stop => stop.canBoard );
-        //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
-        _.forEach($scope.boardStops, function(value, key) {
-          value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
-        });
-        var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
-        _.forEach(passengersByStopId, function(value, key) {
-          var stop = $scope.boardStops.find(stop => stop.id === +key);
-          stop.passengerNumber = value.length;
-          stop.passengerList = value;
-        });
-      })
+      $scope.trip = await TripService.getTrip($scope.data.tripId, true);
+      $scope.boardStops = $scope.trip.tripStops.filter( stop => stop.canBoard );
+      //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
+      _.forEach($scope.boardStops, function(value, key) {
+        value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
+      });
+      var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
+      _.forEach(passengersByStopId, function(value, key) {
+        var stop = $scope.boardStops.find(stop => stop.id === +key);
+        stop.passengerNumber = value.length;
+        stop.passengerList = value;
+      });
+
+      $scope.$apply();
 
       reloadPassengersList();
       PingService.start($scope.data.tripId);
@@ -139,7 +140,13 @@ export default[
       }
     };
 
-    $scope.stopPing = function() {
+    $scope.stopPing = async function() {
+      var promptResponse = await $ionicPopup.confirm ({
+        title: "Stop Ping",
+        template: "Are you sure you want to stop pinging?",
+        okType: "button-royal"
+      });
+      if (!promptResponse) return;
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
       PingService.stop();

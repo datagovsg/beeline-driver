@@ -23,7 +23,7 @@ export default[
         $state.go("sms",{"phoneNo": no});
       }
       catch(error){
-        //driver is not registered 
+        //driver is not registered
         if (error.status==404){
           console.log("not found");
           await $ionicPopup.alert({
@@ -39,7 +39,8 @@ export default[
         var code = $scope.data.verification;
         console.log(no);
         console.log(code);
-        await DriverService.verifyTelephone(no, code);
+        self.driver = await DriverService.verifyTelephone(no, code);
+        await DriverService.getVehicleInfo(true);
         $state.go("app.route");
       }
       catch(err){

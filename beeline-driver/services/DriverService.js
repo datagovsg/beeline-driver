@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import _ from "lodash";
 
 export default function($http, BeelineService, TokenService){
   var self = this;
@@ -31,68 +32,85 @@ export default function($http, BeelineService, TokenService){
     .then(function(response) {
       TokenService.token = response.data.sessionToken;
       var driver = response.data.driver;
-      window.localStorage.setItem('beelineDriver', JSON.stringify(driver));
       return driver;
     });
   };
 
-  //FIXME: need this?
-  this.getDecodedToken = function() {
-    //phone no. company id
-    var decodedToken = jwt.decode(localStorage["sessionToken"]); //e.g. {role: 'driver', driverId: 8, tripId: 145, transportCompanyId: "3", iat: 1461142038}
-    if (decodedToken) {
-      driverId = decodedToken.driverId;
-      return decodedToken;
-    }
-  };
-
-  //FIXME: need this?
-  this.getDriverInfo = function () {
-    if (typeof(driverId)==="undefined") {
-      self.getDecodedToken();
-    }
-    if (typeof(self.driver)!="undefined"){
-      return Promise.resolve(self.driver);
-    }
-    else return BeelineService.request({
-      method: "GET",
-      url: "/drivers/" + driverId
-    }).then(function (response) {
-      self.driver = response.data;
+  this.getVehicle = async function (vehicleId) {
+    try {
+      var response = await BeelineService.request({
+        method: "GET",
+        url: "/vehicles/"+vehicleId
+      });
       return response.data;
-    });
-  };
+    } catch(error){
+      console.log(error.stack);
+    }
+  }
 
   //vehicle is property for driver (current using vehicle)
-  this.getVehicleInfo = function () {
-    if (typeof(driverId)==="undefined") {
-      driverId = self.getDecodedToken().driverId;
+  this.getVehicleInfo = async function (reload) {
+    if (!reload && self.vehicles !== undefined) {
+      if (self.vehicle !== null
+        && self.vehicle.id == window.localStorage["vehicleId"]){
+          return self.vehicle;
+      }
+      else {
+        self.vehicle = await this.getVehicle(window.localStorage["vehicleId"]);
+      }
+      console.log(self.vehicle);
+      return self.vehicle;
     }
-    if (typeof(self.vehicle)!="undefined"){
-      return Promise.resolve(self.vehicle);
+    else {
+      var response = await BeelineService.request({
+        method: "GET",
+        url: "/vehicles"
+      });
+      //sort vehicle by updatedAt in descending order
+      self.vehicles =  _.sortBy(response.data, function(item){
+          return item.updatedAt;
+        }).reverse();
+
+      if (self.vehicles.length > 0) {
+        self.vehicle = self.vehicles[0];
+        window.localStorage["vehicleId"] = self.vehicle.id;
+      }
+      else {
+        self.vehicle = null;
+      }
+
+      return self.vehicle;
     }
-    else return BeelineService.request({
-      method: "GET",
-      url: "/vehicles"
-    }).then(function (response) {
-      self.vehicle = response.data;
-      return response.data[0];
-    });
   };
 
-  this.updateVehicleNo = async function (newVehileNo) {
-    if (typeof(self.vehicle)==="undefined"){
-      await this.getVehicleInfo();
+  this.updateVehicleNo = async function (newVehicleNo) {
+    //check self.vehicles has this newVehileNo, if yes, update vehicleNo
+    //if not, post a vehicle which belongs to this driver
+    if (self.vehicles!==undefined){
+      var index = _.findIndex(self.vehicles, function(item){
+        return item.vehicleNumber == newVehicleNo
+      });
+      if (index != -1) {
+        self.vehicle = self.vehicles[index];
+        window.localStorage["vehicleId"] = self.vehicle.id;
+        return true;
+      }
     }
     return BeelineService.request({
-      method: "PUT",
-      url: "/vehicles/"+self.vehicle[0].id,
+      method: "POST",
+      url: "/vehicles",
       data: {
-        vehicleNumber: newVehileNo
+        vehicleNumber: newVehicleNo
       }
     })
     .then(function(response){
+      self.vehicle = response.data;
+      window.localStorage["vehicleId"] = self.vehicle.id;
+      _.merge(self.vehicles, self.vehicle);
       return true;
+    })
+    .catch((error)=>{
+      return false;
     });
   };
 }

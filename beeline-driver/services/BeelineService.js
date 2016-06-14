@@ -2,7 +2,8 @@
 export default function($http, TokenService) {
   this.request = function(options) {
     // options.url = "https://api.beeline.sg" + options.url;
-    options.url="http://localhost:8081"+options.url;
+    // options.url="http://localhost:8081"+options.url;
+    options.url="https://beeline-server-dev.herokuapp.com"+options.url;
     if (TokenService.token) {
       options.headers = options.headers || {};
       options.headers.Authorization = "Bearer " + TokenService.token;

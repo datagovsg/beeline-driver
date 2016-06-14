@@ -44,10 +44,19 @@ export default [
         }
       }
 
+      var optionalData={};
+
+      if (window.localStorage["vehicleId"]!==undefined
+        && window.localStorage["vehicleId"]!=0) {
+          _.merge(optionalData,{vehicleId: window.localStorage["vehicleId"]})
+      }
+
       var response = await BeelineService.request({
         method: "PUT",
-        url: '/trips/'+self.trip.id+'/setDriver'
-      })
+        url: '/trips/'+self.trip.id+'/setDriver',
+        data: optionalData
+      });
+
       self.trip = response.data;
       return self.trip.id;
     }
@@ -90,11 +99,11 @@ export default [
       });
     };
 
-    this.getPassengersByStop = async function(id, ignoreCache) {
-      if (passengersByStop  && !ignoreCache){
+    this.getPassengersByStop = async function(id, reload) {
+      if (passengersByStop  && !reload){
         return Promise.resolve(passengersByStop);
       } else{
-        await this.getTrip(id);
+        await this.getTrip(id, true);
         var boardStops = this.trip.tripStops.filter(
           stop => stop.canBoard == true);
         this.boardStops = _.sortBy(boardStops, function(item){
