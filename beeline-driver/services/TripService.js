@@ -34,14 +34,14 @@ export default [
           include_trips: true
         }),
       });
+      console.log(trips);
+      if (trips.data.trips.length == 0){
+        throw new Error("noTrip");
+      }
       //assume route only has one trip per day
-      if (trips !== undefined)
-      {
-        self.trip= trips.data.trips[0];
-        console.log(self.trip);
-        if (self.trip.status == "cancelled") {
-          throw new Error("tripCancelled");
-        }
+      self.trip= trips.data.trips[0];
+      if (self.trip.status == "cancelled") {
+        throw new Error("tripCancelled");
       }
 
       var optionalData={};

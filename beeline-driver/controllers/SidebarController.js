@@ -90,7 +90,9 @@ export default[
         var response = await promptVehicleNumber("Your Vehicle No");
         if (response && response.vehicleNumber) {
           console.log(response.vehicleNumber);
+          $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
+          $ionicLoading.hide();
           await $ionicPopup.alert({
             title: "Vehicle is updated to " + response.vehicleNumber
           });

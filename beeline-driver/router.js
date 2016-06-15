@@ -9,7 +9,7 @@ export default function ($stateProvider, $urlRouterProvider) {
   })
   .state("sms", {
     url: "/login/:phoneNo",
-    templateUrl: "templates/SMS.html",
+    templateUrl: "templates/sms.html",
     controller: "LoginController"
   })
   .state("app", {
