@@ -23,6 +23,7 @@ export default[
     $rootScope
   ){
     $scope.data ={
+      routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
     }
     $scope.ping = {
@@ -129,7 +130,7 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
-        $state.go("cancel",{tripId: $scope.data.tripId});
+        $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
       }
       catch(error){
         $ionicLoading.hide();

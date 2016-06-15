@@ -14,8 +14,7 @@ export default [
     $ionicPopup
   ){
     var self = this;
-
-
+    
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
@@ -41,7 +40,7 @@ export default [
       //assume route only has one trip per day
       self.trip= trips.data.trips[0];
       if (self.trip.status == "cancelled") {
-        throw new Error("tripCancelled");
+        throw new Error("tripCancelled"+self.trip.id);
       }
 
       var optionalData={};
@@ -59,10 +58,6 @@ export default [
 
       self.trip = response.data;
       return self.trip.id;
-    }
-
-    this.getCacheTrip = function() {
-      return self.trip;
     }
 
     this.getTrip = function(id, reload){

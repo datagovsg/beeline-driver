@@ -28,7 +28,7 @@ export default [
           $ionicLoading.show({template: loadingTemplate});
           $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
           $ionicLoading.hide();
-          $state.go("start",{"tripId": $scope.data.tripId});
+          $state.go("start",{"routeId": $scope.data.routeId, "tripId": $scope.data.tripId});
         }
         else {
           await $ionicPopup.alert({
@@ -55,10 +55,10 @@ export default [
             $scope.data.routeId = undefined;
           })
         }
-        if (error.message=="tripCancelled") {
+        if (error.message.includes("tripCancelled")) {
           $ionicLoading.hide();
-          var trip = TripService.getCacheTrip();
-          $state.go("cancel",{tripId: trip.id});
+          $scope.data.tripId = error.message.substr(13).valueOf();
+          $state.go("cancel",{routeId:$scope.data.routeId, tripId: $scope.data.tripId});
         }
       }
     }
