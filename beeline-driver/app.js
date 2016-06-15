@@ -55,13 +55,15 @@ angular.module("beeline-driver", [
       StatusBar.styleDefault();
     }
 
+    //stop screen sleep
+    window.plugins.insomnia.keepAwake();
+
     //version no in config.xml only readable from android and ios
     if (window.cordova) {
       cordova.getAppVersion(function(version) {
         appVersion = version;
       });
     }
-
     console.log(appVersion);
     localStorage["version"] = appVersion;
 
@@ -82,6 +84,7 @@ angular.module("beeline-driver", [
     .catch(function(error) {
       console.log(error.stack);
     });
+
 
   });
 });
