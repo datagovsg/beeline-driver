@@ -3,11 +3,11 @@
     Enter Verification Code
   </ion-nav-title>
   <ion-content>
-    <h4 class="text-center">Please enter the code sent to your phone +65 {{data.number}} </h4>
+    <h4 class="text-center">Please enter the code sent to your phone +65 {{data.phoneNo}} </h4>
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
-        <input type="text" ng-model="data.verification">
+        <input type="tel" ng-model="data.verification">
       </label>
     </div>
     <div class="primary-button"

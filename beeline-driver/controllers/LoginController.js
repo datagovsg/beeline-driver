@@ -25,6 +25,7 @@ export default[
     }
     $scope.login = async function(){
       try{
+        console.log($scope.data.phoneNo);
         if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
@@ -59,7 +60,7 @@ export default[
         console.log(code);
         if(VALID_VERIFICATION_REGEX.test(code)){
           $ionicLoading.show({template: loadingTemplate});
-          self.driver = await DriverService.verifyTelephone(no, code);
+          await DriverService.verifyTelephone(no, code);
           await DriverService.getVehicleInfo(true);
           $ionicLoading.hide();
           $state.go("app.route");
@@ -72,8 +73,16 @@ export default[
           $scope.$apply();
         }
       }
-      catch(err){
-        console.log(err);
+      catch(error){
+        console.log(error.stack);
+        if (error.status == 401){
+          $ionicLoading.hide();
+          await $ionicPopup.alert({
+            title: "Your verification does not match."
+          });
+          $scope.data.verification = undefined;
+          $scope.$apply();
+        }
       }
     }
   }];
