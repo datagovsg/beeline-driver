@@ -11,13 +11,15 @@ export default[
   '$stateParams',
   "$ionicPopup",
   "$ionicLoading",
+  "VerifiedPromptService",
   function(
     $scope,
     DriverService,
     $state,
     $stateParams,
     $ionicPopup,
-    $ionicLoading
+    $ionicLoading,
+    VerifiedPromptService
   ){
     $scope.data ={
       phoneNo: $stateParams.phoneNo || undefined,
@@ -33,8 +35,8 @@ export default[
           $state.go("sms",{"phoneNo": $scope.data.phoneNo});
         }
         else {
-          await $ionicPopup.alert({
-            title: "Your phone number is invalid."
+          await VerifiedPromptService.alert({
+            title: "Your phone number is invalid.",
           });
           $scope.data.phoneNo = undefined;
           $scope.$apply();
@@ -44,11 +46,12 @@ export default[
         //driver is not registered
         if (error.status==404){
           $ionicLoading.hide();
-          console.log("not found");
-          await $ionicPopup.alert({
+          await VerifiedPromptService.alert({
             title: "Sorry. Your phone no. is not in the Beeline system. \
             Please tell your bus company."
           });
+          $scope.data.phoneNo = undefined;
+          $scope.$apply();
         }
       }
     }
@@ -56,8 +59,6 @@ export default[
       try{
         var no = $scope.data.phoneNo;
         var code = $scope.data.verification;
-        console.log(no);
-        console.log(code);
         if(VALID_VERIFICATION_REGEX.test(code)){
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.verifyTelephone(no, code);
@@ -66,7 +67,7 @@ export default[
           $state.go("app.route");
         }
         else {
-          await $ionicPopup.alert({
+          await VerifiedPromptService.alert({
             title: "Your verification is invalid."
           });
           $scope.data.verification = undefined;

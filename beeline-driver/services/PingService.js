@@ -5,12 +5,14 @@ export default[
   "$cordovaGeolocation",
   "$interval",
   "$ionicPopup",
+  "VerifiedPromptService",
   function(
     BeelineService,
     DriverService,
     $cordovaGeolocation,
     $interval,
-    $ionicPopup
+    $ionicPopup,
+    VerifiedPromptService
   ) {
     var sendPing = async function(tripId) {
         var userPosition = await $cordovaGeolocation.getCurrentPosition({
@@ -40,18 +42,15 @@ export default[
           await sendPing(tripId);
           self.lastPingTime = Date.now();
         }
-        catch (err) {
-          console.log(err)
-          //GPS not turned on
-          if (err.message == "User denied Geolocation") {
-            console.log("GPS error");
-            $interval.cancel(pingInterval);
-            await $ionicPopup.alert({
-              template: "Please turn on your GPS Location Service"
-            });
-            tryPing();
-            pingInterval = $interval(tryPing, 10000);
-          }
+        catch (error) {
+          console.log("GPS error");
+          $interval.cancel(pingInterval);
+          await VerifiedPromptService.alert({
+            title: "GPS ping fails. Please turn on your Location Service.",
+            subTitle: `${error.status} - ${error.message}`
+          });
+          tryPing();
+          pingInterval = $interval(tryPing, 10000);
         }
       }
 

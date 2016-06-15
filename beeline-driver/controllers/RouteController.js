@@ -9,12 +9,14 @@ export default [
   "$state",
   "$ionicPopup",
   "$ionicLoading",
+  "VerifiedPromptService",
   function(
     $scope,
     TripService,
     $state,
     $ionicPopup,
-    $ionicLoading
+    $ionicLoading,
+    VerifiedPromptService
   ) {
 
     $scope.data = {
@@ -31,7 +33,7 @@ export default [
           $state.go("start",{"routeId": $scope.data.routeId, "tripId": $scope.data.tripId});
         }
         else {
-          await $ionicPopup.alert({
+          await VerifiedPromptService.alert({
             title: "Your input is invalid."
           });
           $scope.data.routeId = undefined;
@@ -41,24 +43,34 @@ export default [
       catch(error) {
         if (error.status == 404) {
           $ionicLoading.hide();
-          $ionicPopup.alert({
+          VerifiedPromptService.alert({
             title: "There is no such route."
           }).then(function(response){
             $scope.data.routeId = undefined;
           })
         }
-        if (error.message=="noTrip") {
+        else if (error.message=="noTrip") {
           $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: "There is no trip today."
+          VerifiedPromptService.alert({
+            title: "No such trip. Please check your route id."
           }).then(function(response){
             $scope.data.routeId = undefined;
           })
         }
-        if (error.message.includes("tripCancelled")) {
+        else if (error.message && error.message.includes("tripCancelled")) {
           $ionicLoading.hide();
           $scope.data.tripId = error.message.substr(13).valueOf();
           $state.go("cancel",{routeId:$scope.data.routeId, tripId: $scope.data.tripId});
+        }
+        else {
+          $ionicLoading.hide();
+          VerifiedPromptService.alert({
+            title: "Error",
+            subTitle: `${error.status} - ${error.message}`
+          }).then(function(response){
+            $scope.data.routeId = undefined;
+            $state.go("login");
+          })
         }
       }
     }

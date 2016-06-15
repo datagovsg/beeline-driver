@@ -93,7 +93,7 @@ export default[
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
           $ionicLoading.hide();
-          await $ionicPopup.alert({
+          await VerifiedPromptService.alert({
             title: "Vehicle is updated to " + response.vehicleNumber
           });
           $state.go("app.route");

@@ -29,12 +29,6 @@ export default function ($stateProvider, $urlRouterProvider) {
   })
   .state("start", {
     url: "/start/:routeId/:tripId",
-    // views: {
-    //   "trip-start": {
-    //     templateUrl: "templates/start.html",
-    //     controller: "StartController"
-    //   }
-    // },
     templateUrl: "templates/start.html",
     controller: "StartController",
     data: {
@@ -43,12 +37,6 @@ export default function ($stateProvider, $urlRouterProvider) {
   })
   .state("cancel", {
     url: "/cancel/:routeId/:tripId",
-    // views: {
-    //   "menu-content": {
-    //     templateUrl: "templates/cancel.html",
-    //     controller: "CancelController"
-    //   }
-    // }
     templateUrl: "templates/cancel.html",
     controller: "CancelController",
   });

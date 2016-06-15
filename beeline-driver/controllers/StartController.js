@@ -11,6 +11,7 @@ export default[
   "PingService",
   "$ionicLoading",
   "$rootScope",
+  "VerifiedPromptService",
   function(
     $scope,
     $state,
@@ -20,7 +21,8 @@ export default[
     $stateParams,
     PingService,
     $ionicLoading,
-    $rootScope
+    $rootScope,
+    VerifiedPromptService
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -134,9 +136,10 @@ export default[
       }
       catch(error){
         $ionicLoading.hide();
-        $ionicPopup.alert({
+        VerifiedPromptService.alert({
           title: "There was an error cancelling trip. Please try again.",
-          subTitle: error
+          subTitle: `${error.status} - ${error.message}`
+
         });
       }
     };
@@ -144,7 +147,7 @@ export default[
     $scope.stopPing = async function() {
       var promptResponse = await $ionicPopup.confirm ({
         title: "Stop Ping",
-        template: "Are you sure you want to stop pinging?",
+        subTitle: "Are you sure you want to stop pinging?",
         okType: "button-royal"
       });
       if (!promptResponse) return;
