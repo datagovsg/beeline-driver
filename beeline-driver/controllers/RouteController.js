@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import loadingTemplate from "../templates/loading.html";
 //any length of non-negative number
-const VALID_INTEGER_REGEX = /^[0-9]*[1-9][0-9]*$/;
+const VALID_INTEGER_REGEX = /^[0-9]*$/;
 
 export default [
   "$scope",
@@ -39,7 +39,14 @@ export default [
         }
       }
       catch(error) {
-        console.log(error.stack);
+        if (error.status == 404) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: "There is no such route."
+          }).then(function(response){
+            $scope.data.routeId = undefined;
+          })
+        }
         if (error.message=="noTrip") {
           $ionicLoading.hide();
           $ionicPopup.alert({
