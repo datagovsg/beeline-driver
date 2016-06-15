@@ -13,6 +13,7 @@ import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/VerifiedPromptService.js";
 import loadingTemplate from "./templates/version-too-old.html";
 
+
 // Configuration Imports
 import configureRoutes from "./router.js";
 // Ionic Starter App
@@ -40,7 +41,7 @@ angular.module("beeline-driver", [
 .service("PingService",PingService)
 .service("VerifiedPromptService",VerifiedPromptService)
 .config(configureRoutes)
-.run(function($ionicPlatform, $ionicLoading) {
+.run(function($ionicPlatform, $ionicLoading, BeelineService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -63,21 +64,37 @@ angular.module("beeline-driver", [
 
     console.log(appVersion);
     localStorage["version"] = appVersion;
-    // "0.0.1" becomes 0.1
-    var versionNo = +(appVersion.replace(".", ""));
-    console.log(versionNo);
 
-    //enable overlay if verion too old
-    //server API return least version to allow access
-    // e.g. "0.0.2"
-    if (versionNo <= 0.1){
-      $ionicLoading.show({template: loadingTemplate});
-    }
+    //check from server API if does not meet minimal version
+    //ionicLoading pop up to stop user interactivity
+    BeelineService.request({
+      method: "GET",
+      url: "/versionRequirements"
+    })
+    .then(function(response){
+      return response.data["driverApp"]["minVersion"];
+    })
+    .then(function(response){
+      if (checkVerison(appVersion, response)){
+        $ionicLoading.show({template: loadingTemplate});
+      }
+    })
+    .catch(function(error) {
+      console.log(error.stack);
+    });
+
   });
 });
 
 //current is appVersion, least is returned from API
 //if return true, ionicLoading is popped up to disallow interactivity
 var checkVerison = function(current, least) {
-  return (+(current.replace(".", "")) < +(least.replace(".", "")))
+  try{
+    var a = current.valueOf();
+    var b = least.valueOf();
+    return (a<b);
+  }
+  catch(error){
+    console.log(error.stack);
+  }
 }
