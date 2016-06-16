@@ -7,14 +7,12 @@ export default [
   "$scope",
   "TripService",
   "$state",
-  "$ionicPopup",
   "$ionicLoading",
   "VerifiedPromptService",
   function(
     $scope,
     TripService,
     $state,
-    $ionicPopup,
     $ionicLoading,
     VerifiedPromptService
   ) {
@@ -23,6 +21,7 @@ export default [
       routeId: undefined,
       tripId: undefined
     };
+
 
     $scope.start = async function() {
       try {

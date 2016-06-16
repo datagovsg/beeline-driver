@@ -2,6 +2,7 @@
 import "babel-polyfill";
 import CancelController from "./controllers/CancelController.js";
 import LoginController from "./controllers/LoginController.js";
+import SmsController from "./controllers/SmsController.js";
 import RouteController from "./controllers/RouteController.js";
 import SidebarController from "./controllers/SidebarController.js";
 import StartController from "./controllers/StartController.js";
@@ -31,6 +32,7 @@ angular.module("beeline-driver", [
 ])
 .controller("CancelController", CancelController)
 .controller("LoginController", LoginController)
+.controller("SmsController", SmsController)
 .controller("RouteController", RouteController)
 .controller("SidebarController", SidebarController)
 .controller("StartController", StartController)

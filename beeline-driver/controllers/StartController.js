@@ -28,6 +28,7 @@ export default[
       routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
     }
+
     $scope.ping = {
       pingStatus: "GPS OFF",
       pingStatusSymbol: "image/GPSoff.svg"
