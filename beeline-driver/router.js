@@ -1,78 +1,49 @@
 export default function ($stateProvider, $urlRouterProvider) {
   $stateProvider
   // entry point starting url received from sms
-  .state("launch", {
-    url: "/launch/:tripToken",
-    controller($state, $stateParams, TokenService) {
-      TokenService.token = $stateParams.tripToken;
-      $state.go("app.landing");
-    }
+  .state("login", {
+    url: "/login",
+    templateUrl: "templates/login.html",
+    controller: "LoginController"
+
+  })
+  .state("sms", {
+    url: "/login/:phoneNo",
+    templateUrl: "templates/sms.html",
+    controller: "SmsController"
   })
   .state("app", {
     url: "/app",
     abstract: true,
-    templateUrl: "templates/emergency.html",
-    controller: "JobEmergencyController"
+    templateUrl: "templates/sidebar.html",
+    controller: "SidebarController"
   })
-  .state("app.landing", {
-    url: "/landing",
+  .state("app.route", {
+    url: "/route",
     views: {
       "menu-content": {
-        templateUrl: "templates/landing.html",
-        controller: "AppLandingController"
+        templateUrl: "templates/choose-route.html",
+        controller: "RouteController"
       }
     }
   })
-  .state("app.jobAccept", {
-    url: "/accept",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/accept.html",
-        controller: "JobAcceptController"
-      }
-    }
-  })
-  .state("app.jobAccepted", {
-    url: "/jobAccepted",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/job-accepted.html",
-        controller: "JobAcceptedController"
-      }
-    }
-  })
-  .state("app.jobStarted", {
-    url: "/jobStarted",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/job-started.html",
-        controller: "JobStartedController"
-      }
-    },
+  .state("start", {
+    url: "/start/:routeId/:tripId",
+    templateUrl: "templates/start.html",
+    controller: "StartController",
     data: {
       sendPings: true,
     }
   })
-  .state("app.passengerList", {
-    url: "/jobStarted/:stopId",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/passenger-list.html",
-        controller: "PassengerListController"
-      }
-    },
-    data: {
-      sendPings: true,
-    }
-  })
-  .state("app.jobEnded", {
-    url: "/jobEnded/:status?replacementPhoneNumber",
-    views: {
-      "menu-content": {
-        templateUrl: "templates/job-ended.html",
-        controller: "JobEndedController"
-      }
-    }
+  .state("cancel", {
+    url: "/cancel/:routeId/:tripId",
+    templateUrl: "templates/cancel.html",
+    controller: "CancelController",
   });
-  $urlRouterProvider.otherwise("/app/landing");
+  // if none of the above states are matched, use this as the fallback
+  if (window.localStorage['sessionToken'] && window.localStorage['sessionToken'] != null) {
+    $urlRouterProvider.otherwise('/app/route');
+  } else {
+    $urlRouterProvider.otherwise('/login');
+  }
 }
