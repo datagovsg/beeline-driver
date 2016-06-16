@@ -16,7 +16,7 @@
          ng-click="showPassengerList = !showPassengerList">
         <div class="row">
           <div class="col col-25">
-            {{boardStop.time | date:'h:mm a'}}
+            {{$index + 1}}. {{boardStop.time | date:'h:mm a'}}
           </div>
           <div class="col">
             <strong>{{boardStop.stop.road}}</strong><br>
