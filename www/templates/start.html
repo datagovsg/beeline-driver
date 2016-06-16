@@ -11,9 +11,24 @@
       <div class="item item-divider">
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
+
+      <div class="row text-center">
+        <div class="col col-50 button"
+          ng-click="data.board = true; data.alight = false"
+          ng-class="{'highlight': data.board}">
+          BOARD
+        </div>
+        <div class="col col-50 button"
+          ng-click="data.alight = true; data.board = false"
+          ng-class="{'highlight': data.alight}">
+          ALIGHT
+        </div>
+      </div>
+
       <div class="item"
          ng-repeat-start="boardStop in boardStops"
-         ng-click="showPassengerList = !showPassengerList">
+         ng-click="showPassengerList = !showPassengerList"
+         ng-if="data.board">
         <div class="row">
           <div class="col col-25">
             {{$index + 1}}. {{boardStop.time | date:'h:mm a'}}
@@ -33,6 +48,35 @@
          ng-if="showPassengerList">
          <div class="item item-divider">{{boardStop.stopDescription}}</div>
          <div ng-repeat="passenger in boardStop.passengerList">
+           <div class="item">
+             <h2>{{$index+1}}. {{passenger.name}}</h2>
+           </div>
+         </div>
+      </div>
+
+      <div class="item"
+         ng-repeat-start="alightStop in alightStops"
+         ng-click="showPassengerList = !showPassengerList"
+         ng-if="data.alight">
+        <div class="row">
+          <div class="col col-25">
+            {{$index + 1}}. {{alightStop.time | date:'h:mm a'}}
+          </div>
+          <div class="col">
+            <strong>{{alightStop.stop.road}}</strong><br>
+          </div>
+          <i class="icon">
+            <span class="ion-android-person"></span> &nbsp;
+            {{ alightStop.passengerNumber > 0 ?
+               alightStop.passengerNumber : 0 }} &nbsp;
+          </i>
+        </div>
+      </div>
+      <div class="item"
+         ng-repeat-end="alightStop in alightStops"
+         ng-if="showPassengerList">
+         <div class="item item-divider">{{alightStop.stopDescription}}</div>
+         <div ng-repeat="passenger in alightStop.passengerList">
            <div class="item">
              <h2>{{$index+1}}. {{passenger.name}}</h2>
            </div>
