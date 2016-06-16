@@ -29,6 +29,22 @@ export default[
       tripId: $stateParams.tripId || undefined,
       board: true,
       alight: false,
+      showBoardPassengerList: false,
+      showAlightPassengerList: false,
+    }
+
+    $scope.showBoard = function(){
+      $scope.data.board = true;
+      $scope.data.alight = false;
+      $scope.data.showBoardPassengerList=false;
+      $scope.data.showAlightPassengerList=false;
+    }
+
+    $scope.showAlight = function(){
+      $scope.data.board = false;
+      $scope.data.alight = true;
+      $scope.data.showBoardPassengerList=false;
+      $scope.data.showAlightPassengerList=false;
     }
 
     $scope.ping = {

@@ -14,12 +14,12 @@
 
       <div class="row text-center">
         <div class="col col-50 button"
-          ng-click="data.board = true; data.alight = false"
+          ng-click="showBoard()"
           ng-class="{'highlight': data.board}">
           BOARD
         </div>
         <div class="col col-50 button"
-          ng-click="data.alight = true; data.board = false"
+          ng-click="showBoard()"
           ng-class="{'highlight': data.alight}">
           ALIGHT
         </div>
@@ -27,7 +27,7 @@
 
       <div class="item"
          ng-repeat-start="boardStop in boardStops"
-         ng-click="showBoardPassengerList = !showBoardPassengerList"
+         ng-click="data.showBoardPassengerList = !data.showBoardPassengerList"
          ng-show="data.board">
         <div class="row">
           <div class="col col-25">
@@ -45,7 +45,7 @@
 		  </div>
       <div class="item"
          ng-repeat-end="boardStop in boardStops"
-         ng-show="showBoardPassengerList">
+         ng-show="data.showBoardPassengerList">
          <div class="item item-divider">{{boardStop.stopDescription}}</div>
          <div ng-repeat="passenger in boardStop.passengerList">
            <div class="item">
@@ -56,7 +56,7 @@
 
       <div class="item"
          ng-repeat-start="alightStop in alightStops"
-         ng-click="showAlightPassengerList = !showAlightPassengerList"
+         ng-click="data.showAlightPassengerList = !data.showAlightPassengerList"
          ng-show="data.alight">
         <div class="row">
           <div class="col col-25">
@@ -74,7 +74,7 @@
       </div>
       <div class="item"
          ng-repeat-end="alightStop in alightStops"
-         ng-show="showAlightPassengerList">
+         ng-show="data.showAlightPassengerList">
          <div class="item item-divider">{{alightStop.stopDescription}}</div>
          <div ng-repeat="passenger in alightStop.passengerList">
            <div class="item">
