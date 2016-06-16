@@ -27,8 +27,8 @@
 
       <div class="item"
          ng-repeat-start="boardStop in boardStops"
-         ng-click="showPassengerList = !showPassengerList"
-         ng-if="data.board">
+         ng-click="showBoardPassengerList = !showBoardPassengerList"
+         ng-show="data.board">
         <div class="row">
           <div class="col col-25">
             {{$index + 1}}. {{boardStop.time | date:'h:mm a'}}
@@ -45,7 +45,7 @@
 		  </div>
       <div class="item"
          ng-repeat-end="boardStop in boardStops"
-         ng-if="showPassengerList">
+         ng-show="showBoardPassengerList">
          <div class="item item-divider">{{boardStop.stopDescription}}</div>
          <div ng-repeat="passenger in boardStop.passengerList">
            <div class="item">
@@ -56,8 +56,8 @@
 
       <div class="item"
          ng-repeat-start="alightStop in alightStops"
-         ng-click="showPassengerList = !showPassengerList"
-         ng-if="data.alight">
+         ng-click="showAlightPassengerList = !showAlightPassengerList"
+         ng-show="data.alight">
         <div class="row">
           <div class="col col-25">
             {{$index + 1}}. {{alightStop.time | date:'h:mm a'}}
@@ -74,7 +74,7 @@
       </div>
       <div class="item"
          ng-repeat-end="alightStop in alightStops"
-         ng-if="showPassengerList">
+         ng-show="showAlightPassengerList">
          <div class="item item-divider">{{alightStop.stopDescription}}</div>
          <div ng-repeat="passenger in alightStop.passengerList">
            <div class="item">
