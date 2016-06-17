@@ -33,7 +33,6 @@ export default[
       else {
         var vehicle = await DriverService.getVehicleInfo(true);
       }
-      console.log(vehicle);
       if (vehicle){
         $scope.data.vehicleNo = vehicle.vehicleNumber;
       }
@@ -87,7 +86,6 @@ export default[
       try {
         var response = await promptVehicleNumber("Your Vehicle No");
         if (response && response.vehicleNumber) {
-          console.log(response.vehicleNumber);
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
           $ionicLoading.hide();
@@ -98,7 +96,7 @@ export default[
         }
       }
       catch(error) {
-        console.log(error.stack);
+        console.error(error.stack);
       }
 
     }
