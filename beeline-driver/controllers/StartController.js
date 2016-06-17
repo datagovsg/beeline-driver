@@ -13,7 +13,6 @@ export default[
   "$rootScope",
   "VerifiedPromptService",
   "$interval",
-  "$ionicModal",
   function(
     $scope,
     $state,
@@ -25,8 +24,7 @@ export default[
     $ionicLoading,
     $rootScope,
     VerifiedPromptService,
-    $interval,
-    $ionicModal
+    $interval
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -35,8 +33,7 @@ export default[
       alight: false,
       showBoardPassengerList: false,
       showAlightPassengerList: false,
-      imageClass: true,
-      toggle: false
+      imageClass: true
     }
 
     $scope.showBoard = function(){
@@ -132,32 +129,52 @@ export default[
       }
     });
 
-    $scope.modal = $ionicModal.fromTemplate(confirmPromptTemplate, {
-      scope: $scope,
-      animation: 'slide-in-up'
-    });
-
-    $scope.toggleClick = function() {
-      $scope.modal.hide()
-      if ($scope.data.toggle) {
-        this.confirmCancelTrip();
-      }
-    };
+    var confirmPrompt = function(options) {
+      var promptScope = $rootScope.$new(true);
+      promptScope.data = {
+        toggle: false
+      };
+      _.defaultsDeep(options,{
+        template: confirmPromptTemplate,
+        title: "",
+        subTitle: "",
+        scope: promptScope,
+        buttons: [
+          { text: "Cancel"},
+          {
+            text: "OK",
+            type: "button-royal",
+            onTap: function(e) {
+              if (promptScope.data.toggle){
+                return true;
+              }
+              e.preventDefault();
+            }
+          }
+        ]
+      });
+      return $ionicPopup.show(options);
+    }
 
     // Prompt to avoid accidental trip ending
     $scope.confirmCancelTrip = async function() {
       try {
+        var promptResponse = await confirmPrompt({
+          title: "Are you sure?",
+          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
+        });
+        if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
         $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
+
       }
       catch(error){
         $ionicLoading.hide();
         VerifiedPromptService.alert({
           title: "There was an error cancelling trip. Please try again.",
           subTitle: `${error.status} - ${error.message}`
-
         });
       }
     };
@@ -171,15 +188,8 @@ export default[
       if (!promptResponse) return;
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
-      $interval.cancel(classToggleInterval);
       PingService.stop();
       $state.go("app.route");
-    }
-
-    $scope.$on('$destroy', () => {
-      if ($scope.modal) {
-        $scope.modal.remove();
-      }
-    });
+    };
 
   }];
