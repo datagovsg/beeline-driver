@@ -61,31 +61,6 @@ export default[
 
     var reloadPassengerTimeout;
     var classToggleInterval;
-    //reload passenger list with ignoreCache=true to update
-    //passenger list per stop is updated automatically
-    var reloadPassengersList = function(){
-      $timeout.cancel(reloadPassengerTimeout);
-      updatePassengerList();
-      //every 1 min reload no. of passenger / stop
-      reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
-    };
-
-    $scope.$on('$ionicView.enter', async () => {
-      $scope.data.tripId = $stateParams.tripId;
-      console.log("before enter "+$scope.data.tripId);
-      $scope.trip = await TripService.getTrip($scope.data.tripId, true);
-      $scope.stops = $scope.trip.tripStops;
-      //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
-      _.forEach($scope.stops, function(value, key) {
-        value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
-      });
-      updatePassengerList();
-      reloadPassengersList();
-      PingService.start($scope.data.tripId);
-      classToggleInterval = $interval(()=>{
-        $scope.data.imageClass = !$scope.data.imageClass;
-      }, 1500);
-    });
 
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
@@ -105,6 +80,31 @@ export default[
         return item.time;
       });
     }
+
+    //reload passenger list with ignoreCache=true to update
+    //passenger list per stop is updated automatically
+    var reloadPassengersList = function(){
+      $timeout.cancel(reloadPassengerTimeout);
+      updatePassengerList();
+      //every 1 min reload no. of passenger / stop
+      reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
+    };
+
+    $scope.$on('$ionicView.enter', async () => {
+      $scope.data.tripId = $stateParams.tripId;
+      console.log("before enter "+$scope.data.tripId);
+      $scope.trip = await TripService.getTrip($scope.data.tripId, true);
+      $scope.stops = $scope.trip.tripStops;
+      //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
+      _.forEach($scope.stops, function(value, key) {
+        value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
+      });
+      reloadPassengersList();
+      PingService.start($scope.data.tripId);
+      classToggleInterval = $interval(()=>{
+        $scope.data.imageClass = !$scope.data.imageClass;
+      }, 1500);
+    });
 
 
     var GPSOffTimeout;
