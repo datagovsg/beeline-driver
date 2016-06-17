@@ -12,6 +12,8 @@ export default[
   "$ionicLoading",
   "$rootScope",
   "VerifiedPromptService",
+  "$interval",
+  "$ionicModal",
   function(
     $scope,
     $state,
@@ -22,7 +24,9 @@ export default[
     PingService,
     $ionicLoading,
     $rootScope,
-    VerifiedPromptService
+    VerifiedPromptService,
+    $interval,
+    $ionicModal
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -31,6 +35,8 @@ export default[
       alight: false,
       showBoardPassengerList: false,
       showAlightPassengerList: false,
+      imageClass: true,
+      toggle: false
     }
 
     $scope.showBoard = function(){
@@ -51,11 +57,13 @@ export default[
       pingStatus: "GPS OFF",
       pingStatusSymbol: "image/GPSoff.svg"
     }
+
     //get generated trip code
     TripService.getTripCode($scope.data.tripId)
     .then((tripCode) => $scope.tripCode = tripCode)
 
     var reloadPassengerTimeout;
+    var classToggleInterval;
     //reload passenger list with ignoreCache=true to update
     //passenger list per stop is updated automatically
     var reloadPassengersList = function(){
@@ -77,7 +85,10 @@ export default[
       updatePassengerList();
       reloadPassengersList();
       PingService.start($scope.data.tripId);
-    })
+      classToggleInterval = $interval(()=>{
+        $scope.data.imageClass = !$scope.data.imageClass;
+      }, 1500);
+    });
 
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
@@ -101,7 +112,7 @@ export default[
 
     var GPSOffTimeout;
 
-    $scope.$watch(() => PingService.lastPingTime, (lastPingTime) => {
+    $scope.$watch(() => PingService.lastPingTime, () => {
       console.log("ping service last ping time updates");
       $timeout.cancel(GPSOffTimeout);
       $scope.ping.pingStatus = "GPS ON";
@@ -110,44 +121,32 @@ export default[
       GPSOffTimeout = $timeout(() => {
         $scope.ping.pingStatus = "GPS OFF";
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
-      }, 30000);
+      }, 20000);
     });
 
-    var confirmPrompt = function(options) {
-      var promptScope = $rootScope.$new(true);
-      promptScope.data = {
-        toggle: false
-      };
-      _.defaultsDeep(options,{
-        template: confirmPromptTemplate,
-        title: "",
-        subTitle: "",
-        scope: promptScope,
-        buttons: [
-          { text: "Cancel"},
-          {
-            text: "OK",
-            type: "button-royal",
-            onTap: function(e) {
-              if (promptScope.data.toggle){
-                return true;
-              }
-              e.preventDefault();
-            }
-          }
-        ]
-      });
-      return $ionicPopup.show(options);
+    $scope.$watch(() => PingService.error, (error)=>{
+      if (error) {
+        console.log("Watch error");
+        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+      }
+    });
+
+    $scope.modal = $ionicModal.fromTemplate(confirmPromptTemplate, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    });
+
+    $scope.toggleClick = function() {
+      $scope.modal.hide()
+      if ($scope.data.toggle) {
+        this.confirmCancelTrip();
+      }
     };
 
     // Prompt to avoid accidental trip ending
     $scope.confirmCancelTrip = async function() {
       try {
-        var promptResponse = await confirmPrompt({
-          title: "Are you sure?",
-          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
-        });
-        if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
@@ -172,8 +171,15 @@ export default[
       if (!promptResponse) return;
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
+      $interval.cancel(classToggleInterval);
       PingService.stop();
       $state.go("app.route");
     }
+
+    $scope.$on('$destroy', () => {
+      if ($scope.modal) {
+        $scope.modal.remove();
+      }
+    });
 
   }];
