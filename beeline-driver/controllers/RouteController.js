@@ -9,12 +9,14 @@ export default [
   "$state",
   "$ionicLoading",
   "VerifiedPromptService",
+  "$ionicHistory",
   function(
     $scope,
     TripService,
     $state,
     $ionicLoading,
-    VerifiedPromptService
+    VerifiedPromptService,
+    $ionicHistory
   ) {
 
     $scope.data = {
@@ -22,13 +24,16 @@ export default [
       tripId: undefined
     };
 
-
     $scope.start = async function() {
       try {
         if(VALID_INTEGER_REGEX.test($scope.data.routeId)){
           $ionicLoading.show({template: loadingTemplate});
           $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
           $ionicLoading.hide();
+          //start has no back view to route selection
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
           $state.go("start",{"routeId": $scope.data.routeId, "tripId": $scope.data.tripId});
         }
         else {

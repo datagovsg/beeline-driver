@@ -13,6 +13,8 @@ export default[
   "$rootScope",
   "VerifiedPromptService",
   "$interval",
+  "$ionicHistory",
+  "$ionicPlatform",
   function(
     $scope,
     $state,
@@ -24,7 +26,9 @@ export default[
     $ionicLoading,
     $rootScope,
     VerifiedPromptService,
-    $interval
+    $interval,
+    $ionicHistory,
+    $ionicPlatform
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -36,6 +40,7 @@ export default[
       imageClass: true
     }
 
+    //pick up tab is clicked
     $scope.showBoard = function(){
       $scope.data.board = true;
       $scope.data.alight = false;
@@ -43,6 +48,7 @@ export default[
       $scope.data.showAlightPassengerList=false;
     }
 
+    //drop off tab is clicked
     $scope.showAlight = function(){
       $scope.data.board = false;
       $scope.data.alight = true;
@@ -54,10 +60,6 @@ export default[
       pingStatus: "GPS OFF",
       pingStatusSymbol: "image/GPSoff.svg"
     }
-
-    //get generated trip code
-    TripService.getTripCode($scope.data.tripId)
-    .then((tripCode) => $scope.tripCode = tripCode)
 
     var reloadPassengerTimeout;
     var classToggleInterval;
@@ -91,8 +93,13 @@ export default[
     };
 
     $scope.$on('$ionicView.enter', async () => {
+
       $scope.data.tripId = $stateParams.tripId;
       console.log("before enter "+$scope.data.tripId);
+      //get generated trip code
+      TripService.getTripCode($scope.data.tripId)
+      .then((tripCode) => $scope.tripCode = tripCode)
+
       $scope.trip = await TripService.getTrip($scope.data.tripId, true);
       $scope.stops = $scope.trip.tripStops;
       //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
@@ -100,10 +107,17 @@ export default[
         value.stopDescription = value.stop.description + ", " + value.stop.road+ ", " + value.stop.type+ ", ID " + value.stop.label;
       });
       reloadPassengersList();
+
       PingService.start($scope.data.tripId);
+      //toggle css class make ping indicator annimation effect
       classToggleInterval = $interval(()=>{
         $scope.data.imageClass = !$scope.data.imageClass;
       }, 1500);
+
+      //override hardware back button, 999 is priority to make sure it runs
+      $ionicPlatform.registerBackButtonAction(
+        onHardwareBackButton,999
+      );
     });
 
 
@@ -167,6 +181,10 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
+        //cancel has no back view to start
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
         $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
 
       }
@@ -191,5 +209,14 @@ export default[
       PingService.stop();
       $state.go("app.route");
     };
+
+    // Triggered when devices with a hardware back button (Android) is clicked by the user
+    // This is a Cordova/Phonegap platform specifc method
+    function onHardwareBackButton(e) {
+      $scope.stopPing();
+      e.preventDefault();
+      return false;
+    };
+
 
   }];
