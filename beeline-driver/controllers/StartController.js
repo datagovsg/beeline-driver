@@ -46,16 +46,12 @@ export default[
     $scope.showBoard = function(){
       $scope.data.board = true;
       $scope.data.alight = false;
-      $scope.data.showBoardPassengerList=false;
-      $scope.data.showAlightPassengerList=false;
     }
 
     //drop off tab is clicked
     $scope.showAlight = function(){
       $scope.data.board = false;
       $scope.data.alight = true;
-      $scope.data.showBoardPassengerList=false;
-      $scope.data.showAlightPassengerList=false;
     }
 
     $scope.ping = {
@@ -70,6 +66,16 @@ export default[
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
+        console.log(value);
+        //wrs user name {name:, email:, telephone:}
+        for (let p of value) {
+          try {
+            let jsonObj = JSON.parse(p.name);
+            p.name  = jsonObj.name;
+          }catch (err) {
+            p.name = p.name;
+          }
+        }
         stop.passengerNumber = value.length;
         stop.passengerList = value;
       });

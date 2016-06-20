@@ -33,5 +33,7 @@
 
   "SLIDE_TO_CONFIRM":            "Slide to confirm",
 
-  "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version."
+  "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version.",
+
+  "ANOTHER_DRIVER_TOOK_JOB":     "nother driver took this job."
 }

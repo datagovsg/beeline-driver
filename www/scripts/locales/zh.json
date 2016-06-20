@@ -33,6 +33,8 @@
 
   "SLIDE_TO_CONFIRM":            "滑动确定",
 
-  "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。"
+  "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。",
+
+  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。"
 
 }
