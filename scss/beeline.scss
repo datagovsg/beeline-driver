@@ -27,6 +27,10 @@
   text-transform: uppercase;
 }
 
+.button {
+  text-transform: uppercase;
+}
+
 .primary-button {
   @extend .button;
   @extend .button-block;
@@ -81,4 +85,20 @@ span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.highlight {
+  background-color: #ffe76e;
+}
+
+img.title-image {
+  transform: scale(1.0, 1.0);
+  transition: 1.5s linear all;
+  vertical-align: middle;
+}
+
+img:not(.title-image){
+  transform: scale(0.5, 0.5);
+  transition: 1.5s linear all;
+  vertical-align: middle;
 }

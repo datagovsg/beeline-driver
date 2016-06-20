@@ -27,6 +27,7 @@ export default[
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
+      imageClass: true
     }
 
     $scope.ping = {
@@ -78,6 +79,11 @@ export default[
 
       reloadPassengersList();
       PingService.start($scope.data.tripId);
+      //toggle css class make ping indicator annimation effect
+      classToggleInterval = $interval(()=>{
+        $scope.data.imageClass = !$scope.data.imageClass;
+      }, 1500);
+
     })
 
 
@@ -92,7 +98,15 @@ export default[
       GPSOffTimeout = $timeout(() => {
         $scope.ping.pingStatus = "GPS OFF";
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
-      }, 30000);
+      }, 20000);
+    });
+
+    $scope.$watch(() => PingService.error, (error)=>{
+      if (error) {
+        console.log("Watch error");
+        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+      }
     });
 
     var confirmPrompt = function(options) {

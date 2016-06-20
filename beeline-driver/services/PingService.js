@@ -6,56 +6,85 @@ export default[
   "$interval",
   "$ionicPopup",
   "VerifiedPromptService",
+  "$state",
   function(
     BeelineService,
     DriverService,
     $cordovaGeolocation,
     $interval,
     $ionicPopup,
-    VerifiedPromptService
+    VerifiedPromptService,
+    $state
   ) {
-    var sendPing = async function(tripId) {
+    var getLocation = async function() {
+      try{
         var userPosition = await $cordovaGeolocation.getCurrentPosition({
-          timeout: 5000,
+          timeout: 15000,
           enableHighAccuracy: true
         });
-
-      return BeelineService.request({
-        method: "POST",
-        url: "/trips/" + tripId + "/pings",
-        data: {
-          vehicleId: window.localStorage["vehicleId"]!==undefined ? window.localStorage["vehicleId"] : 0,
-          latitude: userPosition.coords.latitude,
-          longitude: userPosition.coords.longitude
-        }
-      })
-      .then((response) => true);
+        return userPosition;
+      }
+      catch(error) {
+        self.error = true;
+        console.log(error);
+        console.log("GPS error");
+      }
     };
+
+    var sendPing = async function(tripId, loc){
+      try {
+        await BeelineService.request({
+          method: "POST",
+          url: "/trips/" + tripId + "/pings",
+          data: {
+            vehicleId: window.localStorage["vehicleId"]!==undefined ?
+              window.localStorage["vehicleId"] : 0,
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude
+          }
+        })
+      }
+      catch(error) {
+        console.log(error);
+        console.log("Server error");
+        self.error = true;
+        //no 2 driver ping the same trip at the same time
+        if (error.status == 410){
+          $interval.cancel(pingInterval);
+          await VerifiedPromptService.alert({
+            title: "Another driver took this job",
+          });
+          $state.go("app.route");
+        }
+      }
+    }
+
 
     var pingInterval = null;
     var self = this;
 
     this.start = function(tripId) {
       console.log("ping start");
+      self.error = false;
       async function tryPing() {
         try {
-          await sendPing(tripId);
-          self.lastPingTime = Date.now();
+          var location = await getLocation();
+          if (location){
+            await sendPing(tripId, location);
+            self.error = false;
+            self.lastPingTime = Date.now();
+          }
         }
         catch (error) {
-          console.log("GPS error");
-          $interval.cancel(pingInterval);
-          await VerifiedPromptService.alert({
-            title: "GPS ping fails. Please turn on your Location Service.",
-            subTitle: `${error.status} - ${error.message}`
-          });
-          tryPing();
-          pingInterval = $interval(tryPing, 10000);
+          self.error = true;
+          console.log("Error");
+          console.log(error);
         }
       }
 
       if (!pingInterval) {
         tryPing();
+        //every 10s send ping
         pingInterval = $interval(tryPing, 10000);
       }
     };
