@@ -35,6 +35,8 @@
 
   "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。"
+  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。",
+
+  "YOUR_VEHICLE_NO":             "你的车牌号"
 
 }

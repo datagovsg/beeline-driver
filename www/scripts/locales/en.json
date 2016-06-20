@@ -35,5 +35,7 @@
 
   "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version.",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "nother driver took this job."
+  "ANOTHER_DRIVER_TOOK_JOB":     "nother driver took this job.",
+
+  "YOUR_VEHICLE_NO":             "Your Vehicle No"
 }

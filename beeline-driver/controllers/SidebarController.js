@@ -11,6 +11,7 @@ export default[
   "VerifiedPromptService",
   "$ionicLoading",
   "TokenService",
+  "$translate",
   function(
     $scope,
     $ionicPopup,
@@ -19,7 +20,8 @@ export default[
     $rootScope,
     VerifiedPromptService,
     $ionicLoading,
-    TokenService
+    TokenService,
+    $translate
   ){
     $scope.data = {
       vehicleNo: null
@@ -57,7 +59,8 @@ export default[
 
     $scope.updateVehicleNo = async function() {
       try {
-        var response = await promptVehicleNumber("Your Vehicle No");
+        var transition = await $translate(['YOUR_VEHICLE_NO']);
+        var response = await promptVehicleNumber(transition.YOUR_VEHICLE_NO);
         if (response && response.vehicleNumber) {
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
