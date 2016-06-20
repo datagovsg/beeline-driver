@@ -13,6 +13,8 @@ export default[
   "$rootScope",
   "VerifiedPromptService",
   "$interval",
+  "$ionicHistory",
+  "$ionicPlatform",
   function(
     $scope,
     $state,
@@ -24,7 +26,9 @@ export default[
     $ionicLoading,
     $rootScope,
     VerifiedPromptService,
-    $interval
+    $interval,
+    $ionicHistory,
+    $ionicPlatform
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -112,6 +116,10 @@ export default[
         $scope.data.imageClass = !$scope.data.imageClass;
       }, 1500);
 
+      //override hardware back button, 999 is priority to make sure it runs
+      $ionicPlatform.registerBackButtonAction(
+        onHardwareBackButton,999
+      );
     });
 
     var GPSOffTimeout;
@@ -174,6 +182,10 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
+        //cancel has no back view to start
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
         $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
       }
       catch(error){
@@ -197,6 +209,13 @@ export default[
       $timeout.cancel(reloadPassengerTimeout);
       PingService.stop();
       $state.go("app.route");
-    }
+    };
 
+    // Triggered when devices with a hardware back button (Android) is clicked by the user
+    // This is a Cordova/Phonegap platform specifc method
+    function onHardwareBackButton(e) {
+      $scope.stopPing();
+      e.preventDefault();
+      return false;
+    };
   }];
