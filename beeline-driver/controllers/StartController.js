@@ -72,19 +72,14 @@ export default[
         var stop = $scope.stops.find(stop => stop.id === +key);
         console.log(value);
         //wrs user name {name:, email:, telephone:}
-        // if (value.name !== 'undefined') {
-        //   for (let p of $scope.passengerList) {
-        //     // p = { name: "{name: 'Ah Kow', index: 0, for: 'wrs', email: '...@'}", email: null, telephone: null }
-        //     // OR: p = { name: 'Ah Kow', email: 'ahkow@exmaple.com', telephone: '+6591901238'}
-        //     try {
-        //       let jsonObj = JSON.parse(p);
-        //       _.assign(p, jsonObj)
-        //     }catch (err) {
-        //       console.log(err.stack);
-        //     }
-        //   }
-        // }
-
+        for (let p of value) {
+          try {
+            let jsonObj = JSON.parse(p.name);
+            p.name  = jsonObj.name;
+          }catch (err) {
+            p.name = p.name;
+          }
+        }
         stop.passengerNumber = value.length;
         stop.passengerList = value;
       });
