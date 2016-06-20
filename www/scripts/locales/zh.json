@@ -24,6 +24,8 @@
 
   "UPDATE_VEHICLE":              "更新牌照",
   "LOGOUT":                      "退出",
+  "ARE_YOU_SURE_TO_LOG_OUT":     "你确定要退出吗?",
+  "YOUR_VEHICLE_NO":             "你的车牌号",
 
   "ARE_YOU_SURE":                "你确定吗?",
   "SLIDE_TO_CANCEL":             "滑动取消服务. 我们将会通知巴士公司和乘客。",
@@ -35,8 +37,6 @@
 
   "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。",
-
-  "YOUR_VEHICLE_NO":             "你的车牌号"
+  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。"
 
 }

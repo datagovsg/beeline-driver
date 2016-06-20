@@ -78,10 +78,20 @@ export default[
     }
 
     $scope.logout = async function() {
+      var translations = await $translate(['LOGOUT', 'ARE_YOU_SURE_TO_LOG_OUT', 'CANCEL_BUTTON', 'OK_BUTTON']);
       var promptResponse = await $ionicPopup.confirm ({
-        title: "Log Out",
-        template: "Are you sure you want to log out?",
-        okType: "button-royal"
+        title: translations.LOGOUT,
+        template: translations.ARE_YOU_SURE_TO_LOG_OUT,
+        buttons: [
+          { text: translations.CANCEL_BUTTON},
+          {
+            text: translations.OK_BUTTON,
+            type: "button-royal",
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
       if (!promptResponse) return;
       TokenService.token = null;
