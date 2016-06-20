@@ -14,12 +14,12 @@ export default [
     $ionicPopup
   ){
     var self = this;
-    
+
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
-    this.isPinging = false;
-    var passengersByStop;
+
+    var passengersByStop, passengersByBoardStop, passengersByAlightStop;
 
     this.assignTrip = async function(routeId) {
       var now = new Date();
@@ -99,13 +99,11 @@ export default [
         return Promise.resolve(passengersByStop);
       } else{
         await this.getTrip(id, true);
-        var boardStops = this.trip.tripStops.filter(
-          stop => stop.canBoard == true);
-        this.boardStops = _.sortBy(boardStops, function(item){
-          return item.time;
-        });
         await this.getPassengers(id);
-        passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
+        passengersByBoardStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
+        passengersByAlightStop = _.groupBy(this.passengerData, psg => psg.alightStopId);
+        passengersByStop = _.merge(passengersByBoardStop, passengersByAlightStop);
+        console.log(passengersByStop);
         return Promise.resolve(passengersByStop);
       }
     };

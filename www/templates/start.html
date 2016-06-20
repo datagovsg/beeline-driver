@@ -3,7 +3,8 @@
   <ion-nav-buttons side="right">
     <button class="button">
       {{ping.pingStatus}}
-      <img class="title-image" ng-src="{{ping.pingStatusSymbol}}">
+      <img  ng-class="{'title-image': data.imageClass}"
+            ng-src="{{ping.pingStatusSymbol}}">
     </button>
   </ion-nav-buttons>
   <ion-content>
@@ -11,12 +12,25 @@
       <div class="item item-divider">
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <div class="item"
-         ng-repeat-start="boardStop in boardStops"
-         ng-click="showPassengerList = !showPassengerList">
+      <div class="row text-center">
+        <div  class="col col-50 button-bar"
+              ng-click="showBoard()"
+              ng-class="{'highlight': data.board}">
+          Pick Up
+        </div>
+        <div  class="col col-50 button-bar"
+              ng-click="showAlight()"
+              ng-class="{'highlight': data.alight}">
+          Drop Off
+        </div>
+      </div>
+      <div  class="item"
+            ng-repeat-start="boardStop in boardStops"
+            ng-click="data.showBoardPassengerList = !data.showBoardPassengerList"
+            ng-show="data.board">
         <div class="row">
           <div class="col col-25">
-            {{boardStop.time | date:'h:mm a'}}
+            {{$index + 1}}. {{boardStop.time | date:'h:mm a'}}
           </div>
           <div class="col">
             <strong>{{boardStop.stop.road}}</strong><br>
@@ -28,9 +42,9 @@
           </i>
         </div>
 		  </div>
-      <div class="item"
-         ng-repeat-end="boardStop in boardStops"
-         ng-if="showPassengerList">
+      <div  class="item"
+            ng-repeat-end="boardStop in boardStops"
+            ng-show="data.showBoardPassengerList">
          <div class="item item-divider">{{boardStop.stopDescription}}</div>
          <div ng-repeat="passenger in boardStop.passengerList">
            <div class="item">
@@ -38,14 +52,42 @@
            </div>
          </div>
       </div>
+      <div  class="item"
+            ng-repeat-start="alightStop in alightStops"
+            ng-click="data.showAlightPassengerList = !data.showAlightPassengerList"
+            ng-show="data.alight">
+        <div class="row">
+          <div class="col col-25">
+            {{$index + 1}}. {{alightStop.time | date:'h:mm a'}}
+          </div>
+          <div class="col">
+            <strong>{{alightStop.stop.road}}</strong><br>
+          </div>
+          <i class="icon">
+            <span class="ion-android-person"></span> &nbsp;
+            {{ alightStop.passengerNumber > 0 ?
+               alightStop.passengerNumber : 0 }} &nbsp;
+          </i>
+        </div>
+      </div>
+      <div  class="item"
+            ng-repeat-end="alightStop in alightStops"
+            ng-show="data.showAlightPassengerList">
+         <div class="item item-divider">{{alightStop.stopDescription}}</div>
+         <div ng-repeat="passenger in alightStop.passengerList">
+           <div class="item">
+             <h2>{{$index+1}}. {{passenger.name}}</h2>
+           </div>
+         </div>
+      </div>
     </div>
     <div class="primary-button"
-         ng-click="stopPing()">STOP</div>
+         ng-click="stopPing()">Stop</div>
     <br>
     <div class="text-center">
-      <div class="button button-assertive"
-          ng-click="confirmCancelTrip()">
-          <i class="icon ion-android-warning"></i>CANCEL TRIP
+      <div  class="button button-assertive"
+            ng-click="confirmCancelTrip()">
+          <i class="icon ion-android-warning">&nbsp;&nbsp;</i>Cancel Trip
       </div>
     </div>
   </ion-content>
