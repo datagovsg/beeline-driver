@@ -1,12 +1,20 @@
 <ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
   <ion-content>
     <h4 class="text-center">{{ 'WELCOME' | translate }}</h4>
+
+    <ion-item menu-close class="item-icon-left item-dark"
+      ng-click="switchLanguage('en')">
+      <icon ios="ion-ios-gear" android="ion-settings" default="ion-settings">
+      </icon>
+      ENGLISH
+    </ion-item>
     <ion-item menu-close class="item-icon-left item-dark"
       ng-click="switchLanguage('zh')">
       <icon ios="ion-ios-gear" android="ion-settings" default="ion-settings">
       </icon>
-      {{ 'LANGUAGE_SETTINGS' | translate }}
+      华文
     </ion-item>
+
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-android-pin placeholder-icon"></i>
@@ -15,7 +23,7 @@
     </div>
     <div class="primary-button"
          ng-click='start()'>
-      Start
+      {{ 'START_BUTTON' | translate }}
     </div>
   </ion-content>
 </ion-view>

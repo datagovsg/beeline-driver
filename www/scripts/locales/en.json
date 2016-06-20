@@ -3,6 +3,7 @@
   "ROUTE_TEMPLATE_TITLE":        "Enter Your Route ID",
   "WELCOME":                     "Welcome",
   "ROUTE_TEMPLATE_INPUT":        "Enter Your Route ID ( e.g. 1)",
+  "START_BUTTON":                "Start",
 
   "ROUTE":                       "Route",
   "PICK_UP":                     "Pick Up",
@@ -11,6 +12,7 @@
   "CANCEL_BUTTON":               "Cancel Trip",
 
   "OK_BUTTON":                   "OK",
+  "CANCEL_BUTTON":               "CANCEL",
 
   "CANCELLED":                   "Cancelled",
   "CANCELLED_MSG_1":             "The trip has been cancelled.",
@@ -20,9 +22,11 @@
   "UPDATE_VEHICLE":              "Update Vehicle",
   "LOGOUT":                      "Log out",
 
+  "ARE_YOU_SURE":                "Are you sure?",
+  "SLIDE_TO_CANCEL":             "Slide to cancel trip. This will notify the passsengers and ops.",
 
-  "EDIT":                        "EDIT",
-  "MARKDOWN":                    "MARKDOWN",
-  "PREVIEW":                     "PREVIEW",
-  "UPDATE_POST":                 "UPDATE POST"
+  "STOP_PING":                   "Stop Ping",
+  "STOP_PING_MSG":               "Are you sure you want to stop pinging?",
+
+  "SLIDE_TO_CONFIRM":            "Slide to confirm"
 }

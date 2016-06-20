@@ -54,8 +54,8 @@ angular.module("beeline-driver", [
     suffix: '.json'
   })
   .registerAvailableLanguageKeys(['en', 'zh'], {
-    'en' : 'en', 'en_US': 'en',
-    'zh' : 'zh', 'zh-CN': 'zh', 'zh-SG':'zh'
+    'en' : 'en',
+    'zh' : 'zh',
   })
   .preferredLanguage('en')
   .fallbackLanguage('en')

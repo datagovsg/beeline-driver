@@ -15,6 +15,7 @@ export default[
   "$interval",
   "$ionicHistory",
   "$ionicPlatform",
+  "$translate",
   function(
     $scope,
     $state,
@@ -28,7 +29,8 @@ export default[
     VerifiedPromptService,
     $interval,
     $ionicHistory,
-    $ionicPlatform
+    $ionicPlatform,
+    $translate
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -68,6 +70,21 @@ export default[
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
+        console.log(value);
+        //wrs user name {name:, email:, telephone:}
+        // if (value.name !== 'undefined') {
+        //   for (let p of $scope.passengerList) {
+        //     // p = { name: "{name: 'Ah Kow', index: 0, for: 'wrs', email: '...@'}", email: null, telephone: null }
+        //     // OR: p = { name: 'Ah Kow', email: 'ahkow@exmaple.com', telephone: '+6591901238'}
+        //     try {
+        //       let jsonObj = JSON.parse(p);
+        //       _.assign(p, jsonObj)
+        //     }catch (err) {
+        //       console.log(err.stack);
+        //     }
+        //   }
+        // }
+
         stop.passengerNumber = value.length;
         stop.passengerList = value;
       });
@@ -143,7 +160,8 @@ export default[
       }
     });
 
-    var confirmPrompt = function(options) {
+    var confirmPrompt = async function(options) {
+      var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
       var promptScope = $rootScope.$new(true);
       promptScope.data = {
         toggle: false
@@ -154,9 +172,9 @@ export default[
         subTitle: "",
         scope: promptScope,
         buttons: [
-          { text: "Cancel"},
+          { text: translations.CANCEL_BUTTON},
           {
-            text: "OK",
+            text: translations.OK_BUTTON,
             type: "button-royal",
             onTap: function(e) {
               if (promptScope.data.toggle){
@@ -173,10 +191,13 @@ export default[
     // Prompt to avoid accidental trip ending
     $scope.confirmCancelTrip = async function() {
       try {
+
+        var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL']);
         var promptResponse = await confirmPrompt({
-          title: "Are you sure?",
-          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
+          title: translations.ARE_YOU_SURE,
+          subTitle: translations.SLIDE_TO_CANCEL
         });
+
         if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
@@ -198,10 +219,20 @@ export default[
     };
 
     $scope.stopPing = async function() {
+      var translations = await $translate(['STOP_PING', 'STOP_PING_MSG','CANCEL_BUTTON','OK_BUTTON']);
       var promptResponse = await $ionicPopup.confirm ({
-        title: "Stop Ping",
-        subTitle: "Are you sure you want to stop pinging?",
-        okType: "button-royal"
+        title: translations.STOP_PING,
+        subTitle: translations.STOP_PING_MSG,
+        buttons: [
+          { text: translations.CANCEL_BUTTON},
+          {
+            text: translations.OK_BUTTON,
+            type: "button-royal",
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
       if (!promptResponse) return;
       $timeout.cancel(GPSOffTimeout);
