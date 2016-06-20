@@ -15,6 +15,7 @@ export default[
   "$interval",
   "$ionicHistory",
   "$ionicPlatform",
+  "$translate",
   function(
     $scope,
     $state,
@@ -28,7 +29,8 @@ export default[
     VerifiedPromptService,
     $interval,
     $ionicHistory,
-    $ionicPlatform
+    $ionicPlatform,
+    $translate
   ){
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
@@ -60,9 +62,6 @@ export default[
       pingStatus: "GPS OFF",
       pingStatusSymbol: "image/GPSoff.svg"
     }
-    //get generated trip code
-    TripService.getTripCode($scope.data.tripId)
-    .then((tripCode) => $scope.tripCode = tripCode)
 
     var reloadPassengerTimeout;
     var classToggleInterval;
@@ -96,6 +95,7 @@ export default[
     };
 
     $scope.$on('$ionicView.enter', async () => {
+
       $scope.data.tripId = $stateParams.tripId;
       console.log("before enter "+$scope.data.tripId);
       //get generated trip code
@@ -122,9 +122,10 @@ export default[
       );
     });
 
+
     var GPSOffTimeout;
 
-    $scope.$watch(() => PingService.lastPingTime, (lastPingTime) => {
+    $scope.$watch(() => PingService.lastPingTime, () => {
       console.log("ping service last ping time updates");
       $timeout.cancel(GPSOffTimeout);
       $scope.ping.pingStatus = "GPS ON";
@@ -144,7 +145,8 @@ export default[
       }
     });
 
-    var confirmPrompt = function(options) {
+    var confirmPrompt = async function(options) {
+      var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
       var promptScope = $rootScope.$new(true);
       promptScope.data = {
         toggle: false
@@ -155,9 +157,9 @@ export default[
         subTitle: "",
         scope: promptScope,
         buttons: [
-          { text: "Cancel"},
+          { text: translations.CANCEL_BUTTON},
           {
-            text: "OK",
+            text: translations.OK_BUTTON,
             type: "button-royal",
             onTap: function(e) {
               if (promptScope.data.toggle){
@@ -169,15 +171,18 @@ export default[
         ]
       });
       return $ionicPopup.show(options);
-    };
+    }
 
     // Prompt to avoid accidental trip ending
     $scope.confirmCancelTrip = async function() {
       try {
+
+        var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL']);
         var promptResponse = await confirmPrompt({
-          title: "Are you sure?",
-          subTitle: "Slide to cancel trip. This will notify the passsengers and ops."
+          title: translations.ARE_YOU_SURE,
+          subTitle: translations.SLIDE_TO_CANCEL
         });
+
         if (!promptResponse) return;
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
@@ -187,22 +192,32 @@ export default[
           disableBack: true
         });
         $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
+
       }
       catch(error){
         $ionicLoading.hide();
         VerifiedPromptService.alert({
           title: "There was an error cancelling trip. Please try again.",
           subTitle: `${error.status} - ${error.message}`
-
         });
       }
     };
 
     $scope.stopPing = async function() {
+      var translations = await $translate(['STOP_PING', 'STOP_PING_MSG','CANCEL_BUTTON','OK_BUTTON']);
       var promptResponse = await $ionicPopup.confirm ({
-        title: "Stop Ping",
-        subTitle: "Are you sure you want to stop pinging?",
-        okType: "button-royal"
+        title: translations.STOP_PING,
+        subTitle: translations.STOP_PING_MSG,
+        buttons: [
+          { text: translations.CANCEL_BUTTON},
+          {
+            text: translations.OK_BUTTON,
+            type: "button-royal",
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
       if (!promptResponse) return;
       $timeout.cancel(GPSOffTimeout);
@@ -218,4 +233,6 @@ export default[
       e.preventDefault();
       return false;
     };
+
+
   }];

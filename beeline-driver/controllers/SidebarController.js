@@ -1,5 +1,4 @@
 import _ from "lodash";
-import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
@@ -33,7 +32,6 @@ export default[
       else {
         var vehicle = await DriverService.getVehicleInfo(true);
       }
-      console.log(vehicle);
       if (vehicle){
         $scope.data.vehicleNo = vehicle.vehicleNumber;
       }
@@ -43,32 +41,6 @@ export default[
       $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber : null;
     });
 
-    var confirmPrompt = function(options) {
-      var promptScope = $rootScope.$new(true);
-      promptScope.data = {
-        toggle: false
-      };
-      _.defaultsDeep(options,{
-        template: confirmPromptTemplate,
-        title: "",
-        subTitle: "",
-        scope: promptScope,
-        buttons: [
-          { text: "Cancel"},
-          {
-            text: "OK",
-            type: "button-royal",
-            onTap: function(e) {
-              if (promptScope.data.toggle){
-                return true;
-              }
-              e.preventDefault();
-            }
-          }
-        ]
-      });
-      return $ionicPopup.show(options);
-    };
 
     var promptVehicleNumber = function(title, subtitle){
       return VerifiedPromptService.verifiedPrompt({
@@ -76,7 +48,7 @@ export default[
         subTitle: subtitle,
         inputs: [
           {
-            type: "string",
+            type: "text",
             name: "vehicleNumber",
           }
         ]
@@ -87,7 +59,6 @@ export default[
       try {
         var response = await promptVehicleNumber("Your Vehicle No");
         if (response && response.vehicleNumber) {
-          console.log(response.vehicleNumber);
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
           $ionicLoading.hide();
@@ -98,7 +69,7 @@ export default[
         }
       }
       catch(error) {
-        console.log(error.stack);
+        console.error(error.stack);
       }
 
     }

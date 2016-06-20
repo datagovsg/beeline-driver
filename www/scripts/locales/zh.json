@@ -1,0 +1,38 @@
+{
+  "LANGUAGE_SETTINGS":           "华文",
+  "ROUTE_TEMPLATE_TITLE":        "输入路线号码",
+  "WELCOME":                     "欢迎",
+  "ROUTE_TEMPLATE_INPUT":        "输入路线号码 ( 比如 1)",
+  "START_BUTTON":                "开始",
+  "INPUT_INVALID":               "输入不正确.",
+  "NO_ROUTE_ERROR":              "没有这个路线.",
+  "NO_TRIP_ERROR":               "没有这个服务. 请再查看你的路线号码.",
+
+  "ROUTE":                       "路线",
+  "PICK_UP":                     "上车",
+  "DROP_OFF":                    "下车",
+  "STOP_BUTTON":                 "暂停",
+  "CANCEL_BUTTON":               "取消服务",
+
+  "OK_BUTTON":                   "确认",
+  "CANCEL_BUTTON":               "取消",
+
+  "CANCELLED":                   "已取消",
+  "CANCELLED_MSG_1":             "服务已经取消。",
+  "CANCELLED_MSG_2":             "服务明天继续。",
+  "THANK_YOU":                   "谢谢",
+
+  "UPDATE_VEHICLE":              "更新牌照",
+  "LOGOUT":                      "退出",
+
+  "ARE_YOU_SURE":                "你确定吗?",
+  "SLIDE_TO_CANCEL":             "滑动取消服务. 我们将会通知巴士公司和乘客。",
+
+  "STOP_PING":                   "停止GPS定位",
+  "STOP_PING_MSG":               "你确定你要停止GPS定位?",
+
+  "SLIDE_TO_CONFIRM":            "滑动确定",
+
+  "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。"
+
+}

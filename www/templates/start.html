@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-nav-title>Route {{data.routeId}}</ion-nav-title>
+  <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}}</ion-nav-title>
   <ion-nav-buttons side="right">
     <button class="button">
       {{ping.pingStatus}}
@@ -16,12 +16,12 @@
         <div  class="col col-50 button-bar"
               ng-click="showBoard()"
               ng-class="{'highlight': data.board}">
-          Pick Up
+          {{ 'PICK_UP' | translate }}
         </div>
         <div  class="col col-50 button-bar"
               ng-click="showAlight()"
               ng-class="{'highlight': data.alight}">
-          Drop Off
+          {{ 'DROP_OFF' | translate }}
         </div>
       </div>
       <div  class="item"
@@ -82,12 +82,12 @@
       </div>
     </div>
     <div class="primary-button"
-         ng-click="stopPing()">Stop</div>
+         ng-click="stopPing()">{{ 'STOP_BUTTON' | translate }}</div>
     <br>
     <div class="text-center">
       <div  class="button button-assertive"
             ng-click="confirmCancelTrip()">
-          <i class="icon ion-android-warning">&nbsp;&nbsp;</i>Cancel Trip
+          <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'CANCEL_BUTTON' | translate }}
       </div>
     </div>
   </ion-content>
