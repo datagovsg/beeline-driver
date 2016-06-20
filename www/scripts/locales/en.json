@@ -31,5 +31,7 @@
   "STOP_PING":                   "Stop Ping",
   "STOP_PING_MSG":               "Are you sure you want to stop pinging?",
 
-  "SLIDE_TO_CONFIRM":            "Slide to confirm"
+  "SLIDE_TO_CONFIRM":            "Slide to confirm",
+
+  "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version."
 }

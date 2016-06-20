@@ -31,5 +31,8 @@
   "STOP_PING":                   "停止GPS定位",
   "STOP_PING_MSG":               "你确定你要停止GPS定位?",
 
-  "SLIDE_TO_CONFIRM":            "滑动确定"
+  "SLIDE_TO_CONFIRM":            "滑动确定",
+
+  "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。"
+
 }
