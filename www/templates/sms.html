@@ -1,0 +1,18 @@
+<ion-view>
+  <ion-nav-title>
+    Enter Verification Code
+  </ion-nav-title>
+  <ion-content>
+    <p class="text-center">Please enter the code sent to your phone +65 {{data.phoneNo}} </p>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
+        <input type="tel" ng-model="data.verification">
+      </label>
+    </div>
+    <div class="primary-button"
+         ng-click='verify()'>
+      CONFIRM
+    </div>
+  </ion-content>
+</ion-view>

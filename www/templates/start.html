@@ -1,0 +1,52 @@
+<ion-view>
+  <ion-nav-title>Route {{data.routeId}}</ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button">
+      {{ping.pingStatus}}
+      <img class="title-image" ng-src="{{ping.pingStatusSymbol}}">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        <h1 class="text-center">{{ tripCode }}</h1>
+      </div>
+      <div class="item"
+         ng-repeat-start="boardStop in boardStops"
+         ng-click="showPassengerList = !showPassengerList">
+        <div class="row">
+          <div class="col col-25">
+            {{boardStop.time | date:'h:mm a'}}
+          </div>
+          <div class="col">
+            <strong>{{boardStop.stop.road}}</strong><br>
+          </div>
+          <i class="icon">
+            <span class="ion-android-person"></span> &nbsp;
+            {{ boardStop.passengerNumber > 0 ?
+               boardStop.passengerNumber : 0 }} &nbsp;
+          </i>
+        </div>
+		  </div>
+      <div class="item"
+         ng-repeat-end="boardStop in boardStops"
+         ng-if="showPassengerList">
+         <div class="item item-divider">{{boardStop.stopDescription}}</div>
+         <div ng-repeat="passenger in boardStop.passengerList">
+           <div class="item">
+             <h2>{{$index+1}}. {{passenger.name}}</h2>
+           </div>
+         </div>
+      </div>
+    </div>
+    <div class="primary-button"
+         ng-click="stopPing()">STOP</div>
+    <br>
+    <div class="text-center">
+      <div class="button button-assertive"
+          ng-click="confirmCancelTrip()">
+          <i class="icon ion-android-warning"></i>CANCEL TRIP
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
