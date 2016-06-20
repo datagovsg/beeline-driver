@@ -46,16 +46,12 @@ export default[
     $scope.showBoard = function(){
       $scope.data.board = true;
       $scope.data.alight = false;
-      $scope.data.showBoardPassengerList=false;
-      $scope.data.showAlightPassengerList=false;
     }
 
     //drop off tab is clicked
     $scope.showAlight = function(){
       $scope.data.board = false;
       $scope.data.alight = true;
-      $scope.data.showBoardPassengerList=false;
-      $scope.data.showAlightPassengerList=false;
     }
 
     $scope.ping = {
