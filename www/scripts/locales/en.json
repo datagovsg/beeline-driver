@@ -1,0 +1,28 @@
+{
+  "LANGUAGE_SETTINGS":           "English",
+  "ROUTE_TEMPLATE_TITLE":        "Enter Your Route ID",
+  "WELCOME":                     "Welcome",
+  "ROUTE_TEMPLATE_INPUT":        "Enter Your Route ID ( e.g. 1)",
+
+  "ROUTE":                       "Route",
+  "PICK_UP":                     "Pick Up",
+  "DROP_OFF":                    "Drop Off",
+  "STOP_BUTTON":                 "Stop",
+  "CANCEL_BUTTON":               "Cancel Trip",
+
+  "OK_BUTTON":                   "OK",
+
+  "CANCELLED":                   "Cancelled",
+  "CANCELLED_MSG_1":             "The trip has been cancelled.",
+  "CANCELLED_MSG_2":             "Service will resume tomorrow.",
+  "THANK_YOU":                   "Thank you",
+
+  "UPDATE_VEHICLE":              "Update Vehicle",
+  "LOGOUT":                      "Log out",
+
+
+  "EDIT":                        "EDIT",
+  "MARKDOWN":                    "MARKDOWN",
+  "PREVIEW":                     "PREVIEW",
+  "UPDATE_POST":                 "UPDATE POST"
+}

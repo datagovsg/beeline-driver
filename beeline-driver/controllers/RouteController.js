@@ -10,18 +10,24 @@ export default [
   "$ionicLoading",
   "VerifiedPromptService",
   "$ionicHistory",
+  "$translate",
   function(
     $scope,
     TripService,
     $state,
     $ionicLoading,
     VerifiedPromptService,
-    $ionicHistory
+    $ionicHistory,
+    $translate
   ) {
 
     $scope.data = {
       routeId: undefined,
       tripId: undefined
+    };
+
+    $scope.switchLanguage = function(key) {
+      $translate.use(key);
     };
 
     $scope.start = async function() {

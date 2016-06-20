@@ -15,6 +15,8 @@ import VerifiedPromptService from "./services/VerifiedPromptService.js";
 import loadingTemplate from "./templates/version-too-old.html";
 
 import compareVersions from "compare-versions";
+import "angular-translate";
+import "angular-translate-loader-static-files";
 
 
 // Configuration Imports
@@ -30,7 +32,8 @@ var appVersion = "1.0.0";
 // 'starter.controllers' is found in controllers.js
 angular.module("beeline-driver", [
   "ionic",
-  "ngCordova"
+  "ngCordova",
+  "pascalprecht.translate"
 ])
 .controller("CancelController", CancelController)
 .controller("LoginController", LoginController)
@@ -45,6 +48,20 @@ angular.module("beeline-driver", [
 .service("PingService",PingService)
 .service("VerifiedPromptService",VerifiedPromptService)
 .config(configureRoutes)
+.config(function($translateProvider){
+  $translateProvider.useStaticFilesLoader({
+    prefix: './scripts/locales/',
+    suffix: '.json'
+  })
+  .registerAvailableLanguageKeys(['en', 'zh'], {
+    'en' : 'en', 'en_US': 'en',
+    'zh' : 'zh', 'zh-CN': 'zh', 'zh-SG':'zh'
+  })
+  .preferredLanguage('en')
+  .fallbackLanguage('en')
+  .determinePreferredLanguage()
+  .useSanitizeValueStrategy('escapeParameters');
+})
 .run(function($ionicPlatform, $ionicLoading, BeelineService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -90,5 +107,6 @@ angular.module("beeline-driver", [
     .catch(function(error) {
       console.log(error.stack);
     });
+
   });
 });
