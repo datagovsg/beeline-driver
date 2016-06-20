@@ -4,6 +4,9 @@
   "WELCOME":                     "Welcome",
   "ROUTE_TEMPLATE_INPUT":        "Enter Your Route ID ( e.g. 1)",
   "START_BUTTON":                "Start",
+  "INPUT_INVALID":               "Your input is invalid.",
+  "NO_ROUTE_ERROR":              "There is no such route.",
+  "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
 
   "ROUTE":                       "Route",
   "PICK_UP":                     "Pick Up",

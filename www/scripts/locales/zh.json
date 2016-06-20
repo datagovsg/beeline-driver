@@ -4,6 +4,9 @@
   "WELCOME":                     "欢迎",
   "ROUTE_TEMPLATE_INPUT":        "输入路线号码 ( 比如 1)",
   "START_BUTTON":                "开始",
+  "INPUT_INVALID":               "输入不正确.",
+  "NO_ROUTE_ERROR":              "没有这个路线.",
+  "NO_TRIP_ERROR":               "没有这个服务. 请再查看你的路线号码.",
 
   "ROUTE":                       "路线",
   "PICK_UP":                     "上车",
