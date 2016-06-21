@@ -3,7 +3,7 @@
   <ion-nav-buttons side="right">
     <button class="button">
       {{ping.pingStatus}}
-      <img  ng-class="{'title-image': data.imageClass}"
+      <img  ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}"
             ng-src="{{ping.pingStatusSymbol}}">
     </button>
   </ion-nav-buttons>

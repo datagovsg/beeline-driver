@@ -7,6 +7,8 @@
   "INPUT_INVALID":               "Your input is invalid.",
   "NO_ROUTE_ERROR":              "There is no such route.",
   "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
+  "GPS_BAD":                     "GPS BAD",
+  "GPS_GOOD":                    "GPS GOOD",
 
   "ROUTE":                       "Route",
   "PICK_UP":                     "Pick Up",

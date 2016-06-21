@@ -39,7 +39,6 @@ export default[
       alight: false,
       showBoardPassengerList: false,
       showAlightPassengerList: false,
-      imageClass: true
     }
 
     //pick up tab is clicked
@@ -54,19 +53,21 @@ export default[
       $scope.data.alight = true;
     }
 
-    $scope.ping = {
-      pingStatus: "GPS OFF",
-      pingStatusSymbol: "image/GPSoff.svg"
-    }
-
     var reloadPassengerTimeout;
     var classToggleInterval;
+    var GPSTranslations;
+
+    $scope.ping = {
+      pingStatus: "GPS BAD",
+      pingStatusSymbol: "image/GPSoff.svg",
+      isAnimated: true,
+      isRedON: false,
+    }
 
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
-        console.log(value);
         //wrs user name {name:, email:, telephone:}
         for (let p of value) {
           try {
@@ -103,7 +104,7 @@ export default[
     $scope.$on('$ionicView.enter', async () => {
 
       $scope.data.tripId = $stateParams.tripId;
-      console.log("before enter "+$scope.data.tripId);
+      GPSTranslations = await $translate(['GPS_BAD','GPS_GOOD']);
       //get generated trip code
       TripService.getTripCode($scope.data.tripId)
       .then((tripCode) => $scope.tripCode = tripCode)
@@ -119,35 +120,42 @@ export default[
       PingService.start($scope.data.tripId);
       //toggle css class make ping indicator annimation effect
       classToggleInterval = $interval(()=>{
-        $scope.data.imageClass = !$scope.data.imageClass;
+        $scope.ping.isAnimated = !$scope.ping.isAnimated;
       }, 1500);
 
       //override hardware back button, 999 is priority to make sure it runs
       $ionicPlatform.registerBackButtonAction(
         onHardwareBackButton,999
       );
-    });
 
+    });
 
     var GPSOffTimeout;
 
-    $scope.$watch(() => PingService.lastPingTime, () => {
+    $scope.$watch(() => PingService.lastPingTime, async () => {
       console.log("ping service last ping time updates");
       $timeout.cancel(GPSOffTimeout);
-      $scope.ping.pingStatus = "GPS ON";
+      if (!GPSTranslations) {
+        GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
+      }
+      $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
       $scope.ping.pingStatusSymbol = "image/GPSon.svg";
-      //every 30sec, check status
+      //bring back animation effect
+      $scope.ping.isRedON = false;
+      //every 20sec, check status
       GPSOffTimeout = $timeout(() => {
-        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+        $scope.ping.isRedON = true;
       }, 20000);
     });
 
     $scope.$watch(() => PingService.error, (error)=>{
       if (error) {
         console.log("Watch error");
-        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+        $scope.ping.isRedON = true;
       }
     });
 
