@@ -98,12 +98,10 @@ export default [
       if (passengersByStop  && !reload){
         return Promise.resolve(passengersByStop);
       } else{
-        await this.getTrip(id, true);
-        await this.getPassengers(id);
+        await Promise.all([this.getTrip(id, true), this.getPassengers(id)]);
         passengersByBoardStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         passengersByAlightStop = _.groupBy(this.passengerData, psg => psg.alightStopId);
         passengersByStop = _.merge(passengersByBoardStop, passengersByAlightStop);
-        console.log(passengersByStop);
         return Promise.resolve(passengersByStop);
       }
     };
