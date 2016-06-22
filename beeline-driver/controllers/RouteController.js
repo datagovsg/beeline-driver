@@ -25,7 +25,7 @@ export default [
 
     $scope.start = async function() {
       try {
-        if(VALID_INTEGER_REGEX.test($scope.data.routeId)){
+        if(VALID_INTEGER_REGEX.test($scope.data.routeId)) {
           $ionicLoading.show({template: loadingTemplate});
           $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
           $ionicLoading.hide();

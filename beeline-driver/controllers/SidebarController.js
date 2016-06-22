@@ -26,14 +26,13 @@ export default[
       vehicleNo: null
     };
 
-    $scope.$on('$ionicView.enter',async ()=>{
+    $scope.$on('$ionicView.enter',async ()=> {
       if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
         var vehicle = await DriverService.getVehicleInfo(false);
       }
       else {
         var vehicle = await DriverService.getVehicleInfo(true);
       }
-      console.log(vehicle);
       if (vehicle){
         $scope.data.vehicleNo = vehicle.vehicleNumber;
       }
@@ -70,13 +69,13 @@ export default[
       return $ionicPopup.show(options);
     };
 
-    var promptVehicleNumber = function(title, subtitle){
+    var promptVehicleNumber = function(title, subtitle) {
       return VerifiedPromptService.verifiedPrompt({
         title: title,
         subTitle: subtitle,
         inputs: [
           {
-            type: "string",
+            type: "text",
             name: "vehicleNumber",
           }
         ]
@@ -87,7 +86,6 @@ export default[
       try {
         var response = await promptVehicleNumber("Your Vehicle No");
         if (response && response.vehicleNumber) {
-          console.log(response.vehicleNumber);
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
           $ionicLoading.hide();
@@ -98,7 +96,7 @@ export default[
         }
       }
       catch(error) {
-        console.log(error.stack);
+        console.error(error.stack);
       }
 
     }
@@ -116,6 +114,5 @@ export default[
       window.localStorage.removeItem('vehicleId');
       $state.go("login");
     }
-
 
   }];
