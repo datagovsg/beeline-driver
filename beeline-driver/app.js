@@ -1,22 +1,28 @@
 /* global angular, cordova, StatusBar */
 import "babel-polyfill";
-import AppLandingController from "./controllers/AppLandingController.js";
-import JobEmergencyController from "./controllers/EmergencyController.js";
-import JobAcceptController from "./controllers/JobAcceptController.js";
-import JobAcceptedController from "./controllers/JobAcceptedController.js";
-import JobStartedController from "./controllers/JobStartedController.js";
-import PassengerListController from "./controllers/PassengerListController.js";
-import JobEndedController from "./controllers/JobEndedController.js";
-import TokenService from "./services/TokenService.js";
+import CancelController from "./controllers/CancelController.js";
+import LoginController from "./controllers/LoginController.js";
+import SmsController from "./controllers/SmsController.js";
+import RouteController from "./controllers/RouteController.js";
+import SidebarController from "./controllers/SidebarController.js";
+import StartController from "./controllers/StartController.js";
 import BeelineService from "./services/BeelineService.js";
+import TokenService from "./services/TokenService.js";
 import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
-import VerifiedPromptService from "./services/verifiedPromptService.js";
+import VerifiedPromptService from "./services/VerifiedPromptService.js";
+import loadingTemplate from "./templates/version-too-old.html";
+
+import compareVersions from "compare-versions";
+
 
 // Configuration Imports
 import configureRoutes from "./router.js";
 // Ionic Starter App
+
+// version for this distribution
+var appVersion = "1.0.0";
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -24,36 +30,22 @@ import configureRoutes from "./router.js";
 // 'starter.controllers' is found in controllers.js
 angular.module("beeline-driver", [
   "ionic",
-  "ngCordova",
-  "uiGmapgoogle-maps"
+  "ngCordova"
 ])
-.controller("AppLandingController", AppLandingController)
-.controller("JobEmergencyController", JobEmergencyController)
-.controller("JobAcceptController", JobAcceptController)
-.controller("JobAcceptedController", JobAcceptedController)
-.controller("JobStartedController", JobStartedController)
-.controller("PassengerListController", PassengerListController)
-.controller("JobEndedController", JobEndedController)
-.service("TokenService", TokenService)
-.service("BeelineService", BeelineService)
-.service("DriverService", DriverService)
-.service("TripService", TripService)
-.service("PingService", PingService)
+.controller("CancelController", CancelController)
+.controller("LoginController", LoginController)
+.controller("SmsController", SmsController)
+.controller("RouteController", RouteController)
+.controller("SidebarController", SidebarController)
+.controller("StartController", StartController)
+.service("BeelineService",BeelineService)
+.service("TokenService",TokenService)
+.service("DriverService",DriverService)
+.service("TripService",TripService)
+.service("PingService",PingService)
 .service("VerifiedPromptService",VerifiedPromptService)
-.filter("trusted", ["$sce", function ($sce) {
-  return function(url) {
-    return $sce.trustAsResourceUrl(url);
-  };
-}])
-.config(function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    //client: 'gme-infocommunications',
-    key: "AIzaSyDC38zMc2TIj1-fvtLUdzNsgOQmTBb3N5M",
-    libraries: "places"
-  });
-})
 .config(configureRoutes)
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicLoading, BeelineService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -66,5 +58,37 @@ angular.module("beeline-driver", [
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    //stop screen sleep
+    if (window.plugins && window.plugins.insomnia){
+      window.plugins.insomnia.keepAwake();
+    }
+
+    //version no in config.xml only readable from android and ios
+    if (window.cordova) {
+      cordova.getAppVersion(function(version) {
+        appVersion = version;
+      });
+    }
+    localStorage["version"] = appVersion;
+
+    //check from server API if does not meet minimal version
+    //ionicLoading pop up to stop user interactivity
+    BeelineService.request({
+      method: "GET",
+      url: "/versionRequirements"
+    })
+    .then(function(response){
+      return response.data["driverApp"]["minVersion"];
+    })
+    .then(function(response){
+      if (compareVersions(appVersion, response)==-1){
+        $ionicLoading.show({template: loadingTemplate});
+      }
+    })
+    .catch(function(error) {
+      console.error(error.stack);
+    });
+
   });
 });
