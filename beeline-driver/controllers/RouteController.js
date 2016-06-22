@@ -19,7 +19,6 @@ export default [
     VerifiedPromptService,
     $ionicHistory,
     $translate
-
   ) {
 
     $scope.data = {
