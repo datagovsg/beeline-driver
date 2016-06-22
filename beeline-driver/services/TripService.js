@@ -7,11 +7,13 @@ export default [
   "$cordovaGeolocation",
   "$interval",
   "$ionicPopup",
+  "DriverService",
   function(
     BeelineService,
     $cordovaGeolocation,
     $interval,
-    $ionicPopup
+    $ionicPopup,
+    DriverService
   ){
     var self = this;
 

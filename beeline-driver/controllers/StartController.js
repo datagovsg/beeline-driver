@@ -152,15 +152,6 @@ export default[
       }
     });
 
-    $scope.$watch(() => PingService.error, (error)=>{
-      if (error) {
-        console.log("Watch error");
-        $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
-        $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
-        $scope.ping.isRedON = true;
-      }
-    });
-
     var confirmPrompt = async function(options) {
       var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
       var promptScope = $rootScope.$new(true);

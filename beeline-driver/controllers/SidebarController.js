@@ -95,9 +95,12 @@ export default[
       });
       if (!promptResponse) return;
       TokenService.token = null;
-      //FIXME need to do this?
       window.localStorage.removeItem('sessionToken');
       window.localStorage.removeItem('vehicleId');
+      //logout has no back view to choose-route
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
       $state.go("login");
     }
 
