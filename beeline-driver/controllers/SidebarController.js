@@ -1,5 +1,4 @@
 import _ from "lodash";
-import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
 
@@ -12,6 +11,7 @@ export default[
   "VerifiedPromptService",
   "$ionicLoading",
   "TokenService",
+  "$translate",
   function(
     $scope,
     $ionicPopup,
@@ -20,7 +20,8 @@ export default[
     $rootScope,
     VerifiedPromptService,
     $ionicLoading,
-    TokenService
+    TokenService,
+    $translate
   ){
     $scope.data = {
       vehicleNo: null
@@ -33,7 +34,6 @@ export default[
       else {
         var vehicle = await DriverService.getVehicleInfo(true);
       }
-      console.log(vehicle);
       if (vehicle){
         $scope.data.vehicleNo = vehicle.vehicleNumber;
       }
@@ -43,32 +43,6 @@ export default[
       $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber : null;
     });
 
-    var confirmPrompt = function(options) {
-      var promptScope = $rootScope.$new(true);
-      promptScope.data = {
-        toggle: false
-      };
-      _.defaultsDeep(options,{
-        template: confirmPromptTemplate,
-        title: "",
-        subTitle: "",
-        scope: promptScope,
-        buttons: [
-          { text: "Cancel"},
-          {
-            text: "OK",
-            type: "button-royal",
-            onTap: function(e) {
-              if (promptScope.data.toggle){
-                return true;
-              }
-              e.preventDefault();
-            }
-          }
-        ]
-      });
-      return $ionicPopup.show(options);
-    };
 
     var promptVehicleNumber = function(title, subtitle){
       return VerifiedPromptService.verifiedPrompt({
@@ -76,7 +50,7 @@ export default[
         subTitle: subtitle,
         inputs: [
           {
-            type: "string",
+            type: "text",
             name: "vehicleNumber",
           }
         ]
@@ -85,9 +59,9 @@ export default[
 
     $scope.updateVehicleNo = async function() {
       try {
-        var response = await promptVehicleNumber("Your Vehicle No");
+        var transition = await $translate(['YOUR_VEHICLE_NO']);
+        var response = await promptVehicleNumber(transition.YOUR_VEHICLE_NO);
         if (response && response.vehicleNumber) {
-          console.log(response.vehicleNumber);
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
           $ionicLoading.hide();
@@ -98,16 +72,26 @@ export default[
         }
       }
       catch(error) {
-        console.log(error.stack);
+        console.error(error.stack);
       }
 
     }
 
     $scope.logout = async function() {
+      var translations = await $translate(['LOGOUT', 'ARE_YOU_SURE_TO_LOG_OUT', 'CANCEL_BUTTON', 'OK_BUTTON']);
       var promptResponse = await $ionicPopup.confirm ({
-        title: "Log Out",
-        template: "Are you sure you want to log out?",
-        okType: "button-royal"
+        title: translations.LOGOUT,
+        template: translations.ARE_YOU_SURE_TO_LOG_OUT,
+        buttons: [
+          { text: translations.CANCEL_BUTTON},
+          {
+            text: translations.OK_BUTTON,
+            type: "button-royal",
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
       if (!promptResponse) return;
       TokenService.token = null;

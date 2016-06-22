@@ -1,0 +1,43 @@
+{
+  "LANGUAGE_SETTINGS":           "English",
+  "ROUTE_TEMPLATE_TITLE":        "Enter Your Route ID",
+  "WELCOME":                     "Welcome",
+  "ROUTE_TEMPLATE_INPUT":        "Enter Your Route ID ( e.g. 1)",
+  "START_BUTTON":                "Start",
+  "INPUT_INVALID":               "Your input is invalid.",
+  "NO_ROUTE_ERROR":              "There is no such route.",
+  "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
+  "GPS_BAD":                     "GPS BAD",
+  "GPS_GOOD":                    "GPS GOOD",
+
+  "ROUTE":                       "Route",
+  "PICK_UP":                     "Pick Up",
+  "DROP_OFF":                    "Drop Off",
+  "STOP_BUTTON":                 "Stop",
+  "CANCEL_BUTTON":               "Cancel Trip",
+
+  "OK_BUTTON":                   "OK",
+  "CANCEL_BUTTON":               "CANCEL",
+
+  "CANCELLED":                   "Cancelled",
+  "CANCELLED_MSG_1":             "The trip has been cancelled.",
+  "CANCELLED_MSG_2":             "Service will resume tomorrow.",
+  "THANK_YOU":                   "Thank you",
+
+  "UPDATE_VEHICLE":              "Update Vehicle",
+  "LOGOUT":                      "Log out",
+  "ARE_YOU_SURE_TO_LOG_OUT":     "Are you sure you want to log out?",
+  "YOUR_VEHICLE_NO":             "Your Vehicle No",
+
+  "ARE_YOU_SURE":                "Are you sure?",
+  "SLIDE_TO_CANCEL":             "Slide to cancel trip. This will notify the passsengers and ops.",
+
+  "STOP_PING":                   "Stop Ping",
+  "STOP_PING_MSG":               "Are you sure you want to stop pinging?",
+
+  "SLIDE_TO_CONFIRM":            "Slide to confirm",
+
+  "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version.",
+
+  "ANOTHER_DRIVER_TOOK_JOB":     "nother driver took this job."
+}
