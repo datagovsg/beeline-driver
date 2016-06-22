@@ -10,13 +10,16 @@ export default [
   "$ionicLoading",
   "VerifiedPromptService",
   "$ionicHistory",
+  "$translate",
   function(
     $scope,
     TripService,
     $state,
     $ionicLoading,
     VerifiedPromptService,
-    $ionicHistory
+    $ionicHistory,
+    $translate
+
   ) {
 
     $scope.data = {
@@ -24,6 +27,9 @@ export default [
       tripId: undefined
     };
 
+    $scope.switchLanguage = function(key) {
+      $translate.use(key);
+    };
 
     $scope.start = async function() {
       try {
@@ -38,8 +44,9 @@ export default [
           $state.go("start",{"routeId": $scope.data.routeId, "tripId": $scope.data.tripId});
         }
         else {
+          var translation = await $translate(['INPUT_INVALID']);
           await VerifiedPromptService.alert({
-            title: "Your input is invalid."
+            title: translation.INPUT_INVALID
           });
           $scope.data.routeId = undefined;
           $scope.$apply();
@@ -47,17 +54,19 @@ export default [
       }
       catch(error) {
         if (error.status == 404) {
+          var translation = await $translate(['NO_ROUTE_ERROR']);
           $ionicLoading.hide();
           VerifiedPromptService.alert({
-            title: "There is no such route."
+            title: translation.NO_ROUTE_ERROR
           }).then(function(response){
             $scope.data.routeId = undefined;
           })
         }
         else if (error.message=="noTrip") {
           $ionicLoading.hide();
+          var translation = await $translate(['NO_TRIP_ERROR']);
           VerifiedPromptService.alert({
-            title: "No such trip. Please check your route id."
+            title: translation.NO_TRIP_ERROR
           }).then(function(response){
             $scope.data.routeId = undefined;
           })

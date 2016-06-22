@@ -4,26 +4,29 @@ import verifiedPromptTemplate from "../templates/verified-prompt.html";
 export default[
   "$ionicPopup",
   "$rootScope",
+  "$translate",
   function(
     $ionicPopup,
-    $rootScope
+    $rootScope,
+    $translate
   ){
-    this.verifiedPrompt = function(options) {
+    this.verifiedPrompt = async function(options) {
       var promptScope = $rootScope.$new(true);
       promptScope.form ={
         verifiedPromptForm : {}
       };
       promptScope.data = {};
       promptScope.data.inputs = options.inputs || [];
+      var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
       _.defaultsDeep(options,{
         template: verifiedPromptTemplate,
         title: "",
         subTitle: "",
         scope: promptScope,
         buttons: [
-          { text: "Cancel"},
+          { text: translations.CANCEL_BUTTON},
           {
-            text: "OK",
+            text: translations.OK_BUTTON,
             type: "button-royal",
             onTap: function(e) {
               if (promptScope.form.verifiedPromptForm.$valid) {
