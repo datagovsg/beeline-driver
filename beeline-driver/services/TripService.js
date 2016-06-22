@@ -14,7 +14,7 @@ export default [
     $ionicPopup
   ){
     var self = this;
-    
+
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
@@ -33,7 +33,6 @@ export default [
           include_trips: true
         }),
       });
-      console.log(trips);
       if (trips.data.trips.length == 0){
         throw new Error("noTrip");
       }
@@ -98,13 +97,12 @@ export default [
       if (passengersByStop  && !reload){
         return Promise.resolve(passengersByStop);
       } else{
-        await this.getTrip(id, true);
+        await Promise.all([this.getTrip(id, true), this.getPassengers(id)]);
         var boardStops = this.trip.tripStops.filter(
           stop => stop.canBoard == true);
         this.boardStops = _.sortBy(boardStops, function(item){
           return item.time;
         });
-        await this.getPassengers(id);
         passengersByStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         return Promise.resolve(passengersByStop);
       }
