@@ -10,13 +10,15 @@ export default[
   '$stateParams',
   "$ionicLoading",
   "VerifiedPromptService",
+  "$ionicHistory",
   function(
     $scope,
     DriverService,
     $state,
     $stateParams,
     $ionicLoading,
-    VerifiedPromptService
+    VerifiedPromptService,
+    $ionicHistory
   ){
     $scope.data ={
       phoneNo: $stateParams.phoneNo || undefined,
@@ -32,6 +34,10 @@ export default[
           await DriverService.verifyTelephone(no, code);
           await DriverService.getVehicleInfo(true);
           $ionicLoading.hide();
+          //route has no back view to sms verification
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          })
           $state.go("app.route");
         }
         else {

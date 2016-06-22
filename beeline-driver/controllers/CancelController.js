@@ -1,4 +1,3 @@
-"use strict";
 import loadingTemplate from "../templates/loading.html";
 
 export default[
@@ -13,7 +12,6 @@ export default[
     $ionicLoading
   ){
     $scope.job = {
-      // date: new Date(),
       date: null,
       tripId: null,
       routeId: null,

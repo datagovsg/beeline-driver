@@ -18,7 +18,6 @@ export default [
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
-
     var passengersByStop, passengersByBoardStop, passengersByAlightStop;
 
     this.assignTrip = async function(routeId) {
@@ -45,9 +44,8 @@ export default [
 
       var optionalData={};
 
-      if (window.localStorage["vehicleId"]!==undefined
-        && window.localStorage["vehicleId"]!=0) {
-          _.merge(optionalData,{vehicleId: window.localStorage["vehicleId"]})
+      if (DriverService.getVehicleId() != 0) {
+          _.merge(optionalData,{vehicleId: DriverService.getVehicleId()})
       }
 
       var response = await BeelineService.request({
@@ -98,12 +96,10 @@ export default [
       if (passengersByStop  && !reload){
         return Promise.resolve(passengersByStop);
       } else{
-        await this.getTrip(id, true);
-        await this.getPassengers(id);
+        await Promise.all([this.getTrip(id, true), this.getPassengers(id)]);
         passengersByBoardStop = _.groupBy(this.passengerData, psg => psg.boardStopId);
         passengersByAlightStop = _.groupBy(this.passengerData, psg => psg.alightStopId);
         passengersByStop = _.merge(passengersByBoardStop, passengersByAlightStop);
-        console.log(passengersByStop);
         return Promise.resolve(passengersByStop);
       }
     };
