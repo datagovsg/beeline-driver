@@ -27,6 +27,10 @@
   text-transform: uppercase;
 }
 
+.button {
+  text-transform: uppercase;
+}
+
 .primary-button {
   @extend .button;
   @extend .button-block;
