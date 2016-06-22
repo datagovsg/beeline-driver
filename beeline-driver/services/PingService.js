@@ -15,6 +15,7 @@ export default[
     $ionicPopup,
     VerifiedPromptService,
     $state
+
   ) {
     var getLocation = async function() {
       try{
@@ -25,7 +26,7 @@ export default[
         return userPosition;
       }
       catch(error) {
-        self.error = true;
+        self.gpsError = true;
         console.log(error);
         console.log("GPS error");
       }
@@ -37,8 +38,7 @@ export default[
           method: "POST",
           url: "/trips/" + tripId + "/pings",
           data: {
-            vehicleId: window.localStorage["vehicleId"]!==undefined ?
-              window.localStorage["vehicleId"] : 0,
+            vehicleId: DriverService.getVehicleId(),
             latitude: loc.coords.latitude,
             longitude: loc.coords.longitude
           }
@@ -47,7 +47,7 @@ export default[
       catch(error) {
         console.log(error);
         console.log("Server error");
-        self.error = true;
+        self.gpsError = true;
         //no 2 driver ping the same trip at the same time
         if (error.status == 410){
           $interval.cancel(pingInterval);
@@ -65,18 +65,18 @@ export default[
 
     this.start = function(tripId) {
       console.log("ping start");
-      self.error = false;
+      self.gpsError = false;
       async function tryPing() {
         try {
           var location = await getLocation();
           if (location){
             await sendPing(tripId, location);
-            self.error = false;
+            self.gpsError = false;
             self.lastPingTime = Date.now();
           }
         }
         catch (error) {
-          self.error = true;
+          self.gpsError = true;
           console.log("Error");
           console.log(error);
         }

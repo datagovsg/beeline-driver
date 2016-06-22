@@ -1,9 +1,9 @@
 <ion-view>
-  <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}}</ion-nav-title>
+  <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}} {{data.routeDescription}}</ion-nav-title>
   <ion-nav-buttons side="right">
     <button class="button">
       {{ping.pingStatus}}
-      <img  ng-class="{'title-image': data.imageClass}"
+      <img  ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}"
             ng-src="{{ping.pingStatusSymbol}}">
     </button>
   </ion-nav-buttons>
@@ -14,71 +14,77 @@
       </div>
       <div class="row text-center">
         <div  class="col col-50 button-bar"
-              ng-click="showBoard()"
-              ng-class="{'highlight': data.board}">
+              ng-click="data.currentList='board'"
+              ng-class="{'highlight': data.currentList=='board'}">
           {{ 'PICK_UP' | translate }}
         </div>
         <div  class="col col-50 button-bar"
-              ng-click="showAlight()"
-              ng-class="{'highlight': data.alight}">
+              ng-click="data.currentList='alight'"
+              ng-class="{'highlight': data.currentList=='alight'}">
           {{ 'DROP_OFF' | translate }}
         </div>
       </div>
-      <div  class="item"
-            ng-repeat-start="boardStop in boardStops"
-            ng-click="data.showBoardPassengerList = !data.showBoardPassengerList"
-            ng-show="data.board">
-        <div class="row">
-          <div class="col col-25">
-            {{$index + 1}}. {{boardStop.time | date:'h:mm a'}}
+      <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
+        <div  class="item"
+              ng-click="showBoardPassengerList = !showBoardPassengerList"
+              ng-class="{'bg-grey': !(boardStop.passengerCount >0 ) }">
+          <div class="row">
+            <div class="col col-10">
+              {{$index + 1}}.
+            </div>
+            <div class="col col-20">
+              {{boardStop.time | date:'h:mm a'}}
+            </div>
+            <div class="col item-text-wrap">
+              <strong>{{boardStop.stop.description}}</strong><br>
+            </div>
+            <i class="icon">
+              <span class="ion-android-person"></span> &nbsp;
+              {{ boardStop.passengerCount > 0 ?
+                 boardStop.passengerCount : 0 }} &nbsp;
+            </i>
           </div>
-          <div class="col">
-            <strong>{{boardStop.stop.road}}</strong><br>
-          </div>
-          <i class="icon">
-            <span class="ion-android-person"></span> &nbsp;
-            {{ boardStop.passengerNumber > 0 ?
-               boardStop.passengerNumber : 0 }} &nbsp;
-          </i>
-        </div>
-		  </div>
-      <div  class="item"
-            ng-repeat-end="boardStop in boardStops"
-            ng-show="data.showBoardPassengerList">
-         <div class="item item-divider">{{boardStop.stopDescription}}</div>
-         <div ng-repeat="passenger in boardStop.passengerList">
-           <div class="item">
-             <h2>{{$index+1}}. {{passenger.name}}</h2>
+  		  </div>
+        <div  class="item"
+              ng-show="showBoardPassengerList">
+           <div class="item item-divider">{{boardStop.stopDescription}}</div>
+           <div ng-repeat="passenger in boardStop.passengerList">
+             <div class="item">
+               <h2>{{$index+1}}. {{passenger.name}}</h2>
+             </div>
            </div>
-         </div>
-      </div>
-      <div  class="item"
-            ng-repeat-start="alightStop in alightStops"
-            ng-click="data.showAlightPassengerList = !data.showAlightPassengerList"
-            ng-show="data.alight">
-        <div class="row">
-          <div class="col col-25">
-            {{$index + 1}}. {{alightStop.time | date:'h:mm a'}}
-          </div>
-          <div class="col">
-            <strong>{{alightStop.stop.road}}</strong><br>
-          </div>
-          <i class="icon">
-            <span class="ion-android-person"></span> &nbsp;
-            {{ alightStop.passengerNumber > 0 ?
-               alightStop.passengerNumber : 0 }} &nbsp;
-          </i>
         </div>
       </div>
-      <div  class="item"
-            ng-repeat-end="alightStop in alightStops"
-            ng-show="data.showAlightPassengerList">
-         <div class="item item-divider">{{alightStop.stopDescription}}</div>
-         <div ng-repeat="passenger in alightStop.passengerList">
-           <div class="item">
-             <h2>{{$index+1}}. {{passenger.name}}</h2>
+      <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
+        <div  class="item"
+              ng-click="showAlightPassengerList = !showAlightPassengerList"
+              ng-class= "{'bg-grey': !(alightStop.passengerCount >0 )}" >
+          <div class="row">
+            <div class="col col-10">
+              {{$index + 1}}.
+            </div>
+            <div class="col col-20">
+              {{alightStop.time | date:'h:mm a'}}
+            </div>
+            <div class="col item-text-wrap">
+              <strong>{{alightStop.stop.description}}</strong><br>
+            </div>
+            <i class="icon">
+              <span class="ion-android-person"></span> &nbsp;
+              {{ alightStop.passengerCount > 0 ?
+                 alightStop.passengerCount : 0 }} &nbsp;
+            </i>
+          </div>
+        </div>
+        <div  class="item"
+              ng-show="showAlightPassengerList">
+           <div class="item item-divider">{{alightStop.stopDescription}}</div>
+           <div ng-repeat="passenger in alightStop.passengerList">
+             <div class="item">
+               <h2>{{$index+1}}. {{passenger.name}}</h2>
+             </div>
            </div>
-         </div>
+        </div>
       </div>
     </div>
     <div class="primary-button"

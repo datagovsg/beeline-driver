@@ -11,6 +11,7 @@ export default[
   "VerifiedPromptService",
   "$ionicLoading",
   "TokenService",
+  "$translate",
   function(
     $scope,
     $ionicPopup,
@@ -19,7 +20,8 @@ export default[
     $rootScope,
     VerifiedPromptService,
     $ionicLoading,
-    TokenService
+    TokenService,
+    $translate
   ){
     $scope.data = {
       vehicleNo: null
@@ -57,7 +59,8 @@ export default[
 
     $scope.updateVehicleNo = async function() {
       try {
-        var response = await promptVehicleNumber("Your Vehicle No");
+        var transition = await $translate(['YOUR_VEHICLE_NO']);
+        var response = await promptVehicleNumber(transition.YOUR_VEHICLE_NO);
         if (response && response.vehicleNumber) {
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.updateVehicleNo(response.vehicleNumber);
@@ -75,10 +78,20 @@ export default[
     }
 
     $scope.logout = async function() {
+      var translations = await $translate(['LOGOUT', 'ARE_YOU_SURE_TO_LOG_OUT', 'CANCEL_BUTTON', 'OK_BUTTON']);
       var promptResponse = await $ionicPopup.confirm ({
-        title: "Log Out",
-        template: "Are you sure you want to log out?",
-        okType: "button-royal"
+        title: translations.LOGOUT,
+        template: translations.ARE_YOU_SURE_TO_LOG_OUT,
+        buttons: [
+          { text: translations.CANCEL_BUTTON},
+          {
+            text: translations.OK_BUTTON,
+            type: "button-royal",
+            onTap: function(e) {
+              return true;
+            }
+          }
+        ]
       });
       if (!promptResponse) return;
       TokenService.token = null;
