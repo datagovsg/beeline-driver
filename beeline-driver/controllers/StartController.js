@@ -24,7 +24,7 @@ export default[
     $rootScope,
     VerifiedPromptService
   ){
-    $scope.data ={
+    $scope.data = {
       routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
     }

@@ -18,13 +18,12 @@ export default[
     $ionicLoading,
     VerifiedPromptService
   ){
-    $scope.data ={
+    $scope.data = {
       phoneNo: $stateParams.phoneNo || undefined,
     }
 
-    $scope.login = async function(){
+    $scope.login = async function() {
       try{
-        console.log($scope.data.phoneNo);
         if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
@@ -39,13 +38,13 @@ export default[
           $scope.$apply();
         }
       }
-      catch(error){
+      catch(error) {
         //driver is not registered
         if (error.status==404){
           $ionicLoading.hide();
           await VerifiedPromptService.alert({
             title: "Sorry. Your phone no. is not in the Beeline system. \
-            Please tell your bus company."
+                    Please tell your bus company."
           });
           $scope.data.phoneNo = undefined;
           $scope.$apply();
@@ -53,7 +52,7 @@ export default[
       }
     }
 
-    $scope.$on('$ionicView.leave',()=>{
+    $scope.$on('$ionicView.leave',()=> {
       $scope.data.phoneNo = undefined;
       $scope.$apply();
     })

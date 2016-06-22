@@ -14,6 +14,8 @@ import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/VerifiedPromptService.js";
 import loadingTemplate from "./templates/version-too-old.html";
 
+import compareVersions from "compare-versions";
+
 
 // Configuration Imports
 import configureRoutes from "./router.js";
@@ -58,7 +60,9 @@ angular.module("beeline-driver", [
     }
 
     //stop screen sleep
-    window.plugins.insomnia.keepAwake();
+    if (window.plugins && window.plugins.insomnia){
+      window.plugins.insomnia.keepAwake();
+    }
 
     //version no in config.xml only readable from android and ios
     if (window.cordova) {
@@ -66,7 +70,6 @@ angular.module("beeline-driver", [
         appVersion = version;
       });
     }
-    console.log(appVersion);
     localStorage["version"] = appVersion;
 
     //check from server API if does not meet minimal version
@@ -79,27 +82,13 @@ angular.module("beeline-driver", [
       return response.data["driverApp"]["minVersion"];
     })
     .then(function(response){
-      if (checkVerison(appVersion, response)){
+      if (compareVersions(appVersion, response)==-1){
         $ionicLoading.show({template: loadingTemplate});
       }
     })
     .catch(function(error) {
-      console.log(error.stack);
+      console.error(error.stack);
     });
-
 
   });
 });
-
-//current is appVersion, least is returned from API
-//if return true, ionicLoading is popped up to disallow interactivity
-var checkVerison = function(current, least) {
-  try{
-    var a = current.valueOf();
-    var b = least.valueOf();
-    return (a<b);
-  }
-  catch(error){
-    console.log(error.stack);
-  }
-}
