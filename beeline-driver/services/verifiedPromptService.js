@@ -36,5 +36,14 @@ export default[
       });
       return $ionicPopup.show(options);
     };
+
+    this.alert = function(options){
+      _.defaultsDeep(options,{
+        title: "",
+        subTitle: "",
+        okType: "button-royal",
+      });
+      return $ionicPopup.alert(options);
+    }
   }
 ];
