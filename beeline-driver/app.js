@@ -12,7 +12,7 @@ import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/VerifiedPromptService.js";
-import loadingTemplate from "./templates/version-too-old.html";
+import VersionTooOldTemplate from "./templates/version-too-old.html";
 
 import compareVersions from "compare-versions";
 
@@ -83,7 +83,7 @@ angular.module("beeline-driver", [
     })
     .then(function(response){
       if (compareVersions(appVersion, response)==-1){
-        $ionicLoading.show({template: loadingTemplate});
+        $ionicLoading.show({template: VersionTooOldTemplate});
       }
     })
     .catch(function(error) {
