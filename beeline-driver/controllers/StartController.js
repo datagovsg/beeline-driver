@@ -35,48 +35,34 @@ export default[
     $scope.data ={
       routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
-      board: true,
-      alight: false,
-      showBoardPassengerList: false,
-      showAlightPassengerList: false,
-      imageClass: true
-    }
-
-    //pick up tab is clicked
-    $scope.showBoard = function(){
-      $scope.data.board = true;
-      $scope.data.alight = false;
-    }
-
-    //drop off tab is clicked
-    $scope.showAlight = function(){
-      $scope.data.board = false;
-      $scope.data.alight = true;
-    }
-
-    $scope.ping = {
-      pingStatus: "GPS OFF",
-      pingStatusSymbol: "image/GPSoff.svg"
+      currentList: 'board',
     }
 
     var reloadPassengerTimeout;
     var classToggleInterval;
+    var GPSTranslations;
+
+    $scope.ping = {
+      pingStatus: "GPS BAD",
+      pingStatusSymbol: "image/GPSoff.svg",
+      isAnimated: true,
+      isRedON: false,
+    }
 
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
-        console.log(value);
         //wrs user name {name:, email:, telephone:}
-        for (let p of value) {
+        for (let passsenger of value) {
           try {
-            let jsonObj = JSON.parse(p.name);
-            p.name  = jsonObj.name;
+            let jsonObj = JSON.parse(passsenger.name);
+            passsenger.name  = jsonObj.name;
           }catch (err) {
-            p.name = p.name;
+            passsenger.name = passsenger.name;
           }
         }
-        stop.passengerNumber = value.length;
+        stop.passengerCount = value.length;
         stop.passengerList = value;
       });
 
@@ -100,13 +86,24 @@ export default[
       reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
     };
 
+    var deregister;
     $scope.$on('$ionicView.enter', async () => {
-
+      $scope.data.routeId = $stateParams.routeId;
       $scope.data.tripId = $stateParams.tripId;
-      console.log("before enter "+$scope.data.tripId);
+      TripService.getRouteDescription($scope.data.routeId)
+      .then((res) => {
+        $scope.data.routeDescription = res;
+      });
+      GPSTranslations = await $translate(['GPS_BAD','GPS_GOOD']);
       //get generated trip code
       TripService.getTripCode($scope.data.tripId)
-      .then((tripCode) => $scope.tripCode = tripCode)
+      .then((tripCode) => $scope.tripCode = tripCode);
+
+      PingService.start($scope.data.tripId);
+      //toggle css class make ping indicator annimation effect
+      classToggleInterval = $interval(()=>{
+        $scope.ping.isAnimated = !$scope.ping.isAnimated;
+      }, 1500);
 
       $scope.trip = await TripService.getTrip($scope.data.tripId, true);
       $scope.stops = $scope.trip.tripStops;
@@ -116,38 +113,39 @@ export default[
       });
       reloadPassengersList();
 
-      PingService.start($scope.data.tripId);
-      //toggle css class make ping indicator annimation effect
-      classToggleInterval = $interval(()=>{
-        $scope.data.imageClass = !$scope.data.imageClass;
-      }, 1500);
-
-      //override hardware back button, 999 is priority to make sure it runs
-      $ionicPlatform.registerBackButtonAction(
-        onHardwareBackButton,999
+      //override hardware back button, 101 is priority higher than go to back view
+      deregister = $ionicPlatform.registerBackButtonAction(
+        onHardwareBackButton,101
       );
     });
 
+    //deregister the back button event handler
+    $scope.$on('$ionicView.beforeLeave', () => deregister());
 
     var GPSOffTimeout;
 
-    $scope.$watch(() => PingService.lastPingTime, () => {
-      console.log("ping service last ping time updates");
+    $scope.$watch(() => PingService.lastPingTime, async () => {
       $timeout.cancel(GPSOffTimeout);
-      $scope.ping.pingStatus = "GPS ON";
+      if (!GPSTranslations) {
+        GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
+      }
+      $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
       $scope.ping.pingStatusSymbol = "image/GPSon.svg";
-      //every 30sec, check status
+      //bring back animation effect
+      $scope.ping.isRedON = false;
+      //every 20sec, check status
       GPSOffTimeout = $timeout(() => {
-        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+        $scope.ping.isRedON = true;
       }, 20000);
     });
 
-    $scope.$watch(() => PingService.error, (error)=>{
+    $scope.$watch(() => PingService.gpsError, (error)=>{
       if (error) {
-        console.log("Watch error");
-        $scope.ping.pingStatus = "GPS OFF";
+        $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
+        $scope.ping.isRedON = true;
       }
     });
 
@@ -193,6 +191,7 @@ export default[
         $ionicLoading.show({template: loadingTemplate});
         await TripService.cancelTrip($scope.data.tripId);
         $ionicLoading.hide();
+        stopPingandInterval();
         //cancel has no back view to start
         $ionicHistory.nextViewOptions({
           disableBack: true
@@ -226,19 +225,23 @@ export default[
         ]
       });
       if (!promptResponse) return;
+      stopPingandInterval();
+      $state.go("app.route");
+    };
+
+    //when leave this view, stop the ping service and remove intervals
+    var stopPingandInterval = function (){
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
       PingService.stop();
-      $state.go("app.route");
-    };
+    }
 
     // Triggered when devices with a hardware back button (Android) is clicked by the user
     // This is a Cordova/Phonegap platform specifc method
     function onHardwareBackButton(e) {
-      $scope.stopPing();
       e.preventDefault();
+      $scope.stopPing();
       return false;
     };
-
 
   }];
