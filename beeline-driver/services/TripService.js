@@ -35,7 +35,6 @@ export default [
           include_trips: true
         }),
       });
-      console.log(trips);
       if (trips.data.trips.length == 0){
         throw new Error("noTrip");
       }

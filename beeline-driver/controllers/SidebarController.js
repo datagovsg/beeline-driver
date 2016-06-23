@@ -27,7 +27,7 @@ export default[
       vehicleNo: null
     };
 
-    $scope.$on('$ionicView.enter',async ()=>{
+    $scope.$on('$ionicView.enter',async ()=> {
       if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
         var vehicle = await DriverService.getVehicleInfo(false);
       }
@@ -44,7 +44,7 @@ export default[
     });
 
 
-    var promptVehicleNumber = function(title, subtitle){
+    var promptVehicleNumber = function(title, subtitle) {
       return VerifiedPromptService.verifiedPrompt({
         title: title,
         subTitle: subtitle,
@@ -103,6 +103,5 @@ export default[
       });
       $state.go("login");
     }
-
 
   }];
