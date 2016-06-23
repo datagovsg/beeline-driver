@@ -42,7 +42,7 @@
   padding: 20px 20px;
   font-size: 16px;
   line-height: 0px;
-  background-color: #ffe76e; // FIXME: variables?
+  background-color: $energized;
   border: 0px;
   border-bottom: 4px solid #f7c639;
   border-radius: 20px;
@@ -104,6 +104,6 @@ img:not(.image-pulse){
 }
 
 .stop-no-passenger {
-  background-color: $stop-no-passenger-bg;
-  color: $stop-no-passenger-text;
+  background-color: $item-bg-greyed;
+  color: $item-text-greyed;
 }
