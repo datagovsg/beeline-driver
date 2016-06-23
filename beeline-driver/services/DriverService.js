@@ -113,4 +113,10 @@ export default function($http, BeelineService, TokenService){
       return false;
     });
   };
+
+  this.getVehicleId = function(){
+    var vehicleId = window.localStorage["vehicleId"]!==undefined ?
+      window.localStorage["vehicleId"] : 0;
+    return vehicleId;
+  }
 }

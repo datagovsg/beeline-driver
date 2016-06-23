@@ -19,10 +19,10 @@
     <ion-content>
       <ion-list>
         <ion-item menu-close class="text-center">
-          {{data.vehicleNo}} <br><div class="button button-royal button-outline" ng-click="updateVehicleNo()">Update Vehicle</div>
+          {{data.vehicleNo}} <br><div class="button button-royal button-outline" ng-click="updateVehicleNo()">{{ 'UPDATE_VEHICLE' | translate }}</div>
         </ion-item>
         <ion-item menu-close class="text-center" ng-click="logout()">
-          Log out
+          {{ 'LOGOUT' | translate }}
         </ion-item>
       </ion-list>
     </ion-content>

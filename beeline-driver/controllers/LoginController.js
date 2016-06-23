@@ -40,7 +40,7 @@ export default[
       }
       catch(error) {
         //driver is not registered
-        if (error.status==404){
+        if (error.status == 404) {
           $ionicLoading.hide();
           await VerifiedPromptService.alert({
             title: "Sorry. Your phone no. is not in the Beeline system. \
@@ -52,7 +52,7 @@ export default[
       }
     }
 
-    $scope.$on('$ionicView.leave',()=> {
+    $scope.$on('$ionicView.leave',() => {
       $scope.data.phoneNo = undefined;
       $scope.$apply();
     })

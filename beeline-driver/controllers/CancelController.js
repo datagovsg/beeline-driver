@@ -12,7 +12,6 @@ export default[
     $ionicLoading
   ){
     $scope.job = {
-      // date: new Date(),
       date: null,
       tripId: null,
       routeId: null,

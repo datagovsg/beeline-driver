@@ -6,30 +6,38 @@ export default[
   "$interval",
   "$ionicPopup",
   "VerifiedPromptService",
+  "$state",
   function(
     BeelineService,
     DriverService,
     $cordovaGeolocation,
     $interval,
     $ionicPopup,
-    VerifiedPromptService
-  ) {
-    var sendPing = async function(tripId) {
-        var userPosition = await $cordovaGeolocation.getCurrentPosition({
-          timeout: 5000,
-          enableHighAccuracy: true
-        });
+    VerifiedPromptService,
+    $state
 
+  ) {
+    var getLocation =  function() {
+      return $cordovaGeolocation.getCurrentPosition({
+        timeout: 15000,
+        enableHighAccuracy: true
+      }).then(function(response){
+        return response;
+      });
+    };
+
+    var sendPing = function(tripId, loc){
       return BeelineService.request({
         method: "POST",
         url: "/trips/" + tripId + "/pings",
         data: {
-          vehicleId: window.localStorage["vehicleId"]!==undefined ? window.localStorage["vehicleId"] : 0,
-          latitude: userPosition.coords.latitude,
-          longitude: userPosition.coords.longitude
+          vehicleId: DriverService.getVehicleId(),
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude
         }
-      })
-      .then((response) => true);
+      }).then(function(response){
+        return response.data;
+      });
     };
 
     var pingInterval = null;
@@ -37,25 +45,34 @@ export default[
 
     this.start = function(tripId) {
       console.log("ping start");
+      self.gpsError = false;
       async function tryPing() {
         try {
-          await sendPing(tripId);
+          var location = await getLocation();
+          await sendPing(tripId, location);
+          self.gpsError = false;
           self.lastPingTime = Date.now();
         }
         catch (error) {
-          console.log("GPS error");
-          $interval.cancel(pingInterval);
-          await VerifiedPromptService.alert({
-            title: "GPS ping fails. Please turn on your Location Service.",
-            subTitle: `${error.status} - ${error.message}`
-          });
-          tryPing();
-          pingInterval = $interval(tryPing, 10000);
+          self.gpsError = true;
+          //no 2 driver ping the same trip at the same time
+          if (error.status == 410){
+            $interval.cancel(pingInterval);
+            await VerifiedPromptService.alert({
+              title: "Another driver took this job",
+            });
+            //choose-route has no back view to start
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $state.go("app.route");
+          }
         }
       }
 
       if (!pingInterval) {
         tryPing();
+        //every 10s send ping
         pingInterval = $interval(tryPing, 10000);
       }
     };
