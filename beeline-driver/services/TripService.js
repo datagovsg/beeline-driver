@@ -20,7 +20,6 @@ export default [
     //ping starts when start button is pressed
     //ping stops when stop button is pressed
     this.lastPingTime = 0;
-    this.isPinging = false;
     var passengersByStop, passengersByBoardStop, passengersByAlightStop;
 
     this.assignTrip = async function(routeId) {
