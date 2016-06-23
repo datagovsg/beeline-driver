@@ -1,0 +1,64 @@
+#pg-job-accepted {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#pg-job-accepted .scroll {
+  display: flex;
+  flex-direction: column;
+}
+
+#pg-job-accepted .buttons {
+  flex-grow: 0;
+}
+
+#pg-job-accepted .vehicle {
+  flex-grow: 1;
+}
+
+#pg-job-accepted .vehicle .txt {
+  padding: 5px;
+}
+
+#pg-job-accepted .vehicle .txt .ty{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#pg-job-accepted .vehicle .txt .today{
+  font-size: 18px;
+  padding: 5px;
+}
+
+#pg-job-accepted .vehicle .photo {
+  background-color: #000;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+  border: 1px solid #F5F5F5;
+}
+
+#pg-job-accepted .vehicle img{
+  width: 100%;
+  border: 10px solid #FFF;
+  display: block;
+  line-height: 0px;
+  font-size: 0px;
+}
+#pg-job-accepted .vehicle .platenum {
+  font-size: 28px;
+  line-height: 28px;
+  padding: 10px 0px;
+}
+#pg-job-accepted #btn-correct-bus {
+  background-color: #14C3A5;
+  border-bottom: 4px solid #317966;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+}
+
+#pg-job-accepted .resp b{
+  display: block;
+  font-size: 18px;
+  line-height: 18px;
+  margin: 5px 0px;
+}

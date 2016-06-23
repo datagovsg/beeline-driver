@@ -54,12 +54,12 @@ export default[
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
         //wrs user name {name:, email:, telephone:}
-        for (let p of value) {
+        for (let passsenger of value) {
           try {
-            let jsonObj = JSON.parse(p.name);
-            p.name  = jsonObj.name;
+            let jsonObj = JSON.parse(passsenger.name);
+            passsenger.name  = jsonObj.name;
           }catch (err) {
-            p.name = p.name;
+            passsenger.name = passsenger.name;
           }
         }
         stop.passengerCount = value.length;
@@ -125,7 +125,6 @@ export default[
     var GPSOffTimeout;
 
     $scope.$watch(() => PingService.lastPingTime, async () => {
-      console.log("ping service last ping time updates");
       $timeout.cancel(GPSOffTimeout);
       if (!GPSTranslations) {
         GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
@@ -144,7 +143,6 @@ export default[
 
     $scope.$watch(() => PingService.gpsError, (error)=>{
       if (error) {
-        console.log("Watch error");
         $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
         $scope.ping.isRedON = true;

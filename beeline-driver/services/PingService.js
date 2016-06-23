@@ -7,6 +7,7 @@ export default[
   "$ionicPopup",
   "VerifiedPromptService",
   "$state",
+  "$translate",
   function(
     BeelineService,
     DriverService,
@@ -14,8 +15,8 @@ export default[
     $interval,
     $ionicPopup,
     VerifiedPromptService,
-    $state
-
+    $state,
+    $translate
   ) {
     var getLocation = async function() {
       try{
@@ -51,8 +52,9 @@ export default[
         //no 2 driver ping the same trip at the same time
         if (error.status == 410){
           $interval.cancel(pingInterval);
+          var translation = await $translate(['ANOTHER_DRIVER_TOOK_JOB']);
           await VerifiedPromptService.alert({
-            title: "Another driver took this job",
+            title: translation.ANOTHER_DRIVER_TOOK_JOB
           });
           $state.go("app.route");
         }

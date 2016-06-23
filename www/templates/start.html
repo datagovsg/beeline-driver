@@ -27,7 +27,7 @@
       <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
         <div  class="item"
               ng-click="showBoardPassengerList = !showBoardPassengerList"
-              ng-class="{'bg-grey': !(boardStop.passengerCount >0 ) }">
+              ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
           <div class="row">
             <div class="col col-10">
               {{$index + 1}}.
@@ -58,7 +58,7 @@
       <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
         <div  class="item"
               ng-click="showAlightPassengerList = !showAlightPassengerList"
-              ng-class= "{'bg-grey': !(alightStop.passengerCount >0 )}" >
+              ng-class= "{'stop-no-passenger': !(alightStop.passengerCount >0 )}" >
           <div class="row">
             <div class="col col-10">
               {{$index + 1}}.
