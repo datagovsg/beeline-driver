@@ -16,8 +16,8 @@
   "STOP_BUTTON":                 "Stop",
   "CANCEL_BUTTON":               "Cancel Trip",
 
-  "OK_BUTTON":                   "OK",
-  "CANCEL_BUTTON":               "CANCEL",
+  "OK_BUTTON":                   "Ok",
+  "CANCEL_BUTTON":               "Cancel",
 
   "CANCELLED":                   "Cancelled",
   "CANCELLED_MSG_1":             "The trip has been cancelled.",
