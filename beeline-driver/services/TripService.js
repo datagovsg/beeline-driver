@@ -4,13 +4,11 @@ import qs from "querystring";
 
 export default [
   "BeelineService",
-  "$cordovaGeolocation",
   "$interval",
   "$ionicPopup",
   "DriverService",
   function(
     BeelineService,
-    $cordovaGeolocation,
     $interval,
     $ionicPopup,
     DriverService
@@ -25,7 +23,7 @@ export default [
     this.assignTrip = async function(routeId) {
       var now = new Date();
       this.today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-      var trips = await BeelineService.request({
+      var route = await BeelineService.request({
         method: "GET",
         url: '/routes/'+routeId+'?' + qs.stringify({
           //midnight to midnight
@@ -34,11 +32,12 @@ export default [
           include_trips: true
         }),
       });
-      if (trips.data.trips.length == 0){
+      if (route.data.trips.length == 0){
         throw new Error("noTrip");
       }
+      self.route = route.data;
       //assume route only has one trip per day
-      self.trip= trips.data.trips[0];
+      self.trip= self.route.trips[0];
       if (self.trip.status == "cancelled") {
         throw new Error("tripCancelled"+self.trip.id);
       }
@@ -83,6 +82,25 @@ export default [
       });
     };
 
+    this.getRouteDescription = async function(routeId){
+      try {
+        if (!self.route) {
+          var route = await BeelineService.request({
+            method: "GET",
+            url: '/routes/'+routeId
+          });
+          self.route = route.data;
+          console.log(self.route);
+          console.log(self.route.label);
+        }
+        var description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
+        return description;
+      }
+      catch (error) {
+        return null;
+      }
+    }
+
     this.getPassengers = function(id){
       return BeelineService.request({
         method: "GET",
@@ -108,7 +126,7 @@ export default [
     this.cancelTrip = function(tripId){
       return BeelineService.request({
         method: "POST",
-        url: "/trips/"+tripId+"/statuses",
+        url: "/trips/"+tripId+"/statuses?messagePassengers=true",
         data: {
           status: "cancelled"
         }

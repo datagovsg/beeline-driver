@@ -1,4 +1,11 @@
 {
+  "WELCOME_TO_BEELINE_DRIVER":   "欢迎来到 Beeline Driver",
+  "ENTER_YOUR_PHONE_NO":         "输入你的电话号码",
+  "ENTER_VERIFICATION_CODE":     "输入验证码",
+  "PLEASE_ENTER_CODE_SENT_TO_PHONE": "请输入短信接收到的验证码",
+  "PHONE_NOT_REGISTERED":        "对不起。 你的电话号码不在系统里。请告知你的公司。",
+  "VERIFICATION_NOT_MATCH":      "验证码不正确。",
+
   "LANGUAGE_SETTINGS":           "中文",
   "ROUTE_TEMPLATE_TITLE":        "输入路线号码",
   "WELCOME":                     "欢迎",
@@ -18,16 +25,20 @@
 
   "OK_BUTTON":                   "确认",
   "CANCEL_BUTTON":               "取消",
+  "CONFIRM_BUTTON":              "确定",
+  "NEXT_BUTTON":                 "下一步",
 
   "CANCELLED":                   "已取消",
   "CANCELLED_MSG_1":             "服务已经取消。",
   "CANCELLED_MSG_2":             "服务明天继续。",
   "THANK_YOU":                   "谢谢",
+  "ERROR_CANCEL_TRIP":           "取消服务失败。请重试。",
 
-  "UPDATE_VEHICLE":              "更新牌照",
+  "UPDATE_VEHICLE":              "更换牌照",
   "LOGOUT":                      "退出",
   "ARE_YOU_SURE_TO_LOG_OUT":     "你确定要退出吗?",
   "YOUR_VEHICLE_NO":             "你的车牌号",
+  "VEHICLE_IS_UPDATED_TO":       "车牌号码更换到：",
 
   "ARE_YOU_SURE":                "你确定吗?",
   "SLIDE_TO_CANCEL":             "滑动取消服务. 我们将会通知巴士公司和乘客。",

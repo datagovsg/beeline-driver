@@ -10,20 +10,27 @@ export default[
   '$stateParams',
   "$ionicLoading",
   "VerifiedPromptService",
+  "$translate",
   function(
     $scope,
     DriverService,
     $state,
     $stateParams,
     $ionicLoading,
-    VerifiedPromptService
+    VerifiedPromptService,
+    $translate
   ){
     $scope.data = {
       phoneNo: $stateParams.phoneNo || undefined,
     }
 
-    $scope.login = async function() {
-      try{
+
+    $scope.switchLanguage = function(key) {
+      $translate.use(key);
+    };
+
+    $scope.login = async function(){
+      try {
         if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
@@ -31,8 +38,9 @@ export default[
           $state.go("sms",{"phoneNo": $scope.data.phoneNo});
         }
         else {
+          var translation = await $translate(['INPUT_INVALID']);
           await VerifiedPromptService.alert({
-            title: "Your phone number is invalid.",
+            title: translation.INPUT_INVALID
           });
           $scope.data.phoneNo = undefined;
           $scope.$apply();
@@ -41,10 +49,10 @@ export default[
       catch(error) {
         //driver is not registered
         if (error.status == 404) {
+          var translation = await $translate(['PHONE_NOT_REGISTERED']);
           $ionicLoading.hide();
           await VerifiedPromptService.alert({
-            title: "Sorry. Your phone no. is not in the Beeline system. \
-                    Please tell your bus company."
+            title: translation.PHONE_NOT_REGISTERED
           });
           $scope.data.phoneNo = undefined;
           $scope.$apply();

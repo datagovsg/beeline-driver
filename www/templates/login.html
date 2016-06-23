@@ -1,9 +1,9 @@
 <ion-view>
   <ion-nav-title>
-    Enter Your Phone No.
+    {{'ENTER_YOUR_PHONE_NO' | translate}}
   </ion-nav-title>
   <ion-content>
-    <h4 class="text-center">Welcome to Beeline Driver</h4>
+    <h4 class="text-center">{{'WELCOME_TO_BEELINE_DRIVER' | translate}}</h4>
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
@@ -12,7 +12,17 @@
     </div>
     <div class="primary-button"
          ng-click='login()'>
-      Next
+      {{'NEXT_BUTTON' | translate}}
     </div>
+    <div class="text-center">
+      <a class="padding"
+        ng-click="switchLanguage('en')">
+        ENGLISH
+      </a>
+      <a class="padding"
+        ng-click="switchLanguage('zh')">
+        中文
+      </a>
+  </div>
   </ion-content>
 </ion-view>

@@ -1,15 +1,5 @@
 <ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
   <ion-content>
-    <h3 class="text-center">
-    <a class="padding"
-      ng-click="switchLanguage('en')">
-      ENGLISH
-    </a>
-    <a class="padding"
-      ng-click="switchLanguage('zh')">
-      中文
-    </a>
-  </h3>
     <h4 class="text-center">{{ 'WELCOME' | translate }}
     </h4>
 
@@ -22,6 +12,16 @@
     <div class="primary-button"
          ng-click='start()'>
       {{ 'START_BUTTON' | translate }}
+    </div>
+    <div class="text-center">
+      <a class="padding"
+        ng-click="switchLanguage('en')">
+        ENGLISH
+      </a>
+      <a class="padding"
+        ng-click="switchLanguage('zh')">
+        中文
+      </a>
     </div>
   </ion-content>
 </ion-view>

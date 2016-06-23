@@ -12,7 +12,6 @@ export default[
   "$ionicLoading",
   "$rootScope",
   "VerifiedPromptService",
-  "$interval",
   "$ionicHistory",
   "$ionicPlatform",
   "$translate",
@@ -27,7 +26,6 @@ export default[
     $ionicLoading,
     $rootScope,
     VerifiedPromptService,
-    $interval,
     $ionicHistory,
     $ionicPlatform,
     $translate
@@ -39,7 +37,7 @@ export default[
     }
 
     var reloadPassengerTimeout;
-    var classToggleInterval;
+    var classToggleTimeout;
     var GPSTranslations;
 
     $scope.ping = {
@@ -86,6 +84,19 @@ export default[
       reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
     };
 
+    //toggle css class make ping indicator annimation effect
+    function togglePulse() {
+      if ($scope.ping.isAnimated) {
+        // Starts big, ends small
+        $scope.ping.isAnimated = false;
+        classToggleTimeout = $timeout(togglePulse, 1200)
+      }
+      else {
+        $scope.ping.isAnimated = true;
+        classToggleTimeout = $timeout(togglePulse, 300);
+      }
+    }
+
     var deregister;
     $scope.$on('$ionicView.enter', async () => {
       $scope.data.routeId = $stateParams.routeId;
@@ -94,17 +105,16 @@ export default[
       .then((res) => {
         $scope.data.routeDescription = res;
       });
+
       GPSTranslations = await $translate(['GPS_BAD','GPS_GOOD']);
       //get generated trip code
       TripService.getTripCode($scope.data.tripId)
       .then((tripCode) => $scope.tripCode = tripCode);
 
       PingService.start($scope.data.tripId);
-      //toggle css class make ping indicator annimation effect
-      classToggleInterval = $interval(()=>{
-        $scope.ping.isAnimated = !$scope.ping.isAnimated;
-      }, 1500);
 
+      togglePulse();
+      GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
       $scope.trip = await TripService.getTrip($scope.data.tripId, true);
       $scope.stops = $scope.trip.tripStops;
       //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
@@ -125,15 +135,17 @@ export default[
     var GPSOffTimeout;
 
     $scope.$watch(() => PingService.lastPingTime, async () => {
-      $timeout.cancel(GPSOffTimeout);
-      if (!GPSTranslations) {
-        GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
+      if (PingService.lastPingTime !== undefined) {
+        console.log("ping service last ping time updates");
+        $timeout.cancel(GPSOffTimeout);
+        if (!GPSTranslations) {
+          GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
+        }
+        $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
+        $scope.ping.pingStatusSymbol = "image/GPSon.svg";
+        //bring back animation effect
+        $scope.ping.isRedON = false;
       }
-      $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
-      $scope.ping.pingStatusSymbol = "image/GPSon.svg";
-      //bring back animation effect
-      $scope.ping.isRedON = false;
-      //every 20sec, check status
       GPSOffTimeout = $timeout(() => {
         $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
@@ -181,7 +193,7 @@ export default[
     $scope.confirmCancelTrip = async function() {
       try {
 
-        var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL']);
+        var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL', 'ERROR_CANCEL_TRIP']);
         var promptResponse = await confirmPrompt({
           title: translations.ARE_YOU_SURE,
           subTitle: translations.SLIDE_TO_CANCEL
@@ -202,7 +214,7 @@ export default[
       catch(error){
         $ionicLoading.hide();
         VerifiedPromptService.alert({
-          title: "There was an error cancelling trip. Please try again.",
+          title: translations.ERROR_CANCEL_TRIP,
           subTitle: `${error.status} - ${error.message}`
         });
       }
@@ -229,10 +241,11 @@ export default[
       $state.go("app.route");
     };
 
-    //when leave this view, stop the ping service and remove intervals
+    //when leave this view, stop the ping service and remove timeouts
     var stopPingandInterval = function (){
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
+      $timeout.cancel(classToggleTimeout);
       PingService.stop();
     }
 

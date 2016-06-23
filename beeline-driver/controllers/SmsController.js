@@ -11,6 +11,7 @@ export default[
   "$ionicLoading",
   "VerifiedPromptService",
   "$ionicHistory",
+  "$translate",
   function(
     $scope,
     DriverService,
@@ -18,7 +19,8 @@ export default[
     $stateParams,
     $ionicLoading,
     VerifiedPromptService,
-    $ionicHistory
+    $ionicHistory,
+    $translate
   ){
     $scope.data = {
       phoneNo: $stateParams.phoneNo || undefined,
@@ -41,8 +43,9 @@ export default[
           $state.go("app.route");
         }
         else {
+          var translation = await $translate(['INPUT_INVALID']);
           await VerifiedPromptService.alert({
-            title: "Your verification is invalid."
+            title: translation.INPUT_INVALID
           });
           $scope.data.verification = undefined;
           $scope.$apply();
@@ -51,13 +54,15 @@ export default[
       catch(error){
         console.log(error.stack);
         if (error.status == 401){
+          var translation = await $translate(['VERIFICATION_NOT_MATCH']);
           $ionicLoading.hide();
           await VerifiedPromptService.alert({
-            title: "Your verification does not match."
+            title: translation.VERIFICATION_NOT_MATCH
           });
           $scope.data.verification = undefined;
           $scope.$apply();
         }
+        $ionicLoading.hide();
       }
     }
 
