@@ -22,8 +22,8 @@ export default[
       phoneNo: $stateParams.phoneNo || undefined,
     }
 
-    $scope.login = async function(){
-      try {
+    $scope.login = async function() {
+      try{
         if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           $ionicLoading.show({template: loadingTemplate});
           await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
@@ -38,7 +38,7 @@ export default[
           $scope.$apply();
         }
       }
-      catch (error) {
+      catch(error) {
         //driver is not registered
         if (error.status == 404) {
           $ionicLoading.hide();

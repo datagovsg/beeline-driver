@@ -17,48 +17,28 @@ export default[
     $state
 
   ) {
-    var getLocation = async function() {
-      try{
-        var userPosition = await $cordovaGeolocation.getCurrentPosition({
-          timeout: 15000,
-          enableHighAccuracy: true
-        });
-        return userPosition;
-      }
-      catch(error) {
-        self.gpsError = true;
-        console.log(error);
-        console.log("GPS error");
-      }
+    var getLocation =  function() {
+      return $cordovaGeolocation.getCurrentPosition({
+        timeout: 15000,
+        enableHighAccuracy: true
+      }).then(function(response){
+        return response;
+      });
     };
 
-    var sendPing = async function(tripId, loc){
-      try {
-        await BeelineService.request({
-          method: "POST",
-          url: "/trips/" + tripId + "/pings",
-          data: {
-            vehicleId: DriverService.getVehicleId(),
-            latitude: loc.coords.latitude,
-            longitude: loc.coords.longitude
-          }
-        })
-      }
-      catch(error) {
-        console.log(error);
-        console.log("Server error");
-        self.gpsError = true;
-        //no 2 driver ping the same trip at the same time
-        if (error.status == 410){
-          $interval.cancel(pingInterval);
-          await VerifiedPromptService.alert({
-            title: "Another driver took this job",
-          });
-          $state.go("app.route");
+    var sendPing = function(tripId, loc){
+      return BeelineService.request({
+        method: "POST",
+        url: "/trips/" + tripId + "/pings",
+        data: {
+          vehicleId: DriverService.getVehicleId(),
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude
         }
-      }
-    }
-
+      }).then(function(response){
+        return response.data;
+      });
+    };
 
     var pingInterval = null;
     var self = this;
@@ -69,16 +49,24 @@ export default[
       async function tryPing() {
         try {
           var location = await getLocation();
-          if (location){
-            await sendPing(tripId, location);
-            self.gpsError = false;
-            self.lastPingTime = Date.now();
-          }
+          await sendPing(tripId, location);
+          self.gpsError = false;
+          self.lastPingTime = Date.now();
         }
         catch (error) {
           self.gpsError = true;
-          console.log("Error");
-          console.log(error);
+          //no 2 driver ping the same trip at the same time
+          if (error.status == 410){
+            $interval.cancel(pingInterval);
+            await VerifiedPromptService.alert({
+              title: "Another driver took this job",
+            });
+            //choose-route has no back view to start
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $state.go("app.route");
+          }
         }
       }
 

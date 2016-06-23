@@ -32,7 +32,7 @@ export default[
     $ionicPlatform,
     $translate
   ){
-    $scope.data ={
+    $scope.data = {
       routeId: $stateParams.routeId || undefined,
       tripId: $stateParams.tripId || undefined,
       currentList: 'board',

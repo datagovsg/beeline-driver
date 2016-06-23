@@ -20,12 +20,12 @@ export default[
     VerifiedPromptService,
     $ionicHistory
   ){
-    $scope.data ={
+    $scope.data = {
       phoneNo: $stateParams.phoneNo || undefined,
       verification: undefined,
     }
 
-    $scope.verify = async function(){
+    $scope.verify = async function() {
       try{
         var no = $scope.data.phoneNo;
         var code = $scope.data.verification;
@@ -61,7 +61,7 @@ export default[
       }
     }
 
-    $scope.$on('$ionicView.leave',()=>{
+    $scope.$on('$ionicView.leave',()=> {
       $scope.data.phoneNo = undefined;
       $scope.data.verification = undefined;
       $scope.$apply();

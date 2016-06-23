@@ -12,8 +12,7 @@ import DriverService from "./services/DriverService.js";
 import TripService from "./services/TripService.js";
 import PingService from "./services/PingService.js";
 import VerifiedPromptService from "./services/VerifiedPromptService.js";
-import loadingTemplate from "./templates/version-too-old.html";
-
+import VersionTooOldTemplate from "./templates/version-too-old.html";
 import compareVersions from "compare-versions";
 import "angular-translate";
 import "angular-translate-loader-static-files";
@@ -87,7 +86,6 @@ angular.module("beeline-driver", [
         appVersion = version;
       });
     }
-    console.log(appVersion);
     localStorage["version"] = appVersion;
 
     //check from server API if does not meet minimal version
@@ -101,11 +99,11 @@ angular.module("beeline-driver", [
     })
     .then(function(response){
       if (compareVersions(appVersion, response)==-1){
-        $ionicLoading.show({template: loadingTemplate});
+        $ionicLoading.show({template: VersionTooOldTemplate});
       }
     })
     .catch(function(error) {
-      console.log(error.stack);
+      console.error(error.stack);
     });
 
   });

@@ -32,7 +32,7 @@ export default [
 
     $scope.start = async function() {
       try {
-        if(VALID_INTEGER_REGEX.test($scope.data.routeId)){
+        if(VALID_INTEGER_REGEX.test($scope.data.routeId)) {
           $ionicLoading.show({template: loadingTemplate});
           $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
           $ionicLoading.hide();
@@ -73,6 +73,10 @@ export default [
         else if (error.message && error.message.includes("tripCancelled")) {
           $ionicLoading.hide();
           $scope.data.tripId = error.message.substr(13).valueOf();
+          //cancel has no back view to route selection
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
           $state.go("cancel",{routeId:$scope.data.routeId, tripId: $scope.data.tripId});
         }
         else {
@@ -82,7 +86,6 @@ export default [
             subTitle: `${error.status} - ${error.message}`
           }).then(function(response){
             $scope.data.routeId = undefined;
-            $state.go("login");
           })
         }
       }

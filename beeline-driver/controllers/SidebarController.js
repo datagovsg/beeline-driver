@@ -27,7 +27,7 @@ export default[
       vehicleNo: null
     };
 
-    $scope.$on('$ionicView.enter',async ()=>{
+    $scope.$on('$ionicView.enter',async ()=> {
       if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
         var vehicle = await DriverService.getVehicleInfo(false);
       }
@@ -44,7 +44,7 @@ export default[
     });
 
 
-    var promptVehicleNumber = function(title, subtitle){
+    var promptVehicleNumber = function(title, subtitle) {
       return VerifiedPromptService.verifiedPrompt({
         title: title,
         subTitle: subtitle,
@@ -95,11 +95,13 @@ export default[
       });
       if (!promptResponse) return;
       TokenService.token = null;
-      //FIXME need to do this?
       window.localStorage.removeItem('sessionToken');
       window.localStorage.removeItem('vehicleId');
+      //logout has no back view to choose-route
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
       $state.go("login");
     }
-
 
   }];
