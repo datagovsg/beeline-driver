@@ -23,9 +23,9 @@ export default[
     $scope.$on("$ionicView.enter",async ()=>{
       $scope.job.routeId = $stateParams.routeId;
       $scope.job.tripId = $stateParams.tripId;
-      $scope.job.routeDescription = await TripService.getRouteDescription($scope.job.routeId);
       try {
         $ionicLoading.show({template: loadingTemplate});
+        $scope.job.routeDescription = await TripService.getRouteDescription($scope.job.routeId);
         var trip = await TripService.getTrip($scope.job.tripId);
       } catch (e) {
         console.error(e);

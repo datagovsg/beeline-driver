@@ -84,11 +84,10 @@ export default [
 
     this.getRouteDescription = async function(routeId) {
       try {
-        if (self.route && self.rotue.description) {
-          return self.route.description;
-        }
-        else if (self.route) {
-          self.route.description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
+        if (self.route && self.route.id == routeId) {
+          if (!self.route.description) {
+            self.route.description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
+          }
           return self.route.description;
         }
         else {
