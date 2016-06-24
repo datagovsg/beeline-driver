@@ -32,10 +32,17 @@ export default[
         var no = $scope.data.phoneNo;
         var code = $scope.data.verification;
         if(VALID_VERIFICATION_REGEX.test(code)){
-          $ionicLoading.show({template: loadingTemplate});
-          await DriverService.verifyTelephone(no, code);
-          await DriverService.getVehicleInfo(true);
-          $ionicLoading.hide();
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            await DriverService.verifyTelephone(no, code);
+            await DriverService.getVehicleInfo(true);
+          }
+          catch(error) {
+            throw error;
+          }
+          finally {
+            $ionicLoading.hide();
+          }
           //route has no back view to sms verification
           $ionicHistory.nextViewOptions({
             disableBack: true
@@ -51,18 +58,16 @@ export default[
           $scope.$apply();
         }
       }
-      catch(error){
+      catch(error) {
         console.log(error.stack);
         if (error.status == 401){
           var translation = await $translate(['VERIFICATION_NOT_MATCH']);
-          $ionicLoading.hide();
           await VerifiedPromptService.alert({
             title: translation.VERIFICATION_NOT_MATCH
           });
           $scope.data.verification = undefined;
           $scope.$apply();
         }
-        $ionicLoading.hide();
       }
     }
 

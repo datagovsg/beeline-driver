@@ -32,9 +32,14 @@ export default[
     $scope.login = async function(){
       try {
         if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
-          $ionicLoading.show({template: loadingTemplate});
-          await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
-          $ionicLoading.hide();
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
+          } catch (e) {
+            throw e;
+          } finally {
+            $ionicLoading.hide();
+          }
           $state.go("sms",{"phoneNo": $scope.data.phoneNo});
         }
         else {
@@ -50,7 +55,6 @@ export default[
         //driver is not registered
         if (error.status == 404) {
           var translation = await $translate(['PHONE_NOT_REGISTERED']);
-          $ionicLoading.hide();
           await VerifiedPromptService.alert({
             title: translation.PHONE_NOT_REGISTERED
           });

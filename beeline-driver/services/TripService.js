@@ -82,19 +82,24 @@ export default [
       });
     };
 
-    this.getRouteDescription = async function(routeId){
+    this.getRouteDescription = async function(routeId) {
       try {
-        if (!self.route) {
+        if (self.route && self.rotue.description) {
+          return self.route.description;
+        }
+        else if (self.route) {
+          self.route.description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
+          return self.route.description;
+        }
+        else {
           var route = await BeelineService.request({
             method: "GET",
             url: '/routes/'+routeId
           });
           self.route = route.data;
-          console.log(self.route);
-          console.log(self.route.label);
+          self.route.description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
+          return self.route.description;
         }
-        var description = self.route.label+', '+self.route.from + ' -> '+self.route.to;
-        return description;
       }
       catch (error) {
         return null;

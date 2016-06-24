@@ -47,6 +47,8 @@ export default[
       isRedON: false,
     }
 
+    var gpsTranslationPromise = $translate(['GPS_BAD','GPS_GOOD']);
+
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
       _.forEach(passengersByStopId, function(value, key) {
@@ -101,12 +103,7 @@ export default[
     $scope.$on('$ionicView.enter', async () => {
       $scope.data.routeId = $stateParams.routeId;
       $scope.data.tripId = $stateParams.tripId;
-      TripService.getRouteDescription($scope.data.routeId)
-      .then((res) => {
-        $scope.data.routeDescription = res;
-      });
-
-      GPSTranslations = await $translate(['GPS_BAD','GPS_GOOD']);
+      $scope.data.routeDescription = await TripService.getRouteDescription($scope.data.routeId);
       //get generated trip code
       TripService.getTripCode($scope.data.tripId)
       .then((tripCode) => $scope.tripCode = tripCode);
@@ -114,7 +111,6 @@ export default[
       PingService.start($scope.data.tripId);
 
       togglePulse();
-      GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
       $scope.trip = await TripService.getTrip($scope.data.tripId, true);
       $scope.stops = $scope.trip.tripStops;
       //stop description e.g. "Yishun 1, Yishun Road 1, RandomPoint, ID 333331"
@@ -138,9 +134,7 @@ export default[
       if (PingService.lastPingTime !== undefined) {
         console.log("ping service last ping time updates");
         $timeout.cancel(GPSOffTimeout);
-        if (!GPSTranslations) {
-          GPSTranslations= await $translate(['GPS_BAD','GPS_GOOD']);
-        }
+        GPSTranslations= await gpsTranslationPromise;
         $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
         $scope.ping.pingStatusSymbol = "image/GPSon.svg";
         //bring back animation effect
@@ -153,8 +147,9 @@ export default[
       }, 20000);
     });
 
-    $scope.$watch(() => PingService.gpsError, (error)=>{
+    $scope.$watch(() => PingService.gpsError, async (error) => {
       if (error) {
+        GPSTranslations= await gpsTranslationPromise;
         $scope.ping.pingStatus = GPSTranslations.GPS_BAD;
         $scope.ping.pingStatusSymbol = "image/GPSoff.svg";
         $scope.ping.isRedON = true;
@@ -200,9 +195,14 @@ export default[
         });
 
         if (!promptResponse) return;
-        $ionicLoading.show({template: loadingTemplate});
-        await TripService.cancelTrip($scope.data.tripId);
-        $ionicLoading.hide();
+        try {
+          $ionicLoading.show({template: loadingTemplate});
+          await TripService.cancelTrip($scope.data.tripId);
+        } catch (e) {
+          throw e;
+        } finally {
+          $ionicLoading.hide();
+        }
         stopPingandInterval();
         //cancel has no back view to start
         $ionicHistory.nextViewOptions({
@@ -212,7 +212,6 @@ export default[
 
       }
       catch(error){
-        $ionicLoading.hide();
         VerifiedPromptService.alert({
           title: translations.ERROR_CANCEL_TRIP,
           subTitle: `${error.status} - ${error.message}`

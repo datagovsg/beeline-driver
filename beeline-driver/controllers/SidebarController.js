@@ -65,9 +65,14 @@ export default[
         var translations = await $translate(['YOUR_VEHICLE_NO','VEHICLE_IS_UPDATED_TO']);
         var response = await promptVehicleNumber(translations.YOUR_VEHICLE_NO);
         if (response && response.vehicleNumber) {
-          $ionicLoading.show({template: loadingTemplate});
-          await DriverService.updateVehicleNo(response.vehicleNumber);
-          $ionicLoading.hide();
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            await DriverService.updateVehicleNo(response.vehicleNumber);
+          } catch (e) {
+            throw e;
+          } finally {
+            $ionicLoading.hide();
+          }
           await VerifiedPromptService.alert({
             title: translations.VEHICLE_IS_UPDATED_TO + response.vehicleNumber
           });
@@ -75,10 +80,8 @@ export default[
         }
       }
       catch(error) {
-        $ionicLoading.hide();
         console.error(error.stack);
       }
-
     }
 
     $scope.logout = async function() {
