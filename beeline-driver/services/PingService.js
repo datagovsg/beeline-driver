@@ -26,8 +26,12 @@ export default[
       self.lastPingTime = Date.now();
     }
 
+    var failHandler = function (error) {
+      throw error;
+    }
+
     var getLocation =  function() {
-      navigator.geolocation.getCurrentPosition(successHandler, null, {
+      navigator.geolocation.getCurrentPosition(successHandler, failHandler, {
         timeout: 15000,
         enableHighAccuracy: true
       })

@@ -40,12 +40,6 @@ export default[
     var classToggleTimeout;
     var GPSTranslations;
 
-    $scope.ping = {
-      pingStatus: "GPS BAD",
-      pingStatusSymbol: "image/GPSoff.svg",
-      isAnimated: true,
-      isRedON: false,
-    }
 
     var gpsTranslationPromise = $translate(['GPS_BAD','GPS_GOOD']);
 
@@ -101,6 +95,12 @@ export default[
 
     var deregister;
     $scope.$on('$ionicView.enter', async () => {
+      $scope.ping = {
+        pingStatus: "GPS BAD",
+        pingStatusSymbol: "image/GPSoff.svg",
+        isAnimated: false,
+        isRedON: true,
+      }
       $scope.data.routeId = $stateParams.routeId;
       $scope.data.tripId = $stateParams.tripId;
       $scope.data.routeDescription = await TripService.getRouteDescription($scope.data.routeId);
