@@ -131,9 +131,9 @@ export default[
     var GPSOffTimeout;
 
     $scope.$watch(() => PingService.lastPingTime, async () => {
+      GPSTranslations= await gpsTranslationPromise;
       if (PingService.lastPingTime !== undefined) {
         $timeout.cancel(GPSOffTimeout);
-        GPSTranslations= await gpsTranslationPromise;
         $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;
         $scope.ping.pingStatusSymbol = "image/GPSon.svg";
         //bring back animation effect

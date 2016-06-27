@@ -22,8 +22,12 @@ export default[
       return $cordovaGeolocation.getCurrentPosition({
         timeout: 15000,
         enableHighAccuracy: true
-      }).then(function(response){
-        return response;
+      })
+      .catch(function (err) {
+        return $cordovaGeolocation.getCurrentPosition({
+          timeout: 15000,
+          enableHighAccuracy: false,
+        });
       });
     };
 
