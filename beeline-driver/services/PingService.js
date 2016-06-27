@@ -20,8 +20,14 @@ export default[
     $translate,
     $ionicHistory
   ) {
+    var successHandler = async function(location) {
+      await sendPing(self.tripId, location);
+      self.gpsError = false;
+      self.lastPingTime = Date.now();
+    }
+
     var getLocation =  function() {
-      return $cordovaGeolocation.getCurrentPosition({
+      navigator.geolocation.getCurrentPosition(successHandler, null, {
         timeout: 15000,
         enableHighAccuracy: true
       })
@@ -45,16 +51,13 @@ export default[
     var self = this;
 
     this.start = function(tripId) {
+      self.tripId = tripId;
       self.gpsError = false;
       async function tryPing() {
         try {
-          var location = await getLocation();
-          await sendPing(tripId, location);
-          self.gpsError = false;
-          self.lastPingTime = Date.now();
+          getLocation();
         }
         catch (error) {
-          console.error(error);
           self.gpsError = true;
           //no 2 driver ping the same trip at the same time
           if (error.status == 410){
