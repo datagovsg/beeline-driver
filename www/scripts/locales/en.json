@@ -16,6 +16,7 @@
   "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
   "GPS_BAD":                     "GPS BAD",
   "GPS_GOOD":                    "GPS GOOD",
+  "PLEASE_ENTER_YOUR_ROUTE_ID":  "Please enter your Route ID",
 
   "ROUTE":                       "Route",
   "PICK_UP":                     "Pick Up",
@@ -29,12 +30,12 @@
   "NEXT_BUTTON":                 "Next",
 
   "CANCELLED":                   "Cancelled",
-  "CANCELLED_MSG_1":             "The trip has been cancelled.",
+  "CANCELLED_MSG_1":             "Passengers have been notified.",
   "CANCELLED_MSG_2":             "Service will resume tomorrow.",
   "THANK_YOU":                   "Thank you",
   "ERROR_CANCEL_TRIP":           "There was an error cancelling trip. Please try again.",
 
-  "UPDATE_VEHICLE":              "Update Vehicle",
+  "UPDATE_VEHICLE":              "Update Vehicle No.",
   "LOGOUT":                      "Log out",
   "ARE_YOU_SURE_TO_LOG_OUT":     "Are you sure you want to log out?",
   "YOUR_VEHICLE_NO":             "Your Vehicle No",
@@ -48,7 +49,7 @@
 
   "SLIDE_TO_CONFIRM":            "Slide to confirm",
 
-  "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version.",
+  "VERSION_OUT_OF_DATE":         "Your current app version is outdated. Please update your app.",
 
   "ANOTHER_DRIVER_TOOK_JOB":     "Another driver took this job."
 }

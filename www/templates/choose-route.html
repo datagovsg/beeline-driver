@@ -1,27 +1,30 @@
 <ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
   <ion-content>
-    <h4 class="text-center">{{ 'WELCOME' | translate }}
-    </h4>
-
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-android-pin placeholder-icon"></i>
-        <input type="tel" placeholder="{{ 'ROUTE_TEMPLATE_INPUT' | translate }}" ng-model="data.routeId">
-      </label>
+    <div class="item">
+      <div class="text-center">
+        <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('en')">
+              ENGLISH
+            </a>
+        <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('zh')">
+              中文
+            </a>
+      </div>
     </div>
-    <div class="primary-button"
-         ng-click='start()'>
-      {{ 'START_BUTTON' | translate }}
-    </div>
-    <div class="text-center">
-      <a class="padding"
-        ng-click="switchLanguage('en')">
-        ENGLISH
-      </a>
-      <a class="padding"
-        ng-click="switchLanguage('zh')">
-        中文
-      </a>
+    <div class="startRoute">
+      <h4 class="text-center">{{ 'WELCOME' | translate }}
+        </h4>
+      <p class="text-center">
+        {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
+      </p>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-android-pin placeholder-icon"></i>
+          <input type="tel" placeholder="{{ 'ROUTE_TEMPLATE_INPUT' | translate }}" ng-model="data.routeId">
+        </label>
+      </div>
+      <div class="primary-button" ng-click='start()'>
+        {{ 'START_BUTTON' | translate }}
+      </div>
     </div>
   </ion-content>
 </ion-view>

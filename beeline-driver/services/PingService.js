@@ -18,7 +18,6 @@ export default[
     $state,
     $translate
   ) {
-
     var getLocation =  function() {
       return $cordovaGeolocation.getCurrentPosition({
         timeout: 15000,

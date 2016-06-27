@@ -76,9 +76,7 @@
 }
 
 p {
-  font-weight: bold;
-  margin-top: 1em;
-  margin-left: 1em;
+  font-size: $font-size-base;
 }
 
 span {
@@ -106,4 +104,100 @@ img:not(.image-pulse){
 .stop-no-passenger {
   background-color: $item-bg-greyed;
   color: $item-text-greyed;
+}
+
+// Font-size overrides
+// -------------------------------
+
+.item-note {
+  font-size: $item-font-size;
+}
+
+// popup overrides
+// -------------------------------
+
+.popup-title {
+  padding: $padding-large-vertical*3 $padding-large-vertical*2 $padding-large-vertical;
+  font-size: $font-size-large;
+  font-weight: bold;
+}
+.popup-sub-title {
+  margin: 0 auto;
+  margin-bottom: 40px;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+h1 {
+  font-size: 6em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+
+.item h2 {
+  font-size: 1.8em;
+}
+
+
+// input overrides
+// -------------------------------
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  padding-left: 10px;
+  font-size: $font-size-base;
+}
+
+h3.route-label{
+  text-transform: capitalize;
+  margin-bottom: -$padding-large-vertical;
+}
+
+
+/* start route screen style */
+.cancel-button{
+  padding: 0px $padding-xlarge-horizontal ;
+}
+
+.button-bar {
+  height: 3em;
+  background-color: darken($light-grey, 10%);
+  color: $hint-color;
+  &.highlight{
+    background-color: $light;
+    color: $royal;
+    border-top: 2px solid $royal;
+  }
+}
+
+
+/* side bar screen style */
+.update-vehicle{
+  padding: 0px $padding-xlarge-horizontal ;
+  .ion-android-bus{
+    padding-right: $padding-small-horizontal;
+  }
+}
+
+/* language button style*/
+.lang-button {
+  border-radius: 5px;
+  width: 100px;
+  padding: 0;
+  margin: 0;
 }

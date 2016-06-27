@@ -36,6 +36,5 @@ export default[
       $scope.$apply(()=>{
         $scope.job.date = trip.date;
       });
-
     });
   }];

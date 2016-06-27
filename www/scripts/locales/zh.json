@@ -16,6 +16,7 @@
   "NO_TRIP_ERROR":               "没有这个服务. 请再查看你的路线号码.",
   "GPS_BAD":                     "GPS不正常",
   "GPS_GOOD":                    "GPS正常",
+  "PLEASE_ENTER_YOUR_ROUTE_ID":  "请输入路线号码",
 
   "ROUTE":                       "路线",
   "PICK_UP":                     "上车",
@@ -29,7 +30,7 @@
   "NEXT_BUTTON":                 "下一步",
 
   "CANCELLED":                   "已取消",
-  "CANCELLED_MSG_1":             "服务已经取消。",
+  "CANCELLED_MSG_1":             "乘客已被通知。",
   "CANCELLED_MSG_2":             "服务明天继续。",
   "THANK_YOU":                   "谢谢",
   "ERROR_CANCEL_TRIP":           "取消服务失败。请重试。",

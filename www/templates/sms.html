@@ -2,11 +2,11 @@
   <ion-nav-title>
     {{'ENTER_VERIFICATION_CODE' | translate}}
   </ion-nav-title>
-  <ion-content>
-    <p class="text-center">{{'PLEASE_ENTER_CODE_SENT_TO_PHONE' | translate}} +65 {{data.phoneNo}} </p>
+  <ion-content class="verify">
+        <p class="text-center">{{'PLEASE_ENTER_CODE_SENT_TO_PHONE' | translate}}<br/> +65 {{data.phoneNo}} </p>
     <div class="list list-inset">
       <label class="item item-input">
-        <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
+        <i class="icon ion-locked placeholder-icon"></i>
         <input type="tel" ng-model="data.verification">
       </label>
     </div>

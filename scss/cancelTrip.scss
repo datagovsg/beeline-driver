@@ -1,0 +1,22 @@
+.cancelled-trip{
+  .item {
+    @include display-flex;
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    height: 100%;
+    width: 100%;
+      h3 {
+        padding: $padding-large-vertical 0;
+        font-size: 1.4em;
+      }
+      p {
+        line-height: $line-height-base*1.2;
+      }
+    }
+}
+
+i.ion-alert-circled {
+  font-size: 10em;
+  color: $assertive;
+}

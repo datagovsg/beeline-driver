@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 $hint-color: #888;
 $breadcrumbs-height: 54px;
+$light-grey: #eee;
+$normal-grey: #666;
 
 $table-cell-padding: 10px;
 $table-cell-border-width: 1px;
@@ -19,6 +21,10 @@ $bus-stop-selector-padding-bottom: 5px;
 
 $stopMarkerWidth: 30px;
 $stopMarkerRightMargin: 1em;
+
+$padding-xlarge-horizontal: 30px;
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Ionic variables to be overriden
@@ -59,9 +65,9 @@ $font-family-light-sans-serif:    "Lato", '-apple-system', "HelveticaNeue-Light"
 // $font-family-monospace:           monospace !default;
 
 // $font-family-base:                $font-family-sans-serif !default;
-// $font-size-base:                  14px !default;
-// $font-size-large:                 18px !default;
-// $font-size-small:                 11px !default;
+$font-size-base:                  16px;
+$font-size-large:                 20px;
+$font-size-small:                 12px;
 
 // $line-height-base:                1.428571429 !default; // 20/14
 // $line-height-computed:            floor($font-size-base * $line-height-base) !default; // ~20px
@@ -325,7 +331,7 @@ $tab-item-max-width:              400px;
 // // Items
 // // -------------------------------
 
-// $item-font-size:                  16px !default;
+$item-font-size:                  $font-size-base;
 // $item-border-width:               1px !default;
 // $item-padding:                    16px !default;
 
@@ -652,7 +658,7 @@ $input-color-placeholder:         $hint-color;
 // // Popups
 // // -------------------------------
 
-// $popup-width:                     250px !default;
+$popup-width:                    80%;
 // $popup-enter-animation:           superScaleIn !default;
 // $popup-enter-animation-duration:  0.2s !default;
 // $popup-leave-animation-duration:  0.1s !default;

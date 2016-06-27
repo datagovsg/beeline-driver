@@ -10,6 +10,9 @@
   <ion-content>
     <div class="list">
       <div class="item item-divider">
+        <h3 class="text-center route-label">
+          {{data.routeDescription}}
+        </h3>
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
       <div class="row text-center">
@@ -33,24 +36,26 @@
               {{$index + 1}}.
             </div>
             <div class="col col-20">
-              {{boardStop.time | date:'h:mm a'}}
+              <strong>{{boardStop.time | date:'h:mm a'}}</strong>
             </div>
-            <div class="col item-text-wrap">
-              <strong>{{boardStop.stop.description}}</strong><br>
+            <div class="col col-70 item-text-wrap">
+              {{boardStop.stop.description}}
             </div>
-            <i class="icon">
-              <span class="ion-android-person"></span> &nbsp;
-              {{ boardStop.passengerCount > 0 ?
-                 boardStop.passengerCount : 0 }} &nbsp;
-            </i>
+            <div class="col col-10 col-center">
+              <i class="icon">
+                <span class="ion-android-person"></span> &nbsp;
+                {{ boardStop.passengerCount > 0 ?
+                   boardStop.passengerCount : 0 }} &nbsp;
+              </i>
+            </div>
           </div>
   		  </div>
         <div  class="item"
               ng-show="showBoardPassengerList">
-           <div class="item item-divider">{{boardStop.stopDescription}}</div>
+           <div class="item item-divider item-text-wrap">{{boardStop.stopDescription}}</div>
            <div ng-repeat="passenger in boardStop.passengerList">
              <div class="item">
-               <h2>{{$index+1}}. {{passenger.name}}</h2>
+               <p>{{$index+1}}. {{passenger.name}}</p>
              </div>
            </div>
         </div>
@@ -64,24 +69,26 @@
               {{$index + 1}}.
             </div>
             <div class="col col-20">
-              {{alightStop.time | date:'h:mm a'}}
+              <strong>{{alightStop.time | date:'h:mm a'}}</strong>
             </div>
-            <div class="col item-text-wrap">
-              <strong>{{alightStop.stop.description}}</strong><br>
+            <div class="col col-70 item-text-wrap">
+              {{alightStop.stop.description}}
             </div>
-            <i class="icon">
-              <span class="ion-android-person"></span> &nbsp;
-              {{ alightStop.passengerCount > 0 ?
-                 alightStop.passengerCount : 0 }} &nbsp;
-            </i>
+            <div class="col col-10 col-center">
+              <i class="icon">
+                <span class="ion-android-person"></span> &nbsp;
+                {{ alightStop.passengerCount > 0 ?
+                   alightStop.passengerCount : 0 }} &nbsp;
+              </i>
+            </div>
           </div>
         </div>
         <div  class="item"
               ng-show="showAlightPassengerList">
-           <div class="item item-divider">{{alightStop.stopDescription}}</div>
+           <div class="item item-divider item-text-wrap">{{alightStop.stopDescription}}</div>
            <div ng-repeat="passenger in alightStop.passengerList">
              <div class="item">
-               <h2>{{$index+1}}. {{passenger.name}}</h2>
+               <p>{{$index+1}}. {{passenger.name}}</p>
              </div>
            </div>
         </div>
@@ -91,7 +98,7 @@
          ng-click="stopPing()">{{ 'STOP_BUTTON' | translate }}</div>
     <br>
     <div class="text-center">
-      <div  class="button button-assertive"
+      <div class="button button-outline button-assertive cancel-button"
             ng-click="confirmCancelTrip()">
           <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'CANCEL_BUTTON' | translate }}
       </div>

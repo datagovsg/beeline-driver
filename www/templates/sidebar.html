@@ -5,7 +5,7 @@
       </ion-nav-back-button>
 
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-android-menu" menu-toggle="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
@@ -19,7 +19,13 @@
     <ion-content>
       <ion-list>
         <ion-item menu-close class="text-center">
-          {{data.vehicleNo}} <br><div class="button button-royal button-outline" ng-click="updateVehicleNo()">{{ 'UPDATE_VEHICLE' | translate }}</div>
+          <h2 class="padding-bottom">
+            {{data.vehicleNo}}
+          </h2>
+          <div class="button button-royal button-outline update-vehicle" ng-click="updateVehicleNo()">
+            <i class="icon ion-android-bus"></i>
+            {{ 'UPDATE_VEHICLE' | translate }}
+          </div>
         </ion-item>
         <ion-item menu-close class="text-center" ng-click="logout()">
           {{ 'LOGOUT' | translate }}
