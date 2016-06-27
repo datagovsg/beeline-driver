@@ -1,14 +1,15 @@
-/* login screen style */
-.login{
-  margin:  $padding-large-horizontal;
-}
 
 /* verify screen style */
 .verify{
-  margin:  $padding-large-horizontal;
+  p {
+    margin:  $padding-large-horizontal;
+  }
+
 }
 
 /* start route screen style */
 .startRoute{
-  margin:  $padding-large-horizontal;
+  p {
+    margin:  $padding-large-horizontal;
+  }
 }

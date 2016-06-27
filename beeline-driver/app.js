@@ -72,7 +72,7 @@ angular.module("beeline-driver", [
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      StatusBar.styleLightContent();
     }
 
     //stop screen sleep
