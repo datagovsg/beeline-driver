@@ -1,6 +1,6 @@
 import _ from "lodash";
 import loadingTemplate from "../templates/loading.html";
-const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
+const VALID_CAR_PLATE_REGEX = /^[a-zA-Z0-9_]+$/;
 
 export default[
   "$scope",
@@ -12,6 +12,7 @@ export default[
   "$ionicLoading",
   "TokenService",
   "$translate",
+  "$ionicHistory",
   function(
     $scope,
     $ionicPopup,
@@ -21,7 +22,8 @@ export default[
     VerifiedPromptService,
     $ionicLoading,
     TokenService,
-    $translate
+    $translate,
+    $ionicHistory
   ){
     $scope.data = {
       vehicleNo: null
@@ -52,6 +54,7 @@ export default[
           {
             type: "text",
             name: "vehicleNumber",
+            pattern: VALID_CAR_PLATE_REGEX
           }
         ]
       });
@@ -59,14 +62,19 @@ export default[
 
     $scope.updateVehicleNo = async function() {
       try {
-        var transition = await $translate(['YOUR_VEHICLE_NO']);
-        var response = await promptVehicleNumber(transition.YOUR_VEHICLE_NO);
+        var translations = await $translate(['YOUR_VEHICLE_NO','VEHICLE_IS_UPDATED_TO']);
+        var response = await promptVehicleNumber(translations.YOUR_VEHICLE_NO);
         if (response && response.vehicleNumber) {
-          $ionicLoading.show({template: loadingTemplate});
-          await DriverService.updateVehicleNo(response.vehicleNumber);
-          $ionicLoading.hide();
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            await DriverService.updateVehicleNo(response.vehicleNumber);
+          } catch (e) {
+            throw e;
+          } finally {
+            $ionicLoading.hide();
+          }
           await VerifiedPromptService.alert({
-            title: "Vehicle is updated to " + response.vehicleNumber
+            title: translations.VEHICLE_IS_UPDATED_TO + response.vehicleNumber
           });
           $state.go("app.route");
         }
@@ -74,7 +82,6 @@ export default[
       catch(error) {
         console.error(error.stack);
       }
-
     }
 
     $scope.logout = async function() {

@@ -1,9 +1,9 @@
 <ion-view>
   <ion-nav-title>
-    Enter Verification Code
+    {{'ENTER_VERIFICATION_CODE' | translate}}
   </ion-nav-title>
   <ion-content>
-    <p class="text-center">Please enter the code sent to your phone +65 {{data.phoneNo}} </p>
+    <p class="text-center">{{'PLEASE_ENTER_CODE_SENT_TO_PHONE' | translate}} +65 {{data.phoneNo}} </p>
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
@@ -12,7 +12,7 @@
     </div>
     <div class="primary-button"
          ng-click='verify()'>
-      Confirm
+      {{'CONFIRM_BUTTON' | translate}}
     </div>
   </ion-content>
 </ion-view>

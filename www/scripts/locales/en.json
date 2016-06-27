@@ -1,4 +1,11 @@
 {
+  "WELCOME_TO_BEELINE_DRIVER":   "Welcome to Beeline Driver",
+  "ENTER_YOUR_PHONE_NO":         "Enter Your Phone No.",
+  "ENTER_VERIFICATION_CODE":     "Enter Verification Code",
+  "PLEASE_ENTER_CODE_SENT_TO_PHONE": "Please enter the code sent to your phone ",
+  "PHONE_NOT_REGISTERED":        "Sorry. Your phone no. is not in the Beeline system. Please tell your bus company.",
+  "VERIFICATION_NOT_MATCH":      "Your verification does not match.",
+
   "LANGUAGE_SETTINGS":           "English",
   "ROUTE_TEMPLATE_TITLE":        "Enter Your Route ID",
   "WELCOME":                     "Welcome",
@@ -18,16 +25,20 @@
 
   "OK_BUTTON":                   "Ok",
   "CANCEL_BUTTON":               "Cancel",
+  "CONFIRM_BUTTON":              "Confirm",
+  "NEXT_BUTTON":                 "Next",
 
   "CANCELLED":                   "Cancelled",
   "CANCELLED_MSG_1":             "The trip has been cancelled.",
   "CANCELLED_MSG_2":             "Service will resume tomorrow.",
   "THANK_YOU":                   "Thank you",
+  "ERROR_CANCEL_TRIP":           "There was an error cancelling trip. Please try again.",
 
   "UPDATE_VEHICLE":              "Update Vehicle",
   "LOGOUT":                      "Log out",
   "ARE_YOU_SURE_TO_LOG_OUT":     "Are you sure you want to log out?",
   "YOUR_VEHICLE_NO":             "Your Vehicle No",
+  "VEHICLE_IS_UPDATED_TO":       "Vehicle is updated to ",
 
   "ARE_YOU_SURE":                "Are you sure?",
   "SLIDE_TO_CANCEL":             "Slide to cancel trip. This will notify the passsengers and ops.",
@@ -39,5 +50,5 @@
 
   "VERSION_OUT_OF_DATE":         "Your current app version is too old. Please download new version.",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "nother driver took this job."
+  "ANOTHER_DRIVER_TOOK_JOB":     "Another driver took this job."
 }

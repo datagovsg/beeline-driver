@@ -18,6 +18,7 @@ export default[
     $state,
     $translate
   ) {
+
     var getLocation =  function() {
       return $cordovaGeolocation.getCurrentPosition({
         timeout: 15000,
@@ -55,12 +56,14 @@ export default[
           self.lastPingTime = Date.now();
         }
         catch (error) {
+          console.error(error);
           self.gpsError = true;
           //no 2 driver ping the same trip at the same time
           if (error.status == 410){
             $interval.cancel(pingInterval);
+            var transition = await $translate(['ANOTHER_DRIVER_TOOK_JOB']);
             await VerifiedPromptService.alert({
-              title: "Another driver took this job",
+              title: transition.ANOTHER_DRIVER_TOOK_JOB,
             });
             //choose-route has no back view to start
             $ionicHistory.nextViewOptions({

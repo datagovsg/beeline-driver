@@ -33,9 +33,14 @@ export default [
     $scope.start = async function() {
       try {
         if(VALID_INTEGER_REGEX.test($scope.data.routeId)) {
-          $ionicLoading.show({template: loadingTemplate});
-          $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
-          $ionicLoading.hide();
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
+          } catch (e) {
+            throw e;
+          } finally {
+            $ionicLoading.hide();
+          }
           //start has no back view to route selection
           $ionicHistory.nextViewOptions({
             disableBack: true
@@ -54,7 +59,6 @@ export default [
       catch(error) {
         if (error.status == 404) {
           var translation = await $translate(['NO_ROUTE_ERROR']);
-          $ionicLoading.hide();
           VerifiedPromptService.alert({
             title: translation.NO_ROUTE_ERROR
           }).then(function(response){
@@ -62,7 +66,6 @@ export default [
           })
         }
         else if (error.message=="noTrip") {
-          $ionicLoading.hide();
           var translation = await $translate(['NO_TRIP_ERROR']);
           VerifiedPromptService.alert({
             title: translation.NO_TRIP_ERROR
@@ -71,7 +74,6 @@ export default [
           })
         }
         else if (error.message && error.message.includes("tripCancelled")) {
-          $ionicLoading.hide();
           $scope.data.tripId = error.message.substr(13).valueOf();
           //cancel has no back view to route selection
           $ionicHistory.nextViewOptions({
@@ -80,7 +82,6 @@ export default [
           $state.go("cancel",{routeId:$scope.data.routeId, tripId: $scope.data.tripId});
         }
         else {
-          $ionicLoading.hide();
           VerifiedPromptService.alert({
             title: "Error",
             subTitle: `${error.status} - ${error.message}`
