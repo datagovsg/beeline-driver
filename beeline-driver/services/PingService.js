@@ -23,12 +23,6 @@ export default[
         timeout: 15000,
         enableHighAccuracy: true
       })
-      .catch(function (err) {
-        return $cordovaGeolocation.getCurrentPosition({
-          timeout: 15000,
-          enableHighAccuracy: false,
-        });
-      });
     };
 
     var sendPing = function(tripId, loc){
