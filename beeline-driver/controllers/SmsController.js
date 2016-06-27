@@ -75,4 +75,8 @@ export default[
       $scope.data.verification = undefined;
       $scope.$apply();
     })
+
+    $scope.goLogin = function() {
+      $state.go("login");
+    }
   }];

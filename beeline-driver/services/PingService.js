@@ -8,6 +8,7 @@ export default[
   "VerifiedPromptService",
   "$state",
   "$translate",
+  "$ionicHistory",
   function(
     BeelineService,
     DriverService,
@@ -16,7 +17,8 @@ export default[
     $ionicPopup,
     VerifiedPromptService,
     $state,
-    $translate
+    $translate,
+    $ionicHistory
   ) {
     var getLocation =  function() {
       return $cordovaGeolocation.getCurrentPosition({
