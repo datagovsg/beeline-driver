@@ -45,7 +45,6 @@ export default[
     var self = this;
 
     this.start = function(tripId) {
-      console.log("ping start");
       self.gpsError = false;
       async function tryPing() {
         try {
@@ -81,7 +80,6 @@ export default[
     };
 
     this.stop = function() {
-      console.log("ping stop");
       $interval.cancel(pingInterval);
       pingInterval = null;
     };

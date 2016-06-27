@@ -59,7 +59,6 @@ export default[
         }
       }
       catch(error) {
-        console.log(error.stack);
         if (error.status == 401){
           var translation = await $translate(['VERIFICATION_NOT_MATCH']);
           await VerifiedPromptService.alert({

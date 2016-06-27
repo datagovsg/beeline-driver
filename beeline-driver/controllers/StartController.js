@@ -132,7 +132,6 @@ export default[
 
     $scope.$watch(() => PingService.lastPingTime, async () => {
       if (PingService.lastPingTime !== undefined) {
-        console.log("ping service last ping time updates");
         $timeout.cancel(GPSOffTimeout);
         GPSTranslations= await gpsTranslationPromise;
         $scope.ping.pingStatus = GPSTranslations.GPS_GOOD;

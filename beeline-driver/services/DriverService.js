@@ -44,7 +44,7 @@ export default function($http, BeelineService, TokenService){
       });
       return response.data;
     } catch(error){
-      console.log(error.stack);
+      return;
     }
   }
 
@@ -58,7 +58,6 @@ export default function($http, BeelineService, TokenService){
       else {
         self.vehicle = await this.getVehicle(window.localStorage["vehicleId"]);
       }
-      console.log(self.vehicle);
       return self.vehicle;
     }
     else {

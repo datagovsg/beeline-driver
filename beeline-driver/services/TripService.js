@@ -60,7 +60,6 @@ export default [
 
     this.getTrip = function(id, reload){
       if ( self.trip !== undefined && !reload ){
-        console.log(self.trip);
         return Promise.resolve(self.trip);
       }
       else return BeelineService.request({
