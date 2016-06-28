@@ -2,7 +2,6 @@
 export default[
   "BeelineService",
   "DriverService",
-  "$cordovaGeolocation",
   "$interval",
   "$ionicPopup",
   "VerifiedPromptService",
@@ -12,7 +11,6 @@ export default[
   function(
     BeelineService,
     DriverService,
-    $cordovaGeolocation,
     $interval,
     $ionicPopup,
     VerifiedPromptService,
@@ -20,20 +18,15 @@ export default[
     $translate,
     $ionicHistory
   ) {
-    var successHandler = async function(location) {
-      await sendPing(self.tripId, location);
-      self.gpsError = false;
-      self.lastPingTime = Date.now();
-    }
 
-    var failHandler = function (error) {
-      throw error;
+    var gpsOptions = {
+      timeout: 15000,
+      enableHighAccuracy: true
     }
 
     var getLocation =  function() {
-      navigator.geolocation.getCurrentPosition(successHandler, failHandler, {
-        timeout: 15000,
-        enableHighAccuracy: true
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, gpsOptions)
       })
     };
 
@@ -53,19 +46,46 @@ export default[
 
     var pingInterval = null;
     var self = this;
+    var locationWatch;
 
     this.start = function(tripId) {
-      self.tripId = tripId;
+      var location, locationError;
+
+      //to make location service is continues
+      locationWatch = navigator.geolocation.watchPosition(
+        (position) => {
+          console.log(position.coords);
+          location = position;
+          locationError = null;
+        },
+        (err) => {
+          console.log(err);
+          location = null;
+          locationError = err;
+        },
+        gpsOptions
+      );
+
+      //to avoid popup shows consecutive twice
+      var errorShown = false;
       self.gpsError = false;
+
       async function tryPing() {
         try {
-          getLocation();
+          let currentlocation = await getLocation();
+          if (currentlocation) {
+            await sendPing(tripId, currentlocation);
+            self.gpsError = false;
+            self.lastPingTime = Date.now();
+          }
         }
         catch (error) {
+          console.log(error);
           self.gpsError = true;
           //no 2 driver ping the same trip at the same time
-          if (error.status == 410){
-            $interval.cancel(pingInterval);
+          if (error.status == 410 && !errorShown){
+            errorShown = true;
+            self.stop();
             var transition = await $translate(['ANOTHER_DRIVER_TOOK_JOB']);
             await VerifiedPromptService.alert({
               title: transition.ANOTHER_DRIVER_TOOK_JOB,
@@ -89,6 +109,11 @@ export default[
     this.stop = function() {
       $interval.cancel(pingInterval);
       pingInterval = null;
+
+      if (locationWatch !== undefined) {
+        navigator.geolocation.clearWatch(locationWatch);
+        locationWatch = undefined;
+      }
     };
   }
 ];

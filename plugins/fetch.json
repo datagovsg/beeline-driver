@@ -65,9 +65,8 @@
     },
     "cordova-plugin-insomnia": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-insomnia"
         },
         "is_top_level": true,
         "variables": {}
