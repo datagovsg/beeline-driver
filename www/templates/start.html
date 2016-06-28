@@ -51,11 +51,10 @@
           </div>
   		  </div>
         <div  class="item"
-              ng-show="showBoardPassengerList">
-           <div class="item item-divider item-text-wrap">{{boardStop.stopDescription}}</div>
+              ng-show="showBoardPassengerList && boardStop.passengerCount > 0">
            <div ng-repeat="passenger in boardStop.passengerList">
-             <div class="item">
-               <p>{{$index+1}}. {{passenger.name}}</p>
+             <div class="col col-offset-10">
+               {{index+1}}.  {{passenger.name}}
              </div>
            </div>
         </div>
@@ -84,11 +83,10 @@
           </div>
         </div>
         <div  class="item"
-              ng-show="showAlightPassengerList">
-           <div class="item item-divider item-text-wrap">{{alightStop.stopDescription}}</div>
+              ng-show="showAlightPassengerList && alightStop.passengerCount > 0">
            <div ng-repeat="passenger in alightStop.passengerList">
-             <div class="item">
-               <p>{{$index+1}}. {{passenger.name}}</p>
+             <div class="col col-offset-10">
+               {{index+1}}.  {{passenger.name}}
              </div>
            </div>
         </div>
