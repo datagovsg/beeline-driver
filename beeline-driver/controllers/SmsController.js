@@ -76,7 +76,4 @@ export default[
       $scope.$apply();
     })
 
-    $scope.goLogin = function() {
-      $state.go("login");
-    }
   }];
