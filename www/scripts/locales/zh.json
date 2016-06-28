@@ -44,13 +44,13 @@
   "ARE_YOU_SURE":                "你确定吗?",
   "SLIDE_TO_CANCEL":             "滑动取消服务. 我们将会通知巴士公司和乘客。",
 
-  "STOP_PING":                   "停止GPS定位",
-  "STOP_PING_MSG":               "你确定你要停止GPS定位?",
+  "STOP_PING":                   "结束服务",
+  "STOP_PING_MSG":               "你确定你要结束这个服务吗?",
 
   "SLIDE_TO_CONFIRM":            "滑动确定",
 
   "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "另外的司机驾驶这个服务。"
+  "ANOTHER_DRIVER_TOOK_JOB":     "这个服务被另外的司机取代。"
 
 }
