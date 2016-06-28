@@ -8,4 +8,27 @@
   .tabs.beeline-tabs {
     position: static;
   }
+
+  .tabs-striped {
+    padding-top: 1px;
+  }
+
+  .tab-item {
+    background-color: $light-grey;
+  }
+
+  .tab-item.active {
+    background-color: $light;
+  }
+
+}
+
+.passengerbox {
+  background-color: $light-grey;
+  padding: 20px;
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+
 }

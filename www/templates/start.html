@@ -3,8 +3,7 @@
   <ion-nav-buttons side="right">
     <button class="button">
       {{ping.pingStatus}}
-      <img  ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}"
-            ng-src="{{ping.pingStatusSymbol}}">
+      <img ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}" ng-src="{{ping.pingStatusSymbol}}">
     </button>
   </ion-nav-buttons>
   <ion-content class="start" scroll=true>
@@ -15,7 +14,7 @@
         </h3>
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <div class="tabs-striped tabs-color-royal tabs-background-light">
+      <div class="tabs-striped tabs-color-royal tabs-background-default">
         <div class="tabs beeline-tabs">
           <div class="tab-item" ng-click="data.currentList='board'" ng-class="{'active': data.currentList=='board'}">
             {{ 'PICK_UP' | translate }}
@@ -26,9 +25,7 @@
         </div>
       </div>
       <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
-        <div  class="item"
-              ng-click="showBoardPassengerList = !showBoardPassengerList"
-              ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
+        <div class="item" ng-click="showBoardPassengerList = !showBoardPassengerList" ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
           <div class="row">
             <div class="col col-10">
               {{$index + 1}}.
@@ -47,20 +44,18 @@
               </i>
             </div>
           </div>
-  		  </div>
-        <div  class="item"
-              ng-show="showBoardPassengerList && boardStop.passengerCount > 0">
-           <div ng-repeat="passenger in boardStop.passengerList">
-             <div class="col col-offset-10">
-               {{index+1}}.  {{passenger.name}}
-             </div>
-           </div>
+          <div class="col col-80 col-offset-10 passengerbox"
+                ng-show="showBoardPassengerList && boardStop.passengerCount > 0">
+            <ul>
+              <li ng-repeat="passenger in boardStop.passengerList">
+                {{passenger.name}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
-        <div  class="item"
-              ng-click="showAlightPassengerList = !showAlightPassengerList"
-              ng-class= "{'stop-no-passenger': !(alightStop.passengerCount >0 )}" >
+        <div class="item" ng-click="showAlightPassengerList = !showAlightPassengerList" ng-class="{'stop-no-passenger': !(alightStop.passengerCount >0 )}">
           <div class="row">
             <div class="col col-10">
               {{$index + 1}}.
@@ -79,24 +74,23 @@
               </i>
             </div>
           </div>
+          <div class="col col-80 col-offset-10 passengerbox"
+                ng-show="showAlightPassengerList && alightStop.passengerCount > 0">
+            <ul>
+              <li ng-repeat="passenger in alightStop.passengerList">
+                {{passenger.name}}
+              </li>
+            </ul>
+          </div>
         </div>
-        <div  class="item"
-              ng-show="showAlightPassengerList && alightStop.passengerCount > 0">
-           <div ng-repeat="passenger in alightStop.passengerList">
-             <div class="col col-offset-10">
-               {{index+1}}.  {{passenger.name}}
-             </div>
-           </div>
-        </div>
+
       </div>
     </div>
-    <div class="primary-button"
-         ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>
+    <div class="primary-button" ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>
     <br>
     <div class="text-center">
-      <div class="button button-outline button-assertive cancel-button"
-            ng-click="confirmCancelTrip()">
-          <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'EMERGENCY_BUTTON' | translate }}
+      <div class="button button-assertive cancel-button" ng-click="confirmCancelTrip()">
+        <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'EMERGENCY_BUTTON' | translate }}
       </div>
     </div>
   </ion-content>
