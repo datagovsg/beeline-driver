@@ -15,16 +15,14 @@
         </h3>
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <div class="row text-center">
-        <div  class="col col-50 button-bar"
-              ng-click="data.currentList='board'"
-              ng-class="{'highlight': data.currentList=='board'}">
-          {{ 'PICK_UP' | translate }}
-        </div>
-        <div  class="col col-50 button-bar"
-              ng-click="data.currentList='alight'"
-              ng-class="{'highlight': data.currentList=='alight'}">
-          {{ 'DROP_OFF' | translate }}
+      <div class="tabs-striped tabs-color-royal tabs-background-light">
+        <div class="tabs beeline-tabs">
+          <div class="tab-item" ng-click="data.currentList='board'" ng-class="{'active': data.currentList=='board'}">
+            {{ 'PICK_UP' | translate }}
+          </div>
+          <div class="tab-item" ng-click="data.currentList='alight'" ng-class="{'active': data.currentList=='alight'}">
+            {{ 'DROP_OFF' | translate }}
+          </div>
         </div>
       </div>
       <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
