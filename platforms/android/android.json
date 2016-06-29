@@ -9,11 +9,19 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
                             "count": 1
                         },
                         {
@@ -30,14 +38,6 @@
                         },
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -60,6 +60,9 @@
         }
     },
     "installed_plugins": {
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
@@ -67,6 +70,9 @@
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
         "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+        },
+        "cordova-plugin-insomnia": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
         "cordova-plugin-splashscreen": {
@@ -80,16 +86,17 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
-        "cordova-plugin-insomnia": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
-        "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+            "id": "cordova-plugin-app-version.AppVersionPlugin",
+            "clobbers": [
+                "cordova.getAppVersion"
+            ]
+        },
         {
             "file": "plugins/cordova-plugin-device/www/device.js",
             "id": "cordova-plugin-device.device",
@@ -108,6 +115,13 @@
             "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
             "id": "cordova-plugin-geolocation.PositionError",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
+            "id": "cordova-plugin-insomnia.Insomnia",
+            "clobbers": [
+                "window.plugins.insomnia"
+            ]
         },
         {
             "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
@@ -135,31 +149,17 @@
                 "cordova.plugins.Keyboard"
             ],
             "runs": true
-        },
-        {
-            "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
-            "id": "cordova-plugin-insomnia.Insomnia",
-            "clobbers": [
-                "window.plugins.insomnia"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
-            "id": "cordova-plugin-app-version.AppVersionPlugin",
-            "clobbers": [
-                "cordova.getAppVersion"
-            ]
         }
     ],
     "plugin_metadata": {
+        "cordova-plugin-app-version": "0.1.8",
         "cordova-plugin-console": "1.0.2",
         "cordova-plugin-device": "1.1.1",
         "cordova-plugin-geolocation": "2.1.0",
+        "cordova-plugin-insomnia": "4.2.0",
         "cordova-plugin-splashscreen": "3.1.0",
         "cordova-plugin-statusbar": "2.1.2",
         "cordova-plugin-whitelist": "1.2.1",
-        "ionic-plugin-keyboard": "2.0.1",
-        "cordova-plugin-insomnia": "4.2.0",
-        "cordova-plugin-app-version": "0.1.8"
+        "ionic-plugin-keyboard": "2.0.1"
     }
 }
