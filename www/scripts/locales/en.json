@@ -14,8 +14,8 @@
   "INPUT_INVALID":               "Your input is invalid.",
   "NO_ROUTE_ERROR":              "There is no such route.",
   "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
-  "GPS_BAD":                     "GPS BAD",
-  "GPS_GOOD":                    "GPS GOOD",
+  "GPS_BAD":                     "GPS OFF",
+  "GPS_GOOD":                    "GPS ON",
   "PLEASE_ENTER_YOUR_ROUTE_ID":  "Please enter your Route ID",
 
   "ROUTE":                       "Route",
@@ -35,7 +35,7 @@
   "THANK_YOU":                   "Thank you",
   "ERROR_CANCEL_TRIP":           "There was an error cancelling trip. Please try again.",
 
-  "UPDATE_VEHICLE":              "Update Vehicle No.",
+  "UPDATE_VEHICLE":              "Update Vehicle",
   "LOGOUT":                      "Log out",
   "ARE_YOU_SURE_TO_LOG_OUT":     "Are you sure you want to log out?",
   "YOUR_VEHICLE_NO":             "Your Vehicle No",
@@ -44,12 +44,12 @@
   "ARE_YOU_SURE":                "Are you sure?",
   "SLIDE_TO_CANCEL":             "Slide to cancel trip. This will notify the passsengers and ops.",
 
-  "STOP_PING":                   "Stop Ping",
-  "STOP_PING_MSG":               "Are you sure you want to stop pinging?",
+  "STOP_PING":                   "Stop Trip",
+  "STOP_PING_MSG":               "Are you sure you want to stop this trip?",
 
   "SLIDE_TO_CONFIRM":            "Slide to confirm",
 
   "VERSION_OUT_OF_DATE":         "Your current app version is outdated. Please update your app.",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "Another driver took this job."
+  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver."
 }

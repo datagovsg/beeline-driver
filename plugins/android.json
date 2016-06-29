@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
@@ -17,9 +14,6 @@
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
         "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
-        "cordova-plugin-insomnia": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
         "cordova-plugin-splashscreen": {
@@ -32,6 +26,12 @@
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+        },
+        "cordova-plugin-insomnia": {
+            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+        },
+        "cordova-plugin-app-version": {
             "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
         }
     },

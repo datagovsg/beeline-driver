@@ -188,7 +188,8 @@ h3.route-label{
 
 /* side bar screen style */
 .update-vehicle{
-  padding: 0px $padding-xlarge-horizontal ;
+  padding: 0px $padding-xlarge-horizontal;
+  margin: 0px auto;
   .ion-android-bus{
     padding-right: $padding-small-horizontal;
   }

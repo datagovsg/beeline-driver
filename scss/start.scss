@@ -1,0 +1,34 @@
+
+/* trip start page */
+.start{
+  .cancel-button {
+    margin-bottom: 60px;
+  }
+
+  .tabs.beeline-tabs {
+    position: static;
+  }
+
+  .tabs-striped {
+    padding-top: 1px;
+  }
+
+  .tab-item {
+    background-color: $light-grey;
+  }
+
+  .tab-item.active {
+    background-color: $light;
+  }
+
+}
+
+.passengerbox {
+  background-color: $light-grey;
+  padding: $padding-large-vertical*2;
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+
+}
