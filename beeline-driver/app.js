@@ -86,7 +86,6 @@ angular.module("beeline-driver", [
         appVersion = version;
       });
     }
-    localStorage["version"] = appVersion;
 
     //check from server API if does not meet minimal version
     //ionicLoading pop up to stop user interactivity

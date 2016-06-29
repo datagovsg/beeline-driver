@@ -54,12 +54,10 @@ export default[
       //to make location service is continues
       locationWatch = navigator.geolocation.watchPosition(
         (position) => {
-          console.log(position.coords);
           location = position;
           locationError = null;
         },
         (err) => {
-          console.log(err);
           location = null;
           locationError = err;
         },
@@ -80,7 +78,6 @@ export default[
           }
         }
         catch (error) {
-          console.log(error);
           self.gpsError = true;
           //no 2 driver ping the same trip at the same time
           if (error.status == 410 && !errorShown){
