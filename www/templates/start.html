@@ -28,7 +28,7 @@
         <div class="item" ng-click="showBoardPassengerList = !showBoardPassengerList" ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
           <div class="row">
             <div class="col col-30">
-              {{$index + 1}}. <strong>{{boardStop.time | date:'h:mm a'}}</strong>
+              <strong>{{boardStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
               {{boardStop.stop.description}}
@@ -55,7 +55,7 @@
         <div class="item" ng-click="showAlightPassengerList = !showAlightPassengerList" ng-class="{'stop-no-passenger': !(alightStop.passengerCount >0 )}">
           <div class="row">
             <div class="col col-30">
-              {{$index + 1}}. <strong>{{alightStop.time | date:'h:mm a'}}</strong>
+              <strong>{{alightStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
               {{alightStop.stop.description}}
