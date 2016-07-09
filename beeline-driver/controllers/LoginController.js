@@ -31,7 +31,7 @@ export default[
 
     $scope.login = async function(){
       try {
-        if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
+        if($scope.data.phoneNo === '########' || VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           try {
             $ionicLoading.show({template: loadingTemplate});
             await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
