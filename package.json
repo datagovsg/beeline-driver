@@ -11,7 +11,8 @@
     "build": "npm run sass && npm run webpack",
     "watch": "npm run start & npm run sass-watch & npm run webpack-watch",
     "prestart": "npm run build",
-    "start": "http-server www/"
+    "start": "http-server www/",
+    "postinstall": "ionic state restore"
   },
   "dependencies": {
     "angular-simple-logger": "^0.1.7",
@@ -43,7 +44,7 @@
     "cordova-plugin-app-version"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }
