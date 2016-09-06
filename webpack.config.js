@@ -12,11 +12,11 @@ $ export BACKEND_URL=<something>
 2. https://beeline-server-dev.herokuapp.com (STAGING)
 `)
 }
-
 var env = {
-    BACKEND_URL: process.env.BACKEND_URL,
+    BACKEND_URL: process.env.BACKEND_URL || 'https://beeline-server-dev.herokuapp.com'
 }
-fs.writeFileSync(`${__dirname}/beeline/env.json`, JSON.stringify(env))
+
+fs.writeFileSync(`${__dirname}/beeline-driver/env.json`, JSON.stringify(env))
 
 module.exports = {
   module: {
@@ -33,6 +33,12 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
+        exclude: /node_modules/,
+        include: path.resolve('.'),
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
         exclude: /node_modules/,
         include: path.resolve('.'),
       },
