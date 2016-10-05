@@ -32,9 +32,10 @@ export default function() {
 
   }
 
+  var lastGeoFence = null;
+
   this.announceGeoFence = function (stops, position) {
     if (!window.TTS) return;
-    var lastGeoFence = null;
 
     const {latitude, longitude} = position.coords;
 
@@ -45,11 +46,18 @@ export default function() {
     const nearest = _.minBy(_.zip(distanceToStops, stops), ds => ds[0])
 
     if (nearest[0] < 150) { // Within geofence
-      TTS.speak({
-        text: `${nearest[1].stop.description}. ${formatPassengerSummary(nearest[1])}`,
-        locale: `en-US`,
-        rate: 1
-      }, console.log, console.log)
+      if (lastGeoFence !== nearest[1].id) {
+        TTS.speak({
+          text: `${nearest[1].stop.description}. ${formatPassengerSummary(nearest[1])}`,
+          locale: `en-US`,
+          rate: 1
+        }, console.log, console.log)
+      }
+
+      lastGeoFence = nearest[1].id;
+    }
+    else {
+      lastGeoFence = null;
     }
   }
 }
