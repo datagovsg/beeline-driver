@@ -80,6 +80,10 @@ export default[
       }
     }
 
+    function locationChanged(position) {
+      SpeechService.announceGeoFence($scope.stops, position);
+    }
+
     var deregister;
     $scope.$on('$ionicView.enter', async () => {
       $scope.ping = {
@@ -96,6 +100,7 @@ export default[
       .then((tripCode) => $scope.tripCode = tripCode);
 
       PingService.start($scope.data.tripId);
+      PingService.events.on('locationChanged', locationChanged);
 
       togglePulse();
       $scope.trip = await TripService.getTrip($scope.data.tripId, true);
@@ -232,6 +237,7 @@ export default[
       $timeout.cancel(reloadPassengerTimeout);
       $timeout.cancel(classToggleTimeout);
       PingService.stop();
+      PingService.events.removeListener('locationChanged', locationChanged);
     }
 
     // Triggered when devices with a hardware back button (Android) is clicked by the user

@@ -1,3 +1,5 @@
+var EventEmitter = require('events');
+
 // Wrapper for making requests to the beeline api
 export default[
   "BeelineService",
@@ -48,12 +50,15 @@ export default[
     var self = this;
     var locationWatch;
 
+    this.events = new EventEmitter();
+
     this.start = function(tripId) {
       var location, locationError;
 
       //to make location service is continues
       locationWatch = navigator.geolocation.watchPosition(
         (position) => {
+          this.events.emit('locationChanged', position);
           location = position;
           locationError = null;
         },
