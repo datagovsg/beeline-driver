@@ -9,19 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
                             "count": 1
                         },
                         {
@@ -38,6 +30,14 @@
                         },
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -56,110 +56,141 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"TTS\"><param name=\"android-package\" value=\"com.wordsbaking.cordova.tts.TTS\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
     "installed_plugins": {
-        "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
-        "cordova-plugin-insomnia": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-insomnia": {
+            "PACKAGE_NAME": "sg.beeline.driver"
         }
     },
     "dependent_plugins": {},
     "modules": [
         {
-            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
-            "id": "cordova-plugin-app-version.AppVersionPlugin",
-            "clobbers": [
-                "cordova.getAppVersion"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-device/www/device.js",
             "id": "cordova-plugin-device.device",
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "pluginId": "cordova-plugin-device",
             "clobbers": [
                 "device"
             ]
         },
         {
-            "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
             "id": "cordova-plugin-geolocation.geolocation",
+            "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+            "pluginId": "cordova-plugin-geolocation",
             "clobbers": [
                 "navigator.geolocation"
             ]
         },
         {
-            "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
             "id": "cordova-plugin-geolocation.PositionError",
+            "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+            "pluginId": "cordova-plugin-geolocation",
             "runs": true
         },
         {
-            "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
-            "id": "cordova-plugin-insomnia.Insomnia",
-            "clobbers": [
-                "window.plugins.insomnia"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
             "id": "cordova-plugin-splashscreen.SplashScreen",
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "pluginId": "cordova-plugin-splashscreen",
             "clobbers": [
                 "navigator.splashscreen"
             ]
         },
         {
-            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
             "id": "cordova-plugin-statusbar.statusbar",
+            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+            "pluginId": "cordova-plugin-statusbar",
             "clobbers": [
                 "window.StatusBar"
             ]
         },
         {
-            "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+            "id": "cordova-plugin-tts.tts",
+            "file": "plugins/cordova-plugin-tts/www/tts.js",
+            "pluginId": "cordova-plugin-tts",
+            "clobbers": [
+                "TTS"
+            ]
+        },
+        {
             "id": "cordova-plugin-whitelist.whitelist",
+            "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+            "pluginId": "cordova-plugin-whitelist",
             "runs": true
         },
         {
-            "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
             "id": "ionic-plugin-keyboard.keyboard",
+            "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
+            "pluginId": "ionic-plugin-keyboard",
             "clobbers": [
                 "cordova.plugins.Keyboard"
             ],
             "runs": true
+        },
+        {
+            "id": "cordova-plugin-app-version.AppVersionPlugin",
+            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+            "pluginId": "cordova-plugin-app-version",
+            "clobbers": [
+                "cordova.getAppVersion"
+            ]
+        },
+        {
+            "id": "cordova-plugin-insomnia.Insomnia",
+            "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
+            "pluginId": "cordova-plugin-insomnia",
+            "clobbers": [
+                "window.plugins.insomnia"
+            ]
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-app-version": "0.1.8",
         "cordova-plugin-console": "1.0.2",
         "cordova-plugin-device": "1.1.1",
         "cordova-plugin-geolocation": "2.1.0",
-        "cordova-plugin-insomnia": "4.2.0",
         "cordova-plugin-splashscreen": "3.1.0",
         "cordova-plugin-statusbar": "2.1.2",
+        "cordova-plugin-tts": "0.2.3",
         "cordova-plugin-whitelist": "1.2.1",
-        "ionic-plugin-keyboard": "2.0.1"
+        "ionic-plugin-keyboard": "2.0.1",
+        "cordova-plugin-app-version": "0.1.9",
+        "cordova-plugin-insomnia": "4.2.0"
     }
 }

@@ -2,33 +2,13 @@ import _ from "lodash";
 import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 export default[
-  "$scope",
-  "$state",
-  "TripService",
-  "$ionicPopup",
-  "$timeout",
-  "$stateParams",
-  "PingService",
-  "$ionicLoading",
-  "$rootScope",
-  "VerifiedPromptService",
-  "$ionicHistory",
-  "$ionicPlatform",
-  "$translate",
+  "$scope", "$state", "TripService", "$ionicPopup", "$timeout", "$stateParams",
+  "PingService", "$ionicLoading", "$rootScope", "VerifiedPromptService",
+  "$ionicHistory", "$ionicPlatform", "$translate", "SpeechService",
   function(
-    $scope,
-    $state,
-    TripService,
-    $ionicPopup,
-    $timeout,
-    $stateParams,
-    PingService,
-    $ionicLoading,
-    $rootScope,
-    VerifiedPromptService,
-    $ionicHistory,
-    $ionicPlatform,
-    $translate
+    $scope, $state, TripService, $ionicPopup, $timeout, $stateParams,
+    PingService, $ionicLoading, $rootScope, VerifiedPromptService,
+    $ionicHistory, $ionicPlatform, $translate, SpeechService
   ){
     $scope.data = {
       routeId: $stateParams.routeId || undefined,
@@ -45,6 +25,9 @@ export default[
 
     var updatePassengerList = async function(){
       var passengersByStopId = await TripService.getPassengersByStop($scope.data.tripId, true);
+
+      var passengerListBefore = _.cloneDeep($scope.stops);
+
       _.forEach(passengersByStopId, function(value, key) {
         var stop = $scope.stops.find(stop => stop.id === +key);
         //wrs user name {name:, email:, telephone:}
@@ -59,6 +42,10 @@ export default[
         stop.passengerCount = value.length;
         stop.passengerList = value;
       });
+
+      if (passengerListBefore) {
+        SpeechService.announcePassengerListDifferences($scope.stops, passengerListBefore)
+      }
 
       $scope.boardStops = $scope.trip.tripStops.filter( stop => stop.canBoard );
       $scope.boardStops = _.sortBy($scope.boardStops, function(item){
@@ -77,7 +64,7 @@ export default[
       $timeout.cancel(reloadPassengerTimeout);
       updatePassengerList();
       //every 1 min reload no. of passenger / stop
-      reloadPassengerTimeout = $timeout(reloadPassengersList,60000);
+      reloadPassengerTimeout = $timeout(reloadPassengersList,20000);
     };
 
     //toggle css class make ping indicator annimation effect

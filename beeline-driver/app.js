@@ -45,6 +45,7 @@ angular.module("beeline-driver", [
 .service("DriverService",DriverService)
 .service("TripService",TripService)
 .service("PingService",PingService)
+.service("SpeechService", require('./services/SpeechService').default)
 .service("VerifiedPromptService",VerifiedPromptService)
 .config(configureRoutes)
 .config(function($translateProvider){

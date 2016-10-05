@@ -8,31 +8,34 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
-        },
-        "cordova-plugin-insomnia": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.ionicframework.ionicbeelinedriver405344"
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-insomnia": {
+            "PACKAGE_NAME": "sg.beeline.driver"
         }
     },
     "dependent_plugins": {}
