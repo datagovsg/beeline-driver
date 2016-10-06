@@ -27,7 +27,7 @@ export default function($translate) {
 
     var text = (newServicedStops.length >= 1) ?
     [
-      ['en-US', 'There are new passengers at the stop: ']
+      ['en-US', 'There are new passengers at the stop: '],
       ['en-US', newServicedStops.join(', and ')]
     ] : []
 
