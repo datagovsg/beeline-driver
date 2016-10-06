@@ -54,8 +54,10 @@ angular.module("beeline-driver", [
     suffix: '.json'
   })
   .registerAvailableLanguageKeys(['en_US', 'zh_CN'], {
+    'en_*': 'en_US',
     'en' : 'en_US',
     'zh' : 'zh_CN',
+    'zh_*' : 'zh_CN',
   })
   .preferredLanguage('en_US')
   .fallbackLanguage('en_US')
@@ -75,6 +77,9 @@ angular.module("beeline-driver", [
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    // For android -- media control buttons should control the music volume
+    window.DriverHelper.setVolumeControlStream('MUSIC')
 
     //stop screen sleep
     if (window.plugins && window.plugins.insomnia){

@@ -231,6 +231,13 @@ export default[
       $state.go("app.route");
     };
 
+    $scope.navigateToStop = function (stop) {
+      window.DriverHelper.startNavigation({
+        lat: stop.coordinates.coordinates[1],
+        lon: stop.coordinates.coordinates[0],
+      })
+    }
+
     //when leave this view, stop the ping service and remove timeouts
     var stopPingandInterval = function (){
       $timeout.cancel(GPSOffTimeout);

@@ -22,9 +22,6 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "sg.beeline.driver"
         },
-        "cordova-plugin-tts": {
-            "PACKAGE_NAME": "sg.beeline.driver"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "sg.beeline.driver"
         },
@@ -35,6 +32,12 @@
             "PACKAGE_NAME": "sg.beeline.driver"
         },
         "cordova-plugin-insomnia": {
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "sg.beeline.driver"
+        },
+        "cordova-plugin-beeline": {
             "PACKAGE_NAME": "sg.beeline.driver"
         }
     },

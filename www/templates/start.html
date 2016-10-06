@@ -30,7 +30,7 @@
             <div class="col col-30">
               <strong>{{boardStop.time | date:'h:mm a'}}</strong>
             </div>
-            <div class="col col-60 item-text-wrap">
+            <div class="col col-60 item-text-wrap" ng-click="navigateToStop(boardStop.stop)">
               {{boardStop.stop.description}}
             </div>
             <div class="col col-10 col-top">

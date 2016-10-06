@@ -55,14 +55,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-tts": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-tts"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-app-version": {
         "source": {
             "type": "registry",
@@ -75,6 +67,22 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-insomnia"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-tts": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-tts"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-beeline": {
+        "source": {
+            "type": "local",
+            "path": "/home/daniel/cordova-plugin-beeline"
         },
         "is_top_level": true,
         "variables": {}

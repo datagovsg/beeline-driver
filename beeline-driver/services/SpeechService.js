@@ -62,23 +62,36 @@ export default function($translate) {
     else {
     }
   }
+
+  async function formatPassengerSummary(tripStop) {
+    // FIXME: need to separate passengerList by boarding/alighting passengers
+    if (!tripStop.passengerList) {
+      return '';
+    }
+    else if (tripStop.passengerList.length === 0) {
+      return [[$translate.use().replace(/_/g, '-'), await $translate('SPEECH_NO_PASSENGERS')]];
+    }
+    else if (tripStop.passengerList.length === 1) {
+      return [[$translate.use().replace(/_/g, '-'), await $translate('SPEECH_ONE_PASSENGERS')]];
+    }
+    /* Fixme need dual for Arabic :p */
+    else {
+      return [[$translate.use().replace(/_/g, '-'), await $translate('SPEECH_N_PASSENGERS', { numPassengers: tripStop.passengerList.length })]];
+    }
+  }
 }
 
-function formatPassengerSummary(tripStop) {
-  // FIXME: need to separate passengerList by boarding/alighting passengers
-  if (!tripStop.passengerList) {
-    return '';
-  }
-  else if (tripStop.passengerList.length === 0) {
-    return 'There are no passengers at this stop.';
-  }
-  else if (tripStop.passengerList.length === 1) {
-    return 'There is one passenger at this stop.';
-  }
-  else {
-    return `There are ${tripStop.passengerList.length} passengers at this stop.`
+async function speakMultilingual(sentences, rate = 0.6) {
+  for (let [locale, sentence] of sentences) {
+    await new Promise((resolve, reject) => {
+      TTS.speak({
+        text: sentence,
+        locale, rate
+      }, resolve, reject);
+    });
   }
 }
+
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //:::                                                                         :::
