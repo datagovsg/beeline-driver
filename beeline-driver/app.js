@@ -53,12 +53,12 @@ angular.module("beeline-driver", [
     prefix: './scripts/locales/',
     suffix: '.json'
   })
-  .registerAvailableLanguageKeys(['en', 'zh'], {
-    'en' : 'en',
-    'zh' : 'zh',
+  .registerAvailableLanguageKeys(['en_US', 'zh_CN'], {
+    'en_US' : 'en_US',
+    'zh_CN' : 'zh_CN',
   })
-  .preferredLanguage('en')
-  .fallbackLanguage('en')
+  .preferredLanguage('en_US')
+  .fallbackLanguage('en_US')
   .determinePreferredLanguage()
   .useSanitizeValueStrategy('escapeParameters');
 })

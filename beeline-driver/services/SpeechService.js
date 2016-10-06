@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
-export default function() {
+export default function($translate) {
 
   this.announcePassengerListDifferences = function (newStops, oldStops) {
 
+    ((formatPassengerSummary(newStops[0]))).then(console.log)
     if (!window.TTS) return;
 
     var oldStopsById = _.keyBy(oldStops, s => s.id)
@@ -24,12 +25,13 @@ export default function() {
 
     if (newServicedStops.length == 0) return;
 
-    var text = (newServicedStops.length == 1) ?
-    ('There are new passengers at the stop, ' + newServicedStops[0]) :
-    ('There are new passengers at the stops, ' + newServicedStops.join(', and '));
+    var text = (newServicedStops.length >= 1) ?
+    [
+      ['en-US', 'There are new passengers at the stop: ']
+      ['en-US', newServicedStops.join(', and ')]
+    ] : []
 
-    TTS.speak({text, locale: 'en-US', rate: 1}, console.log, console.log);
-
+    speakMultilingual(text);
   }
 
   var lastGeoFence = null;
@@ -47,17 +49,17 @@ export default function() {
 
     if (nearest[0] < 150) { // Within geofence
       if (lastGeoFence !== nearest[1].id) {
-        TTS.speak({
-          text: `${nearest[1].stop.description}. ${formatPassengerSummary(nearest[1])}`,
-          locale: `en-US`,
-          rate: 1
-        }, console.log, console.log)
+        (async () => {
+          speakMultilingual([
+            ['en-US', `${nearest[1].stop.description}.`]
+          ].concat(await formatPassengerSummary(nearest[1]))
+          )
+        })()
       }
 
       lastGeoFence = nearest[1].id;
     }
     else {
-      lastGeoFence = null;
     }
   }
 }

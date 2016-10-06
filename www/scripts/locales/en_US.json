@@ -51,5 +51,10 @@
 
   "VERSION_OUT_OF_DATE":         "Your current app version is outdated. Please update your app.",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver."
+  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver.",
+
+
+  "SPEECH_N_PASSENGERS":        "There are {{numPassengers}} passengers at this stop.",
+  "SPEECH_ONE_PASSENGERS":      "There is one passenger at this stop.",
+  "SPEECH_NO_PASSENGERS":       "There are no passengers at this stop"
 }

@@ -51,6 +51,10 @@
 
   "VERSION_OUT_OF_DATE":         "你的应用程序版本太低。请下载新版本。",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "这个服务被另外的司机取代。"
+  "ANOTHER_DRIVER_TOOK_JOB":     "这个服务被另外的司机取代。",
+
+  "SPEECH_N_PASSENGERS":        "这个站有{{numPassengers}}个乘客。",
+  "SPEECH_ONE_PASSENGERS":      "这个站有一个乘客。",
+  "SPEECH_NO_PASSENGERS":       "这个站没有乘客。"
 
 }
