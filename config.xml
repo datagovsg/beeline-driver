@@ -68,4 +68,5 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
+    <plugin name="cordova-plugin-beeline" spec="~0.2.3" />
 </widget>

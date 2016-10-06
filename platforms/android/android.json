@@ -66,7 +66,7 @@
                         },
                         {
                             "xml": "<feature name=\"DriverHelper\"><param name=\"android-package\" value=\"sg.beeline.driver.HelperPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -149,14 +149,6 @@
             ]
         },
         {
-            "id": "cordova-plugin-tts.tts",
-            "file": "plugins/cordova-plugin-tts/www/tts.js",
-            "pluginId": "cordova-plugin-tts",
-            "clobbers": [
-                "TTS"
-            ]
-        },
-        {
             "id": "cordova-plugin-whitelist.whitelist",
             "file": "plugins/cordova-plugin-whitelist/whitelist.js",
             "pluginId": "cordova-plugin-whitelist",
@@ -185,6 +177,14 @@
             "pluginId": "cordova-plugin-insomnia",
             "clobbers": [
                 "window.plugins.insomnia"
+            ]
+        },
+        {
+            "id": "cordova-plugin-tts.tts",
+            "file": "plugins/cordova-plugin-tts/www/tts.js",
+            "pluginId": "cordova-plugin-tts",
+            "clobbers": [
+                "TTS"
             ]
         },
         {

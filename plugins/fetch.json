@@ -81,8 +81,8 @@
     },
     "cordova-plugin-beeline": {
         "source": {
-            "type": "local",
-            "path": "/home/daniel/cordova-plugin-beeline"
+            "type": "registry",
+            "id": "git+ssh@github.com:datagovsg/cordova-plugin-beeline.git"
         },
         "is_top_level": true,
         "variables": {}
