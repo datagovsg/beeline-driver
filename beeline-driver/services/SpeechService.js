@@ -81,7 +81,7 @@ export default function($translate) {
   }
 }
 
-async function speakMultilingual(sentences, rate = 0.6) {
+async function speakMultilingual(sentences, rate = 0.8) {
   for (let [locale, sentence] of sentences) {
     await new Promise((resolve, reject) => {
       TTS.speak({
