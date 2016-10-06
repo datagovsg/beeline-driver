@@ -24,7 +24,6 @@ export default[
       phoneNo: $stateParams.phoneNo || undefined,
     }
 
-
     $scope.switchLanguage = function(key) {
       $translate.use(key);
     };
