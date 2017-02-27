@@ -105,7 +105,7 @@ export default function($http, BeelineService, TokenService){
     .then(function(response){
       self.vehicle = response.data;
       window.localStorage["vehicleId"] = self.vehicle.id;
-      _.merge(self.vehicles, self.vehicle);
+      self.vehicles.push(self.vehicle);
       return true;
     })
     .catch((error)=>{
