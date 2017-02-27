@@ -15,4 +15,11 @@ export default function() {
   this.get = (propertyName) => {
     return decodedToken[propertyName];
   };
+  this.logout = function () {
+    // Set token to null via previously defined property,
+    // ie, this.token
+    this.token = null;
+    window.localStorage.removeItem('sessionToken');
+    window.localStorage.removeItem('vehicleId');
+  };
 }

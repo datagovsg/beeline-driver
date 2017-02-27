@@ -29,15 +29,23 @@ export default[
       vehicleNo: null
     };
 
-    $scope.$on('$ionicView.enter',async ()=> {
-      if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
-        var vehicle = await DriverService.getVehicleInfo(false);
-      }
-      else {
-        var vehicle = await DriverService.getVehicleInfo(true);
-      }
-      if (vehicle){
-        $scope.data.vehicleNo = vehicle.vehicleNumber;
+    $scope.$on('$ionicView.enter',async () => {
+      if (!await DriverService.verifySession()) {
+        //logout has no back view to choose-route
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go("login");
+      } else {
+        if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
+          var vehicle = await DriverService.getVehicleInfo(false);
+        }
+        else {
+          var vehicle = await DriverService.getVehicleInfo(true);
+        }
+        if (vehicle){
+          $scope.data.vehicleNo = vehicle.vehicleNumber;
+        }
       }
     });
 
@@ -101,9 +109,7 @@ export default[
         ]
       });
       if (!promptResponse) return;
-      TokenService.token = null;
-      window.localStorage.removeItem('sessionToken');
-      window.localStorage.removeItem('vehicleId');
+      TokenService.logout();
       //logout has no back view to choose-route
       $ionicHistory.nextViewOptions({
         disableBack: true
