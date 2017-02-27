@@ -118,4 +118,20 @@ export default function($http, BeelineService, TokenService){
       window.localStorage["vehicleId"] : 0;
     return vehicleId;
   }
+
+  this.verifySession = function () {
+    return BeelineService.request({
+      url: '/vehicles', //Just use vehicles to verify session
+      method: 'GET'
+    })
+    .then(response => true, function(error) {
+      if (error.status == 403 || error.status == 401) {
+        TokenService.logout();
+        return false;
+      } else {
+        throw error;
+      }
+    });
+  };
+
 }
