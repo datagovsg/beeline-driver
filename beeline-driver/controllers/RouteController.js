@@ -2,6 +2,7 @@ import _ from 'lodash';
 import loadingTemplate from "../templates/loading.html";
 //any length of non-negative number
 const VALID_INTEGER_REGEX = /^[0-9]*$/;
+const VALID_CAR_PLATE_REGEX = /^[a-zA-Z0-9_]+$/;
 
 export default [
   "$scope",
@@ -11,6 +12,7 @@ export default [
   "VerifiedPromptService",
   "$ionicHistory",
   "$translate",
+  'DriverService',
   function(
     $scope,
     TripService,
@@ -18,17 +20,84 @@ export default [
     $ionicLoading,
     VerifiedPromptService,
     $ionicHistory,
-    $translate
+    $translate,
+    DriverService
   ) {
 
     $scope.data = {
       routeId: undefined,
-      tripId: undefined
+      tripId: undefined,
+      phoneNo: undefined,
+      vehicleNo: undefined
     };
+
+    $scope.data.phoneNo = window.localStorage["phoneNo"];
 
     $scope.switchLanguage = function(key) {
       $translate.use(key);
     };
+
+    $scope.$on('$ionicView.enter',async () => {
+      if (!await DriverService.verifySession()) {
+        //logout has no back view to choose-route
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go("login");
+      } else {
+        if (window.localStorage["vehicleId"] !== undefined && window.localStorage["vehicleId"] != 0) {
+          var vehicle = await DriverService.getVehicleInfo(false);
+        }
+        else {
+          var vehicle = await DriverService.getVehicleInfo(true);
+        }
+        if (vehicle){
+          $scope.data.vehicleNo = vehicle.vehicleNumber.toUpperCase();
+        }
+      }
+    });
+
+    var promptVehicleNumber = function(title, subtitle) {
+      return VerifiedPromptService.verifiedPrompt({
+        title: title,
+        subTitle: subtitle,
+        inputs: [
+          {
+            type: "text",
+            name: "vehicleNumber",
+            pattern: VALID_CAR_PLATE_REGEX
+          }
+        ]
+      });
+    };
+
+    $scope.updateVehicleNo = async function() {
+      try {
+        var translations = await $translate(['YOUR_VEHICLE_NO','VEHICLE_IS_UPDATED_TO']);
+        var response = await promptVehicleNumber(translations.YOUR_VEHICLE_NO);
+        if (response && response.vehicleNumber) {
+          try {
+            $ionicLoading.show({template: loadingTemplate});
+            await DriverService.updateVehicleNo(response.vehicleNumber);
+          } catch (e) {
+            throw e;
+          } finally {
+            $ionicLoading.hide();
+          }
+          await VerifiedPromptService.alert({
+            title: translations.VEHICLE_IS_UPDATED_TO + response.vehicleNumber
+          });
+        }
+      }
+      catch(error) {
+        console.error(error.stack);
+      }
+    }
+
+    $scope.$watch(() => DriverService.vehicle, (vehicle) => {
+      $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber : null;
+    });
+
 
     $scope.start = async function() {
       try {
