@@ -1,5 +1,6 @@
 <ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
   <ion-content>
+
     <div class="item">
       <div class="text-center">
         <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('en')">
@@ -9,10 +10,22 @@
               中文
             </a>
       </div>
+      <br>
+      <div><h2 class="text-center">{{ 'WELCOME' | translate }} {{data.phoneNo}}</h2></div>
+    </div>
+    <!-- <div class='item'>
+      <p class="text-center">
+        {{data.vehicleNo}}
+        <a class="button button-royal button-outline update-vehicle" ng-click="updateVehicleNo()">
+          <i class="icon ion-android-bus"></i>
+          {{'UPDATE_VEHICLE' | translate }}
+        </a>
+      </p>
+    </div> -->
+    <div class="item item-icon-left" on-tap="updateVehicleNo()">
+      <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
     </div>
     <div class="startRoute">
-      <h4 class="text-center">{{ 'WELCOME' | translate }}
-        </h4>
       <p class="text-center">
         {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
       </p>

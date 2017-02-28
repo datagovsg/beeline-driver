@@ -106,4 +106,8 @@ angular.module("beeline-driver", [
     });
 
   });
+})
+.run(function (DriverService) {
+  // Pre-fetch the vehicles
+  DriverService.getVehicleInfo()
 });
