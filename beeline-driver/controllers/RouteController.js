@@ -31,7 +31,9 @@ export default [
       vehicleNo: undefined
     };
 
-    $scope.data.phoneNo = window.localStorage["phoneNo"];
+    $scope.$watch(() => DriverService.phoneNo, (no) => {
+      $scope.data.phoneNo = no ? no : null
+    });
 
     $scope.switchLanguage = function(key) {
       $translate.use(key);

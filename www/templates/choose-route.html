@@ -13,18 +13,6 @@
       <br>
       <div><h2 class="text-center">{{ 'WELCOME' | translate }} {{data.phoneNo}}</h2></div>
     </div>
-    <!-- <div class='item'>
-      <p class="text-center">
-        {{data.vehicleNo}}
-        <a class="button button-royal button-outline update-vehicle" ng-click="updateVehicleNo()">
-          <i class="icon ion-android-bus"></i>
-          {{'UPDATE_VEHICLE' | translate }}
-        </a>
-      </p>
-    </div> -->
-    <div class="item item-icon-left" on-tap="updateVehicleNo()">
-      <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
-    </div>
     <div class="startRoute">
       <p class="text-center">
         {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
@@ -38,6 +26,10 @@
       <div class="primary-button" ng-click='start()'>
         {{ 'START_TRIP_BUTTON' | translate }}
       </div>
+    </div>
+    <!-- move to the bottom of the page -->
+    <div class="item item-icon-left show-at-bottom" on-tap="updateVehicleNo()">
+      <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
     </div>
   </ion-content>
 </ion-view>

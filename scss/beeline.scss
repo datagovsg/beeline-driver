@@ -27,9 +27,9 @@
   text-transform: uppercase;
 }
 
-.button {
-  text-transform: uppercase;
-}
+// .button {
+//   text-transform: uppercase;
+// }
 
 .primary-button {
   @extend .button;
@@ -39,6 +39,7 @@
 }
 
 .primary-button {
+  text-transform: uppercase;
   padding: 20px 20px;
   font-size: 16px;
   line-height: 0px;

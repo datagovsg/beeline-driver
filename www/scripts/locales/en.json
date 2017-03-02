@@ -1,6 +1,7 @@
 {
   "WELCOME_TO_BEELINE_DRIVER":   "Welcome to Beeline Driver",
   "ENTER_YOUR_PHONE_NO":         "Enter Your Phone No.",
+  "HAVE_A_PIN":                  "I already have a PIN",
   "ENTER_VERIFICATION_CODE":     "Enter Verification Code",
   "PLEASE_ENTER_CODE_SENT_TO_PHONE": "Please enter the code sent to your phone ",
   "PHONE_NOT_REGISTERED":        "Sorry. Your phone no. is not in the Beeline system. Please tell your bus company.",

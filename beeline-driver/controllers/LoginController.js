@@ -64,6 +64,11 @@ export default[
       }
     }
 
+    $scope.goToSMS = function() {
+      if ($scope.data.phoneNo && VALID_PHONE_REGEX.test($scope.data.phoneNo))
+        $state.go("sms", {"phoneNo": $scope.data.phoneNo})
+    }
+
     $scope.$on('$ionicView.leave',() => {
       $scope.data.phoneNo = undefined;
       $scope.$apply();
