@@ -1,0 +1,21 @@
+<ion-view view-title="Cancelled Trip" hide-back-button="true">
+  <ion-content class="cancelled-trip" scroll=false>
+    <ion-item class="item item-wrap">
+      <div class="text-center">
+        <h4 class="text-center route-label">
+          {{job.routeDescription}}
+        </h4>
+        <h2>{{ 'ROUTE' | translate }} {{job.routeId}} {{ 'CANCELLED' | translate }}</h2>
+        <h3>{{job.date| date:'d-MM-y'}}</h3>
+        <i class="icon ion-alert-circled"></i>
+        <p class="padding">
+          {{ 'CANCELLED_MSG_1' | translate }}<br>
+          {{ 'CANCELLED_MSG_2' | translate }}<br>
+          {{ 'THANK_YOU' | translate }}!<br>
+          <br>
+        </p>
+        <div class="primary-button" ui-sref='app.route'>{{ 'OK_BUTTON' | translate }}</div>
+      </div>
+    </ion-item>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,56 @@
+{
+  "WELCOME_TO_BEELINE_DRIVER":   "Welcome to Beeline Driver",
+  "ENTER_YOUR_PHONE_NO":         "Enter Your Phone No.",
+  "HAVE_A_PIN":                  "I already have a PIN",
+  "ENTER_VERIFICATION_CODE":     "Enter Verification Code",
+  "PLEASE_ENTER_CODE_SENT_TO_PHONE": "Please enter the code sent to your phone ",
+  "PHONE_NOT_REGISTERED":        "Sorry. Your phone no. is not in the Beeline system. Please tell your bus company.",
+  "VERIFICATION_NOT_MATCH":      "Your verification does not match.",
+
+  "LANGUAGE_SETTINGS":           "English",
+  "ROUTE_TEMPLATE_TITLE":        "Enter Your Route ID",
+  "WELCOME":                     "Welcome",
+  "ROUTE_TEMPLATE_INPUT":        "Enter Your Route ID ( e.g. 1)",
+  "START_TRIP_BUTTON":           "Start Trip",
+  "INPUT_INVALID":               "Your input is invalid.",
+  "NO_ROUTE_ERROR":              "There is no such route.",
+  "NO_TRIP_ERROR":               "No such trip. Please check your route id.",
+  "GPS_BAD":                     "GPS OFF",
+  "GPS_GOOD":                    "GPS ON",
+  "PLEASE_ENTER_YOUR_ROUTE_ID":  "Please enter your Route ID",
+
+  "ROUTE":                       "Route",
+  "PICK_UP":                     "Pick Up",
+  "DROP_OFF":                    "Drop Off",
+  "STOP_TRIP_BUTTON":            "Stop Trip",
+  "EMERGENCY_BUTTON":            "Emergency",
+
+  "OK_BUTTON":                   "Ok",
+  "CANCEL_BUTTON":               "Cancel",
+  "CONFIRM_BUTTON":              "Confirm",
+  "NEXT_BUTTON":                 "Next",
+
+  "CANCELLED":                   "Cancelled",
+  "CANCELLED_MSG_1":             "Passengers have been notified.",
+  "CANCELLED_MSG_2":             "Service will resume tomorrow.",
+  "THANK_YOU":                   "Thank you",
+  "ERROR_CANCEL_TRIP":           "There was an error cancelling trip. Please try again.",
+
+  "UPDATE_VEHICLE":              "Update Vehicle",
+  "LOGOUT":                      "Log out",
+  "ARE_YOU_SURE_TO_LOG_OUT":     "Are you sure you want to log out?",
+  "YOUR_VEHICLE_NO":             "Your Vehicle No",
+  "VEHICLE_IS_UPDATED_TO":       "Vehicle is updated to ",
+
+  "ARE_YOU_SURE":                "Are you sure?",
+  "SLIDE_TO_CANCEL":             "Slide to cancel trip. This will notify the passsengers and ops.",
+
+  "STOP_PING":                   "Stop Trip",
+  "STOP_PING_MSG":               "Are you sure you want to stop this trip?",
+
+  "SLIDE_TO_CONFIRM":            "Slide to confirm",
+
+  "VERSION_OUT_OF_DATE":         "Your current app version is outdated. Please update your app.",
+
+  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver."
+}

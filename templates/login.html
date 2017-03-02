@@ -1,0 +1,36 @@
+<ion-view>
+  <ion-nav-title>
+    {{'WELCOME_TO_BEELINE_DRIVER' | translate}}
+  </ion-nav-title>
+  <ion-content class="login">
+    <div class="item">
+      <div class="text-center">
+        <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('en')">
+              ENGLISH
+            </a>
+        <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('zh')">
+              中文
+            </a>
+      </div>
+    </div>
+    <h4 class="text-center">{{'ENTER_YOUR_PHONE_NO' | translate}}</h4>
+    <form class="list list-inset" name='phoneForm'>
+      <label class="item item-input">
+        <i class="icon ion-ios-telephone placeholder-icon"></i>
+        <input type="tel" ng-model="data.phoneNo" placeholder="e.g. 91234567" ng-pattern='/^[8-9]{1}[0-9]{7}$/' ng-required='true'>
+      </label>
+    </form>
+    <div class="primary-button"
+         ng-click='login()'>
+      {{'NEXT_BUTTON' | translate}}
+    </div>
+    <div class="text-center">
+      <button class="button button-clear button-royal" class="text-center"
+           ng-click='goToSMS()' ng-disabled='phoneForm.$invalid'>
+        {{'HAVE_A_PIN' | translate}}
+      </button>
+    </div>
+
+
+  </ion-content>
+</ion-view>

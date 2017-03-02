@@ -1,0 +1,91 @@
+<ion-view>
+  <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}}</ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button">
+      {{ping.pingStatus}}
+      <img ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}" ng-src="{{ping.pingStatusSymbol}}">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="start" scroll=true>
+    <div class="list">
+      <div class="item item-divider">
+        <h3 class="text-center route-label">
+          {{data.routeDescription}}
+        </h3>
+        <h1 class="text-center">{{ tripCode }}</h1>
+      </div>
+      <div class="tabs-striped tabs-color-royal tabs-background-default">
+        <div class="tabs beeline-tabs">
+          <div class="tab-item" ng-click="data.currentList='board'" ng-class="{'active': data.currentList=='board'}">
+            {{ 'PICK_UP' | translate }}
+          </div>
+          <div class="tab-item" ng-click="data.currentList='alight'" ng-class="{'active': data.currentList=='alight'}">
+            {{ 'DROP_OFF' | translate }}
+          </div>
+        </div>
+      </div>
+      <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
+        <div class="item" ng-click="showBoardPassengerList = !showBoardPassengerList" ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
+          <div class="row">
+            <div class="col col-30">
+              <strong>{{boardStop.time | date:'h:mm a'}}</strong>
+            </div>
+            <div class="col col-60 item-text-wrap">
+              {{boardStop.stop.description}}
+            </div>
+            <div class="col col-10 col-top">
+              <i class="icon">
+                <span class="ion-android-person"></span> &nbsp;
+                {{ boardStop.passengerCount > 0 ?
+                   boardStop.passengerCount : 0 }} &nbsp;
+              </i>
+            </div>
+          </div>
+          <div class="col col-80 col-offset-10 passengerbox"
+                ng-show="showBoardPassengerList && boardStop.passengerCount > 0">
+            <ul>
+              <li ng-repeat="passenger in boardStop.passengerList">
+                {{passenger.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
+        <div class="item" ng-click="showAlightPassengerList = !showAlightPassengerList" ng-class="{'stop-no-passenger': !(alightStop.passengerCount >0 )}">
+          <div class="row">
+            <div class="col col-30">
+              <strong>{{alightStop.time | date:'h:mm a'}}</strong>
+            </div>
+            <div class="col col-60 item-text-wrap">
+              {{alightStop.stop.description}}
+            </div>
+            <div class="col col-10 col-top">
+              <i class="icon">
+                <span class="ion-android-person"></span> &nbsp;
+                {{ alightStop.passengerCount > 0 ?
+                   alightStop.passengerCount : 0 }} &nbsp;
+              </i>
+            </div>
+          </div>
+          <div class="col col-80 col-offset-10 passengerbox"
+                ng-show="showAlightPassengerList && alightStop.passengerCount > 0">
+            <ul>
+              <li ng-repeat="passenger in alightStop.passengerList">
+                {{passenger.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="primary-button" ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>
+    <br>
+    <div class="text-center">
+      <div class="button button-assertive cancel-button" ng-click="confirmCancelTrip()">
+        <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'EMERGENCY_BUTTON' | translate }}
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
