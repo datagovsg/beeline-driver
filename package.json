@@ -12,7 +12,8 @@
     "watch": "npm run start & npm run sass-watch & npm run webpack-watch",
     "prestart": "npm run build",
     "start": "http-server www/",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "gh-pages": "gh-pages -d www"
   },
   "dependencies": {
     "angular-simple-logger": "^0.1.7",
@@ -42,10 +43,14 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-geolocation",
     "cordova-plugin-insomnia",
-    "cordova-plugin-app-version"
+    "cordova-plugin-app-version",
+    "cordova-hot-code-push-plugin"
   ],
   "cordovaPlatforms": [
     "android",
     "ios"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
+  }
 }
