@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import loadingTemplate from "../templates/loading.html";
 //any length of non-negative number
-const VALID_INTEGER_REGEX = /^[0-9]*$/;
+const VALID_INTEGER_REGEX = /^[0-9]+$/;
 const VALID_CAR_PLATE_REGEX = /^[a-zA-Z0-9_]+$/;
 
 export default [
@@ -25,14 +25,14 @@ export default [
   ) {
 
     $scope.data = {
-      routeId: undefined,
-      tripId: undefined,
-      phoneNo: undefined,
-      vehicleNo: undefined
+      routeId: null,
+      tripId: null,
+      phoneNo: null,
+      vehicleNo: null
     };
 
-    $scope.$watch(() => DriverService.phoneNo, (no) => {
-      $scope.data.phoneNo = no ? no : null
+    $scope.$watch(() => DriverService.phoneNo, (telephone) => {
+      $scope.data.phoneNo = telephone || null
     });
 
     $scope.switchLanguage = function(key) {
@@ -123,7 +123,7 @@ export default [
           await VerifiedPromptService.alert({
             title: translation.INPUT_INVALID
           });
-          $scope.data.routeId = undefined;
+          $scope.data.routeId = null;
           $scope.$apply();
         }
       }
@@ -133,7 +133,7 @@ export default [
           VerifiedPromptService.alert({
             title: translation.NO_ROUTE_ERROR
           }).then(function(response){
-            $scope.data.routeId = undefined;
+            $scope.data.routeId = null;
           })
         }
         else if (error.message=="noTrip") {
@@ -141,7 +141,7 @@ export default [
           VerifiedPromptService.alert({
             title: translation.NO_TRIP_ERROR
           }).then(function(response){
-            $scope.data.routeId = undefined;
+            $scope.data.routeId = null;
           })
         }
         else if (error.message && error.message.includes("tripCancelled")) {
@@ -157,7 +157,7 @@ export default [
             title: "Error",
             subTitle: `${error.status} - ${error.message}`
           }).then(function(response){
-            $scope.data.routeId = undefined;
+            $scope.data.routeId = null;
           })
         }
       }
