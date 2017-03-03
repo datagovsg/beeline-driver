@@ -55,6 +55,7 @@ export default [
         }
         if (vehicle){
           $scope.data.vehicleNo = vehicle.vehicleNumber.toUpperCase();
+          $scope.$digest();
         }
       }
     });
