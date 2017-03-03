@@ -13,7 +13,9 @@
     "prestart": "npm run build",
     "start": "http-server www/",
     "heroku-postbuild": "npm run build",
-    "gh-pages": "gh-pages -d www"
+    "gh-pages": "gh-pages -d www",
+    "hcp": "cordova-hcp build",
+    "deploy": "npm run hcp & npm run gh-pages"
   },
   "dependencies": {
     "angular-simple-logger": "^0.1.7",
@@ -51,6 +53,7 @@
     "ios"
   ],
   "devDependencies": {
+    "cordova-hot-code-push-cli": "^1.1.1",
     "gh-pages": "^0.12.0"
   }
 }
