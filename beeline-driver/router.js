@@ -7,7 +7,7 @@ export default function ($stateProvider, $urlRouterProvider) {
     controller: "LoginController"
 
   })
-  .state("sms", {
+  .state("loginVerification", {
     url: "/login/:phoneNo",
     templateUrl: "templates/sms.html",
     controller: "SmsController"

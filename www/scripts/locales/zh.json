@@ -1,6 +1,7 @@
 {
   "WELCOME_TO_BEELINE_DRIVER":   "欢迎来到 Beeline Driver",
   "ENTER_YOUR_PHONE_NO":         "输入你的电话号码",
+  "HAVE_A_PIN":                  "已经有验证码",
   "ENTER_VERIFICATION_CODE":     "输入验证码",
   "PLEASE_ENTER_CODE_SENT_TO_PHONE": "请输入短信接收到的验证码",
   "PHONE_NOT_REGISTERED":        "对不起。 你的电话号码不在系统里。请告知你的公司。",

@@ -21,5 +21,6 @@ export default function() {
     this.token = null;
     window.localStorage.removeItem('sessionToken');
     window.localStorage.removeItem('vehicleId');
+    window.localStorage.removeItem('phoneNo');
   };
 }

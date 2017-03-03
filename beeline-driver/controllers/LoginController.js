@@ -40,7 +40,7 @@ export default[
           } finally {
             $ionicLoading.hide();
           }
-          $state.go("sms",{"phoneNo": $scope.data.phoneNo});
+          $state.go("loginVerification",{"phoneNo": $scope.data.phoneNo});
         }
         else {
           var translation = await $translate(['INPUT_INVALID']);
@@ -62,6 +62,11 @@ export default[
           $scope.$apply();
         }
       }
+    }
+
+    $scope.bypassSMS = function() {
+      if ($scope.data.phoneNo && VALID_PHONE_REGEX.test($scope.data.phoneNo))
+        $state.go("loginVerification", {"phoneNo": $scope.data.phoneNo})
     }
 
     $scope.$on('$ionicView.leave',() => {
