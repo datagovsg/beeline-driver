@@ -70,4 +70,8 @@
     </platform>
     <plugin name="cordova-plugin-insomnia" spec="~4.2.0" />
     <plugin name="cordova-plugin-app-version" spec="~0.1.8" />
+    <plugin name="cordova-hot-code-push-plugin" spec="~1.5.2" />
+    <chcp>
+      <config-file url="https://driver.beeline.sg/chcp.json"/>
+    </chcp>
 </widget>
