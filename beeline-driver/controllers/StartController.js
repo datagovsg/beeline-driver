@@ -1,34 +1,14 @@
 import _ from "lodash";
-import confirmPromptTemplate from "../templates/confirm-prompt.html";
+// import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 export default[
-  "$scope",
-  "$state",
-  "TripService",
-  "$ionicPopup",
-  "$timeout",
-  "$stateParams",
-  "PingService",
-  "$ionicLoading",
-  "$rootScope",
-  "VerifiedPromptService",
-  "$ionicHistory",
-  "$ionicPlatform",
-  "$translate",
+  "$scope","$state","TripService","$ionicPopup","$timeout","$stateParams",
+  "PingService","$ionicLoading","$rootScope","VerifiedPromptService",
+  "$ionicHistory","$ionicPlatform","$translate","$ionicScrollDelegate",
   function(
-    $scope,
-    $state,
-    TripService,
-    $ionicPopup,
-    $timeout,
-    $stateParams,
-    PingService,
-    $ionicLoading,
-    $rootScope,
-    VerifiedPromptService,
-    $ionicHistory,
-    $ionicPlatform,
-    $translate
+    $scope,$state,TripService,$ionicPopup,$timeout,$stateParams,
+    PingService,$ionicLoading,$rootScope,VerifiedPromptService,
+    $ionicHistory,$ionicPlatform,$translate,$ionicScrollDelegate
   ){
     $scope.data = {
       routeId: $stateParams.routeId || undefined,
@@ -123,6 +103,8 @@ export default[
       deregister = $ionicPlatform.registerBackButtonAction(
         onHardwareBackButton,101
       );
+      //without resize, 'stop trip' button not shown when viewing 'drop off' stops
+      $ionicScrollDelegate.resize();
     });
 
     //deregister the back button event handler
@@ -155,68 +137,68 @@ export default[
       }
     });
 
-    var confirmPrompt = async function(options) {
-      var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
-      var promptScope = $rootScope.$new(true);
-      promptScope.data = {
-        toggle: false
-      };
-      _.defaultsDeep(options,{
-        template: confirmPromptTemplate,
-        title: "",
-        subTitle: "",
-        scope: promptScope,
-        buttons: [
-          { text: translations.CANCEL_BUTTON},
-          {
-            text: translations.OK_BUTTON,
-            type: "button-royal",
-            onTap: function(e) {
-              if (promptScope.data.toggle){
-                return true;
-              }
-              e.preventDefault();
-            }
-          }
-        ]
-      });
-      return $ionicPopup.show(options);
-    }
+    // var confirmPrompt = async function(options) {
+    //   var translations = await $translate(['CANCEL_BUTTON', 'OK_BUTTON']);
+    //   var promptScope = $rootScope.$new(true);
+    //   promptScope.data = {
+    //     toggle: false
+    //   };
+    //   _.defaultsDeep(options,{
+    //     template: confirmPromptTemplate,
+    //     title: "",
+    //     subTitle: "",
+    //     scope: promptScope,
+    //     buttons: [
+    //       { text: translations.CANCEL_BUTTON},
+    //       {
+    //         text: translations.OK_BUTTON,
+    //         type: "button-royal",
+    //         onTap: function(e) {
+    //           if (promptScope.data.toggle){
+    //             return true;
+    //           }
+    //           e.preventDefault();
+    //         }
+    //       }
+    //     ]
+    //   });
+    //   return $ionicPopup.show(options);
+    // }
 
     // Prompt to avoid accidental trip ending
-    $scope.confirmCancelTrip = async function() {
-      try {
-
-        var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL', 'ERROR_CANCEL_TRIP']);
-        var promptResponse = await confirmPrompt({
-          title: translations.ARE_YOU_SURE,
-          subTitle: translations.SLIDE_TO_CANCEL
-        });
-
-        if (!promptResponse) return;
-        try {
-          $ionicLoading.show({template: loadingTemplate});
-          await TripService.cancelTrip($scope.data.tripId);
-        } catch (e) {
-          throw e;
-        } finally {
-          $ionicLoading.hide();
-        }
-        stopPingandInterval();
-        //cancel has no back view to start
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-        $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
-
-      }
-      catch(error){
-        VerifiedPromptService.alert({
-          title: translations.ERROR_CANCEL_TRIP,
-          subTitle: `${error.status} - ${error.message}`
-        });
-      }
-    };
+    // $scope.confirmCancelTrip = async function() {
+    //   try {
+    //
+    //     var translations = await $translate(['ARE_YOU_SURE', 'SLIDE_TO_CANCEL', 'ERROR_CANCEL_TRIP']);
+    //     var promptResponse = await confirmPrompt({
+    //       title: translations.ARE_YOU_SURE,
+    //       subTitle: translations.SLIDE_TO_CANCEL
+    //     });
+    //
+    //     if (!promptResponse) return;
+    //     try {
+    //       $ionicLoading.show({template: loadingTemplate});
+    //       await TripService.cancelTrip($scope.data.tripId);
+    //     } catch (e) {
+    //       throw e;
+    //     } finally {
+    //       $ionicLoading.hide();
+    //     }
+    //     stopPingandInterval();
+    //     //cancel has no back view to start
+    //     $ionicHistory.nextViewOptions({
+    //       disableBack: true
+    //     });
+    //     $state.go("cancel",{routeId: $scope.data.routeId, tripId: $scope.data.tripId});
+    //
+    //   }
+    //   catch(error){
+    //     VerifiedPromptService.alert({
+    //       title: translations.ERROR_CANCEL_TRIP,
+    //       subTitle: `${error.status} - ${error.message}`
+    //     });
+    //   }
+    // };
 
     $scope.stopPing = async function() {
       var translations = await $translate(['STOP_PING', 'STOP_PING_MSG','CANCEL_BUTTON','OK_BUTTON']);

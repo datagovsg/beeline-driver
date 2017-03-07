@@ -1,0 +1,32 @@
+
+  choose-route {
+    ion-content {
+      display: flex;
+      flex-flow: column;
+      .item {
+        flex: 0 0 auto;
+      }
+      .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-flow: column;
+          .list {
+            flex: 0 0 auto;
+
+          }
+          .footer {
+            bottom: 0px;
+            flex: 1 0 auto;
+            position: relative;
+
+            .update-vehicle {
+              bottom: 30px;
+              right: 0;
+              left: 0;
+              padding: 10px;
+              position: absolute;
+            }
+          }
+      }
+    }
+  }
