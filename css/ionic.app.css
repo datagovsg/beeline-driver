@@ -9939,26 +9939,27 @@ h3.route-label {
 .startRoute p {
   margin: 16px; }
 
-#choose-route {
-  height: 100%;
+#choose-route ion-content {
   display: flex;
   flex-flow: column; }
-  #choose-route .scroll {
+  #choose-route ion-content .item {
+    flex: 0 0 auto; }
+  #choose-route ion-content .content {
     flex: 1 1 auto;
     display: flex;
     flex-flow: column; }
-    #choose-route .scroll .content {
-      flex: 1 1 auto;
-      display: flex;
-      flex-flow: column; }
-      #choose-route .scroll .content .list {
-        flex: 1 1 auto;
-        position: relative; }
-        #choose-route .scroll .content .list .show-at-bottom {
-          bottom: 60px;
-          width: 90%;
-          margin: 0 2.5%;
-          position: absolute; }
+    #choose-route ion-content .content .list {
+      flex: 0 0 auto; }
+    #choose-route ion-content .content .footer {
+      bottom: 0px;
+      flex: 1 0 auto;
+      position: relative; }
+      #choose-route ion-content .content .footer .update-vehicle {
+        bottom: 30px;
+        right: 0;
+        left: 0;
+        padding: 10px;
+        position: absolute; }
 
 /* trip start page */
 .start .bottom-button {
