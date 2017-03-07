@@ -9939,15 +9939,26 @@ h3.route-label {
 .startRoute p {
   margin: 16px; }
 
-.scroll {
+#choose-route {
   height: 100%;
-  width: 100%;
-  position: relative; }
-  .scroll .show-at-bottom {
-    bottom: 30px;
-    width: 90%;
-    margin: 0 2.5%;
-    position: absolute; }
+  display: flex;
+  flex-flow: column; }
+  #choose-route .scroll {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column; }
+    #choose-route .scroll .content {
+      flex: 1 1 auto;
+      display: flex;
+      flex-flow: column; }
+      #choose-route .scroll .content .list {
+        flex: 1 1 auto;
+        position: relative; }
+        #choose-route .scroll .content .list .show-at-bottom {
+          bottom: 60px;
+          width: 90%;
+          margin: 0 2.5%;
+          position: absolute; }
 
 /* trip start page */
 .start .bottom-button {

@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "326225188e5fc06affad23809466225b"
+    "hash": "9cc8d6ed170595de4681ab669b9723bd"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -89,7 +89,7 @@
   },
   {
     "file": "index.html",
-    "hash": "0ff68693b1452440890480e615c65aec"
+    "hash": "c0cc73aa90b0ec4ecf629d44e095d83e"
   },
   {
     "file": "js/angular-simple-logger.js",
@@ -381,7 +381,7 @@
   },
   {
     "file": "templates/choose-route.html",
-    "hash": "932174ae8eca0bd0c92db8c63a6fb5f7"
+    "hash": "61c4882d9318fbd846366a0e69f5f415"
   },
   {
     "file": "templates/login.html",

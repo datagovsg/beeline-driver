@@ -1,5 +1,5 @@
-<ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
-  <ion-content overflow-scroll='false'>
+<ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true" id="choose-route">
+  <ion-content overflow-scroll="true">
 
     <div class="item">
       <div class="text-center">
@@ -13,7 +13,7 @@
       <br>
       <div><h2 class="text-center">{{ 'WELCOME' | translate }} {{data.phoneNo}}</h2></div>
     </div>
-    <div class="startRoute">
+    <div class="content">
       <p class="text-center">
         {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
       </p>
@@ -22,14 +22,16 @@
           <i class="icon ion-android-pin placeholder-icon"></i>
           <input type="tel" placeholder="{{ 'ROUTE_TEMPLATE_INPUT' | translate }}" ng-model="data.routeId">
         </label>
+        <div class="primary-button" ng-click='start()'>
+          {{ 'START_TRIP_BUTTON' | translate }}
+        </div>
+        <!-- move to the bottom of the page -->
+        <div class="item item-icon-left show-at-bottom" on-tap="updateVehicleNo()">
+          <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
+        </div>
       </div>
-      <div class="primary-button" ng-click='start()'>
-        {{ 'START_TRIP_BUTTON' | translate }}
-      </div>
+
     </div>
-    <!-- move to the bottom of the page -->
-    <div class="item item-icon-left show-at-bottom" on-tap="updateVehicleNo()">
-      <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
-    </div>
+
   </ion-content>
 </ion-view>
