@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "b992e80f1899c86a39fec4fc561cf7e9"
+    "hash": "326225188e5fc06affad23809466225b"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -89,7 +89,7 @@
   },
   {
     "file": "index.html",
-    "hash": "f67984600da92a460c53ebc789ed56d9"
+    "hash": "0ff68693b1452440890480e615c65aec"
   },
   {
     "file": "js/angular-simple-logger.js",
@@ -97,11 +97,11 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "03ae759279443cdb0eee23e63869fc50"
+    "hash": "63dea193f46683762615f4a496b49753"
   },
   {
     "file": "js/bundle.js.map",
-    "hash": "3d13c125455ee57b45c848da472cab30"
+    "hash": "df2b150cd8b41f1ada90296fd2f6e50a"
   },
   {
     "file": "js/ng-cordova.min.js",
@@ -373,7 +373,7 @@
   },
   {
     "file": "scripts/locales/zh.json",
-    "hash": "17f6b0327f9a19ef0db2ba7c9457f66a"
+    "hash": "8ad94591b1fa38fc8faa7ce8701c6478"
   },
   {
     "file": "templates/cancel.html",
@@ -381,11 +381,11 @@
   },
   {
     "file": "templates/choose-route.html",
-    "hash": "2d687492a3516f7f238de22a415c8eae"
+    "hash": "932174ae8eca0bd0c92db8c63a6fb5f7"
   },
   {
     "file": "templates/login.html",
-    "hash": "adcec018e93f79e94dbe5c41aa1399e4"
+    "hash": "4015a348255929ef152bfb984f82c122"
   },
   {
     "file": "templates/sidebar.html",
@@ -397,6 +397,6 @@
   },
   {
     "file": "templates/start.html",
-    "hash": "1de7eb535f4d1f39bc2cbcd6692dd7a4"
+    "hash": "fab08ad4ff9a9422d2ec3566adcc0a9f"
   }
 ]

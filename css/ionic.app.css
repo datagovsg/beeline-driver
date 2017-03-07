@@ -9950,7 +9950,7 @@ h3.route-label {
     position: absolute; }
 
 /* trip start page */
-.start .cancel-button {
+.start .bottom-button {
   margin-bottom: 60px; }
 
 .start .tabs.beeline-tabs {
