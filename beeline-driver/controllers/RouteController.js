@@ -98,7 +98,7 @@ export default [
     }
 
     $scope.$watch(() => DriverService.vehicle, (vehicle) => {
-      $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber : null;
+      $scope.data.vehicleNo = vehicle? vehicle.vehicleNumber.toUpperCase() : null;
     });
 
 
