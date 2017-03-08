@@ -1,5 +1,5 @@
 <ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true" id="choose-route">
-  <ion-content scroll="false">
+  <ion-content scroll="true" overflow-scroll="true">
     <div class="item">
       <div class="text-center">
         <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('en')">
@@ -25,15 +25,16 @@
           {{ 'START_TRIP_BUTTON' | translate }}
         </div>
       </div>
-      <div class="footer">
-        <!-- move to the bottom of the page -->
-        <div class="item item-icon-left update-vehicle text-center" on-tap="updateVehicleNo()">
-          <i class="icon ion-android-bus"></i>
-          {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> <b>{{data.vehicleNo}}</b></span>
-        </div>
-      </div>
     </div>
 
+    <div class="footer">
+      <!-- move to the bottom of the page -->
+      <div class="item item-icon-left" ng-click="updateVehicleNo()">
+        <i class="icon ion-android-bus"></i>
+        {{ 'UPDATE_VEHICLE' | translate }} {{data.vehicleNo}}
+        <span class="item-note">{{data.vehicleNo}}</span>
+      </div>
 
+    </div>
   </ion-content>
 </ion-view>
