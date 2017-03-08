@@ -97,7 +97,7 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "63dea193f46683762615f4a496b49753"
+    "hash": "60835616edb5de8e9c4db924840fbc1c"
   },
   {
     "file": "js/bundle.js.map",
@@ -369,7 +369,7 @@
   },
   {
     "file": "scripts/locales/en.json",
-    "hash": "a16b00a089cdd61d4cdb43d87f0580ed"
+    "hash": "5b0d0b1bc7a316c65a8c2463e582bcae"
   },
   {
     "file": "scripts/locales/zh.json",
