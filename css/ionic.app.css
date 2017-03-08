@@ -9960,6 +9960,8 @@ h3.route-label {
         left: 0;
         padding: 10px;
         position: absolute; }
+        #choose-route ion-content .content .footer .update-vehicle .item-note {
+          color: black; }
 
 /* trip start page */
 .start .bottom-button {

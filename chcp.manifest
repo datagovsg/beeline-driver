@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "3629b904b2bd1e023a03748017d08776"
+    "hash": "3b20abc13310011d7d0d8d857774e89d"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -89,7 +89,7 @@
   },
   {
     "file": "index.html",
-    "hash": "1688259e9d5a56d06119b92f22b1f752"
+    "hash": "f67984600da92a460c53ebc789ed56d9"
   },
   {
     "file": "js/angular-simple-logger.js",
@@ -101,7 +101,7 @@
   },
   {
     "file": "js/bundle.js.map",
-    "hash": "df2b150cd8b41f1ada90296fd2f6e50a"
+    "hash": "4248f1efa6fc1b8cd35f643eeb9879a4"
   },
   {
     "file": "js/ng-cordova.min.js",
@@ -381,7 +381,7 @@
   },
   {
     "file": "templates/choose-route.html",
-    "hash": "9623dae301178a61f370dbda6e952ce6"
+    "hash": "a30dcda3f3b6ff7df164d80167eaa776"
   },
   {
     "file": "templates/login.html",
@@ -397,6 +397,6 @@
   },
   {
     "file": "templates/start.html",
-    "hash": "fab08ad4ff9a9422d2ec3566adcc0a9f"
+    "hash": "123263b8a9cad5a3b7e47112672276fd"
   }
 ]

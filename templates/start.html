@@ -54,13 +54,13 @@
       <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
         <div class="item" ng-click="showAlightPassengerList = !showAlightPassengerList" ng-class="{'stop-no-passenger': !(alightStop.passengerCount >0 )}">
           <div class="row">
-            <div class="col col-30">
+            <div class="col col-20 item-text-wrap">
               <strong>{{alightStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
               {{alightStop.stop.description}}
             </div>
-            <div class="col col-10 col-top">
+            <div class="col col-20 col-top">
               <i class="icon">
                 <span class="ion-android-person"></span> &nbsp;
                 {{ alightStop.passengerCount > 0 ?
