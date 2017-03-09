@@ -97,11 +97,11 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "9469c3b4a266a5294921991c7f0f519f"
+    "hash": "2e3bd6c00261a48b479b5e00d38369a8"
   },
   {
     "file": "js/bundle.js.map",
-    "hash": "ba94f3e27f5e262372d04c1732041eed"
+    "hash": "bb912318fe7297b7b68568ec7e6999ec"
   },
   {
     "file": "js/ng-cordova.min.js",
