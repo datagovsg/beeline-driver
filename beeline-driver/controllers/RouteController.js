@@ -31,10 +31,6 @@ export default [
       vehicleNo: null
     };
 
-    $scope.$watch(() => DriverService.phoneNo, (telephone) => {
-      $scope.data.phoneNo = telephone || null
-    });
-
     $scope.switchLanguage = function(key) {
       $translate.use(key);
     };
@@ -55,8 +51,9 @@ export default [
         }
         if (vehicle){
           $scope.data.vehicleNo = vehicle.vehicleNumber.toUpperCase();
-          $scope.$digest();
         }
+        $scope.data.phoneNo = window.localStorage["phoneNo"] || null;
+        $scope.$digest();
       }
     });
 

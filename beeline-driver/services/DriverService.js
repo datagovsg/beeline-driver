@@ -33,6 +33,7 @@ export default function($http, BeelineService, TokenService){
       TokenService.token = response.data.sessionToken;
       //to store phone no and show it in 'welcome..'
       self.phoneNo = number;
+      window.localStorage["phoneNo"] = number;
       var driver = response.data.driver;
       return driver;
     })
