@@ -155,6 +155,8 @@
 	    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 	      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 	      cordova.plugins.Keyboard.disableScroll(true);
+	      //keyboard shrinkView
+	      cordova.plugins.Keyboard.shrinkView(true);
 	    }
 	    if (window.StatusBar) {
 	      // org.apache.cordova.statusbar required
@@ -9199,12 +9201,6 @@
 	    vehicleNo: null
 	  };
 	
-	  $scope.$watch(function () {
-	    return DriverService.phoneNo;
-	  }, function (telephone) {
-	    $scope.data.phoneNo = telephone || null;
-	  });
-	
 	  $scope.switchLanguage = function (key) {
 	    $translate.use(key);
 	  };
@@ -9229,7 +9225,7 @@
 	              disableBack: true
 	            });
 	            $state.go("login");
-	            _context.next = 17;
+	            _context.next = 19;
 	            break;
 	
 	          case 7:
@@ -9256,10 +9252,11 @@
 	          case 16:
 	            if (vehicle) {
 	              $scope.data.vehicleNo = vehicle.vehicleNumber.toUpperCase();
-	              $scope.$digest();
 	            }
+	            $scope.data.phoneNo = window.localStorage["phoneNo"] || null;
+	            $scope.$digest();
 	
-	          case 17:
+	          case 19:
 	          case "end":
 	            return _context.stop();
 	        }
@@ -36152,6 +36149,7 @@
 	      TokenService.token = response.data.sessionToken;
 	      //to store phone no and show it in 'welcome..'
 	      self.phoneNo = number;
+	      window.localStorage["phoneNo"] = number;
 	      var driver = response.data.driver;
 	      return driver;
 	    }).catch(function (error) {
