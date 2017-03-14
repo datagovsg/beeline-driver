@@ -1,6 +1,5 @@
-<ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true">
-  <ion-content>
-
+<ion-view view-title="{{ 'ROUTE_TEMPLATE_TITLE' | translate }}" hide-back-button="true" id="choose-route">
+  <ion-content scroll="true" overflow-scroll="true">
     <div class="item">
       <div class="text-center">
         <a class="button button-outline button-royal lang-button" ng-click="switchLanguage('en')">
@@ -13,23 +12,29 @@
       <br>
       <div><h2 class="text-center">{{ 'WELCOME' | translate }} {{data.phoneNo}}</h2></div>
     </div>
-    <div class="startRoute">
-      <p class="text-center">
-        {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
-      </p>
+    <div class="content">
       <div class="list list-inset">
+        <p class="text-center">
+          {{ 'PLEASE_ENTER_YOUR_ROUTE_ID' | translate}}
+        </p>
         <label class="item item-input">
           <i class="icon ion-android-pin placeholder-icon"></i>
           <input type="tel" placeholder="{{ 'ROUTE_TEMPLATE_INPUT' | translate }}" ng-model="data.routeId">
         </label>
-      </div>
-      <div class="primary-button" ng-click='start()'>
-        {{ 'START_TRIP_BUTTON' | translate }}
+        <div class="primary-button" ng-click='start()'>
+          {{ 'START_TRIP_BUTTON' | translate }}
+        </div>
       </div>
     </div>
-    <!-- move to the bottom of the page -->
-    <div class="item item-icon-left show-at-bottom" on-tap="updateVehicleNo()">
-      <i class="icon ion-android-bus"></i> {{'UPDATE_VEHICLE' | translate }} <span class="item-note"> {{data.vehicleNo}}</span>
+
+    <div class="footer">
+      <!-- move to the bottom of the page -->
+      <div class="item item-icon-left" ng-click="updateVehicleNo()">
+        <i class="icon ion-android-bus"></i>
+        {{ 'UPDATE_VEHICLE' | translate }}
+        <span class="item-note">{{data.vehicleNo}}</span>
+      </div>
+
     </div>
   </ion-content>
 </ion-view>

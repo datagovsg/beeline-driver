@@ -46,11 +46,11 @@
     "cordova-plugin-geolocation",
     "cordova-plugin-insomnia",
     "cordova-plugin-app-version",
-    "cordova-hot-code-push-plugin"
+    "cordova-hot-code-push-plugin",
+    "cordova-plugin-network-information"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "android"
   ],
   "devDependencies": {
     "cordova-hot-code-push-cli": "^1.1.1",

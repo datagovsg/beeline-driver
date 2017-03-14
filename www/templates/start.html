@@ -27,13 +27,13 @@
       <div ng-repeat="boardStop in boardStops" ng-show="data.currentList=='board'">
         <div class="item" ng-click="showBoardPassengerList = !showBoardPassengerList" ng-class="{'stop-no-passenger': !(boardStop.passengerCount >0 ) }">
           <div class="row">
-            <div class="col col-30">
+            <div class="col col-20 item-text-wrap">
               <strong>{{boardStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
               {{boardStop.stop.description}}
             </div>
-            <div class="col col-10 col-top">
+            <div class="col col-20 col-top">
               <i class="icon">
                 <span class="ion-android-person"></span> &nbsp;
                 {{ boardStop.passengerCount > 0 ?
@@ -54,13 +54,13 @@
       <div ng-repeat="alightStop in alightStops" ng-show="data.currentList=='alight'">
         <div class="item" ng-click="showAlightPassengerList = !showAlightPassengerList" ng-class="{'stop-no-passenger': !(alightStop.passengerCount >0 )}">
           <div class="row">
-            <div class="col col-30">
+            <div class="col col-20 item-text-wrap">
               <strong>{{alightStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
               {{alightStop.stop.description}}
             </div>
-            <div class="col col-10 col-top">
+            <div class="col col-20 col-top">
               <i class="icon">
                 <span class="ion-android-person"></span> &nbsp;
                 {{ alightStop.passengerCount > 0 ?
@@ -80,12 +80,12 @@
 
       </div>
     </div>
-    <div class="primary-button" ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>
+    <div class="primary-button bottom-button" ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>
     <br>
-    <div class="text-center">
-      <div class="button button-assertive cancel-button" ng-click="confirmCancelTrip()">
+    <!-- <div class="text-center">
+      <div class="button button-assertive bottom-button" ng-click="confirmCancelTrip()">
         <i class="icon ion-android-warning">&nbsp;&nbsp;</i>{{ 'EMERGENCY_BUTTON' | translate }}
       </div>
-    </div>
+    </div> -->
   </ion-content>
 </ion-view>
