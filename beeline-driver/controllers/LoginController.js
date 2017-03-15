@@ -1,7 +1,7 @@
 "use strict";
 import loadingTemplate from "../templates/loading.html";
 
-const VALID_PHONE_REGEX = /^[8-9]{1}[0-9]{7}$/;
+const VALID_PHONE_REGEX = /^([8-9]{1}[0-9]{7}|[#]{8})$/;
 
 export default[
   "$scope",
@@ -31,7 +31,7 @@ export default[
 
     $scope.login = async function(){
       try {
-        if($scope.data.phoneNo === '########' || VALID_PHONE_REGEX.test($scope.data.phoneNo)){
+        if(VALID_PHONE_REGEX.test($scope.data.phoneNo)){
           try {
             $ionicLoading.show({template: loadingTemplate});
             await DriverService.sendTelephoneVerificationCode($scope.data.phoneNo);
