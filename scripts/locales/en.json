@@ -52,5 +52,7 @@
 
   "VERSION_OUT_OF_DATE":         "Your current app version is outdated. Please update your app.",
 
-  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver."
+  "ANOTHER_DRIVER_TOOK_JOB":     "This trip has been taken over by another driver.",
+
+  "CURRENT_VERSION":             "Current Version"
 }

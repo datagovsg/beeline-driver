@@ -134,7 +134,9 @@
 
 
 	// Configuration Imports
-	angular.module("beeline-driver", ["ionic", "ngCordova", "pascalprecht.translate"]).controller("CancelController", _CancelController2.default).controller("LoginController", _LoginController2.default).controller("SmsController", _SmsController2.default).controller("RouteController", _RouteController2.default).controller("SidebarController", _SidebarController2.default).controller("StartController", _StartController2.default).service("BeelineService", _BeelineService2.default).service("TokenService", _TokenService2.default).service("DriverService", _DriverService2.default).service("TripService", _TripService2.default).service("PingService", _PingService2.default).service("VerifiedPromptService", _VerifiedPromptService2.default).config(_router2.default).config(function ($translateProvider) {
+	var app = angular.module('beeline-driver', ["ionic", "ngCordova", "pascalprecht.translate"]);
+
+	app.controller("CancelController", _CancelController2.default).controller("LoginController", _LoginController2.default).controller("SmsController", _SmsController2.default).controller("RouteController", _RouteController2.default).controller("SidebarController", _SidebarController2.default).controller("StartController", _StartController2.default).service("BeelineService", _BeelineService2.default).service("TokenService", _TokenService2.default).service("DriverService", _DriverService2.default).service("TripService", _TripService2.default).service("PingService", _PingService2.default).service("VerifiedPromptService", _VerifiedPromptService2.default).config(_router2.default).config(function ($translateProvider) {
 	  $translateProvider.useStaticFilesLoader({
 	    prefix: './scripts/locales/',
 	    suffix: '.json'
@@ -183,6 +185,18 @@
 	      console.error(error.stack);
 	    });
 	  });
+	});
+
+	var devicePromise = new Promise(function (resolve, reject) {
+	  if (window.cordova) {
+	    document.addEventListener('deviceready', resolve, false);
+	  } else {
+	    console.log('No cordova detected');
+	    resolve();
+	  }
+	});
+	app.service('DevicePromise', function () {
+	  return devicePromise;
 	});
 
 /***/ },
@@ -8736,15 +8750,26 @@
 	var VALID_INTEGER_REGEX = /^[0-9]+$/;
 	var VALID_CAR_PLATE_REGEX = /^[a-zA-Z0-9_]+$/;
 
-	exports.default = ["$scope", "TripService", "$state", "$ionicLoading", "VerifiedPromptService", "$ionicHistory", "$translate", 'DriverService', function ($scope, TripService, $state, $ionicLoading, VerifiedPromptService, $ionicHistory, $translate, DriverService) {
+	exports.default = ["$scope", "TripService", "$state", "$ionicLoading", "VerifiedPromptService", "$ionicHistory", "$translate", 'DriverService', 'DevicePromise', function ($scope, TripService, $state, $ionicLoading, VerifiedPromptService, $ionicHistory, $translate, DriverService, DevicePromise) {
 	  var _this = this;
 
 	  $scope.data = {
 	    routeId: null,
 	    tripId: null,
 	    phoneNo: null,
-	    vehicleNo: null
+	    vehicleNo: null,
+	    currentVersion: null
 	  };
+
+	  $scope.hasCordova = !!window.cordova || false;
+
+	  DevicePromise.then(function () {
+	    if ($scope.hasCordova) {
+	      chcp.getVersionInfo(function (error, data) {
+	        $scope.data.currentVersion = data.currentWebVersion || null;
+	      });
+	    }
+	  });
 
 	  $scope.switchLanguage = function (key) {
 	    $translate.use(key);

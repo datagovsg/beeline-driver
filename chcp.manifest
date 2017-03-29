@@ -97,11 +97,11 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "9e3c6e80d868dd7553464a2132847976"
+    "hash": "fd43a0385032abca380fc9a95f75faba"
   },
   {
     "file": "js/bundle.js.map",
-    "hash": "e0a6e40729f102130b25e07b2108bd83"
+    "hash": "bc3f2815e13e4334bb1005442568de45"
   },
   {
     "file": "js/ng-cordova.min.js",
@@ -361,11 +361,11 @@
   },
   {
     "file": "scripts/locales/en.json",
-    "hash": "a16b00a089cdd61d4cdb43d87f0580ed"
+    "hash": "a47d5ed2e63d69150c245b3fd7b11c7f"
   },
   {
     "file": "scripts/locales/zh.json",
-    "hash": "8ad94591b1fa38fc8faa7ce8701c6478"
+    "hash": "b9c233d61039a724a41913a545d7fd7f"
   },
   {
     "file": "templates/cancel.html",
@@ -373,7 +373,7 @@
   },
   {
     "file": "templates/choose-route.html",
-    "hash": "548d8de976cbce85f583edae855a90ed"
+    "hash": "c606811d3c670fa80109972870af4b35"
   },
   {
     "file": "templates/login.html",
