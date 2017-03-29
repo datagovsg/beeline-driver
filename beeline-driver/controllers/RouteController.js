@@ -5,31 +5,30 @@ const VALID_INTEGER_REGEX = /^[0-9]+$/;
 const VALID_CAR_PLATE_REGEX = /^[a-zA-Z0-9_]+$/;
 
 export default [
-  "$scope",
-  "TripService",
-  "$state",
-  "$ionicLoading",
-  "VerifiedPromptService",
-  "$ionicHistory",
-  "$translate",
-  'DriverService',
+  "$scope","TripService","$state","$ionicLoading","VerifiedPromptService",
+  "$ionicHistory","$translate",'DriverService','DevicePromise',
   function(
-    $scope,
-    TripService,
-    $state,
-    $ionicLoading,
-    VerifiedPromptService,
-    $ionicHistory,
-    $translate,
-    DriverService
+    $scope,TripService,$state,$ionicLoading,VerifiedPromptService,
+    $ionicHistory,$translate,DriverService,DevicePromise
   ) {
 
     $scope.data = {
       routeId: null,
       tripId: null,
       phoneNo: null,
-      vehicleNo: null
+      vehicleNo: null,
+      currentVersion: null
     };
+
+    $scope.hasCordova = !!window.cordova || false
+
+    DevicePromise.then(()=>{
+      if ($scope.hasCordova) {
+        chcp.getVersionInfo((error, data)=>{
+          $scope.data.currentVersion = data.currentWebVersion || null;
+        })
+      }
+    })
 
     $scope.switchLanguage = function(key) {
       $translate.use(key);

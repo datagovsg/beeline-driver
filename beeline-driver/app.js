@@ -29,12 +29,13 @@ var appVersion = "1.0.0";
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module("beeline-driver", [
+var app = angular.module('beeline-driver', [
   "ionic",
   "ngCordova",
   "pascalprecht.translate"
 ])
-.controller("CancelController", CancelController)
+
+app.controller("CancelController", CancelController)
 .controller("LoginController", LoginController)
 .controller("SmsController", SmsController)
 .controller("RouteController", RouteController)
@@ -108,3 +109,14 @@ angular.module("beeline-driver", [
 
   });
 });
+
+var devicePromise = new Promise((resolve, reject) => {
+  if (window.cordova) {
+    document.addEventListener('deviceready', resolve, false);
+  }
+  else {
+    console.log('No cordova detected')
+    resolve();
+  }
+})
+app.service('DevicePromise', () => devicePromise);
