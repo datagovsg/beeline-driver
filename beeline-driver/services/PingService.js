@@ -49,17 +49,19 @@ export default[
     var locationWatch;
 
     this.start = function(tripId) {
-      var location, locationError;
+      var location, locationError, lastLocationTime = 0;
 
       //to make location service is continues
       locationWatch = navigator.geolocation.watchPosition(
         (position) => {
           location = position;
           locationError = null;
+          lastLocationTime = Date.now();
         },
         (err) => {
           location = null;
           locationError = err;
+          lastLocationTime = 0;
         },
         gpsOptions
       );
@@ -70,9 +72,8 @@ export default[
 
       async function tryPing() {
         try {
-          let currentlocation = await getLocation();
-          if (currentlocation) {
-            await sendPing(tripId, currentlocation);
+          if (Date.now() - lastLocationTime < 10 * 60000) {
+            await sendPing(tripId, location);
             self.gpsError = false;
             self.lastPingTime = Date.now();
           }
