@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "cf1fa336152eca32b183f06d48856766"
+    "hash": "c22613572d1f528a2d222c6dd6dc148a"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -373,7 +373,7 @@
   },
   {
     "file": "templates/choose-route.html",
-    "hash": "c606811d3c670fa80109972870af4b35"
+    "hash": "12394fd97ecf1eaeb375e65eb8561308"
   },
   {
     "file": "templates/login.html",
