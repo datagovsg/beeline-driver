@@ -34,9 +34,8 @@
         {{ 'UPDATE_VEHICLE' | translate }}
         <span class="item-note">{{data.vehicleNo}}</span>
       </div>
-      <div class="item" ng-show="hasCordova && data.currentVersion">
-        {{ 'CURRENT_VERSION' | translate }}
-        <span class="item-note">{{data.currentVersion}}</span>
+      <div class="text-center version-number" ng-show="hasCordova && data.currentVersion">
+        {{data.currentVersion}}
       </div>
     </div>
   </ion-content>
