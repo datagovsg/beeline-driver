@@ -77,8 +77,11 @@ export default function($http, BeelineService, TokenService){
         }).reverse();
 
       if (self.vehicles.length > 0) {
-        self.vehicle = self.vehicles[0];
-        window.localStorage["vehicleId"] = self.vehicle.id;
+        const matchingVehicle = window.localStorage.vehicleId
+          ? self.vehicles.find(v => v.id.toString() === window.localStorage.vehicleId)
+          : null;
+
+        self.vehicle = matchingVehicle || self.vehicles[0];
       }
       else {
         self.vehicle = null;
