@@ -1,9 +1,5 @@
 [
   {
-    "file": "CNAME",
-    "hash": "34751f11a356374c6de4dc8d5ab7e93c"
-  },
-  {
     "file": "css/fonts/Lato-Bold.woff",
     "hash": "d878b6c29b10beca227e9eef4246111b"
   },
@@ -97,11 +93,7 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "fd43a0385032abca380fc9a95f75faba"
-  },
-  {
-    "file": "js/bundle.js.map",
-    "hash": "bc3f2815e13e4334bb1005442568de45"
+    "hash": "a5dfbdea1d5f6b6138c8736fbb9ef276"
   },
   {
     "file": "js/ng-cordova.min.js",
