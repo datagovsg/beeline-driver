@@ -27,9 +27,9 @@ export default [
         method: "GET",
         url: '/routes/'+routeId+'?' + qs.stringify({
           //midnight to midnight
-          start_date: this.today,
-          end_date: this.today + 24*60*60*1000,
-          include_trips: true
+          startDate: this.today,
+          endDate: this.today + 24*60*60*1000,
+          includeTrips: true
         }),
       });
       if (route.data.trips.length == 0){
