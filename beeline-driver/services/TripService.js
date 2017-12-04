@@ -107,7 +107,7 @@ export default [
     this.getPassengers = function(id){
       return BeelineService.request({
         method: "GET",
-        url: "/trips/"+id+"/get_passengers"
+        url: "/trips/"+id+"/passengers"
       })
       .then(function(response){
         self.passengerData = response.data;
