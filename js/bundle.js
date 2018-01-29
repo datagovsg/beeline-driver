@@ -27291,18 +27291,16 @@
 	});
 
 	exports.default = function ($http, TokenService) {
-	  var sendRequestTo = function sendRequestTo(urlRoot) {
-	    return function (options) {
-	      options.url = urlRoot + options.url;
-	      if (TokenService.token) {
-	        options.headers = options.headers || {};
-	        options.headers.Authorization = "Bearer " + TokenService.token;
-	      }
-	      return $http(options);
-	    };
+	  this.request = function (options) {
+	    // options.url = "https://api.beeline.sg" + options.url;
+	    options.url = env.BACKEND_URL + options.url;
+	    // options.url="https://beeline-server-dev.herokuapp.com"+options.url;
+	    if (TokenService.token) {
+	      options.headers = options.headers || {};
+	      options.headers.Authorization = "Bearer " + TokenService.token;
+	    }
+	    return $http(options);
 	  };
-	  this.request = sendRequestTo(env.BACKEND_URL);
-	  this.tracking = sendRequestTo(env.TRACKING_URL);
 	};
 
 	var env = __webpack_require__(338);
@@ -27313,7 +27311,7 @@
 /* 338 */
 /***/ (function(module, exports) {
 
-	module.exports = {"BACKEND_URL":"http://api.beeline.sg","TRACKING_URL":"http://tracking.beeline.sg"}
+	module.exports = {"BACKEND_URL":"http://api.beeline.sg"}
 
 /***/ }),
 /* 339 */
@@ -37648,9 +37646,9 @@
 	              }
 
 	              _context.next = 15;
-	              return BeelineService.tracking({
+	              return BeelineService.request({
 	                method: "PUT",
-	                url: '/trips/' + self.trip.id + '/roster',
+	                url: '/trips/' + self.trip.id + '/setDriver',
 	                data: optionalData
 	              });
 
