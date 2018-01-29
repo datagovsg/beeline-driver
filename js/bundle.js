@@ -27311,7 +27311,7 @@
 /* 338 */
 /***/ (function(module, exports) {
 
-	module.exports = {"BACKEND_URL":"http://api.beeline.sg"}
+	module.exports = {"BACKEND_URL":"https://api.beeline.sg"}
 
 /***/ }),
 /* 339 */
