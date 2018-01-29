@@ -48,9 +48,9 @@ export default [
           _.merge(optionalData,{vehicleId: DriverService.getVehicleId()})
       }
 
-      var response = await BeelineService.request({
+      var response = await BeelineService.tracking({
         method: "PUT",
-        url: '/trips/'+self.trip.id+'/setDriver',
+        url: '/trips/'+self.trip.id+'/roster',
         data: optionalData
       });
 
