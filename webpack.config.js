@@ -9,11 +9,24 @@ $ export BACKEND_URL=<something>
 
 <something> is one of:
 1. https://api.beeline.sg (LIVE)
-2. https://beeline-server-dev.herokuapp.com (STAGING)
+2. https://api-staging.beeline.sg (STAGING)
+`)
+}
+
+if (!process.env.TRACKING_URL) {
+  throw new Error(`
+Please run the following before running webpack:
+
+$ export TRACKING_URL=<something>
+
+<something> is one of:
+1. https://tracking.beeline.sg (LIVE)
+2. https://tracking-staging.beeline.sg (STAGING)
 `)
 }
 var env = {
-    BACKEND_URL: process.env.BACKEND_URL || 'https://beeline-server-dev.herokuapp.com'
+  BACKEND_URL: process.env.BACKEND_URL || 'https://api-staging.beeline.sg',
+  TRACKING_URL: process.env.TRACKING_URL || 'https://tracking-staging.beeline.sg'
 }
 
 fs.writeFileSync(`${__dirname}/beeline-driver/env.json`, JSON.stringify(env))
