@@ -38502,9 +38502,9 @@
 	  };
 
 	  var sendPing = function sendPing(tripId, loc) {
-	    return BeelineService.request({
+	    return BeelineService.tracking({
 	      method: "POST",
-	      url: "/trips/" + tripId + "/pings",
+	      url: "/trips/" + tripId + "/pings/latest",
 	      data: {
 	        vehicleId: DriverService.getVehicleId(),
 	        latitude: loc.coords.latitude,
