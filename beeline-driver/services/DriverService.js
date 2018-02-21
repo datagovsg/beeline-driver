@@ -125,7 +125,7 @@ export default function($http, BeelineService, TokenService){
   this.getVehicleId = function(){
     var vehicleId = window.localStorage["vehicleId"]!==undefined ?
       window.localStorage["vehicleId"] : 0;
-    return vehicleId;
+    return Number(vehicleId);
   }
 
   this.verifySession = function () {
