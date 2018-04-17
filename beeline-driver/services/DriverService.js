@@ -82,6 +82,9 @@ export default function($http, BeelineService, TokenService){
           : null;
 
         self.vehicle = matchingVehicle || self.vehicles[0];
+        if (!window.localStorage.vehicleId) {
+          window.localStorage.vehicleId = self.vehicle.id;
+        }
       }
       else {
         self.vehicle = null;
