@@ -15,8 +15,8 @@
   "INPUT_INVALID":               "输入不正确.",
   "NO_ROUTE_ERROR":              "没有这个路线号码.",
   "NO_TRIP_ERROR":               "没有这个服务. 请再查看你的路线号码.",
-  "GPS_BAD":                     "GPS不正常",
-  "GPS_GOOD":                    "GPS正常",
+  "GPS_BAD":                     "不正常",
+  "GPS_GOOD":                    "正常",
   "PLEASE_ENTER_YOUR_ROUTE_ID":  "请输入路线号码",
 
   "ROUTE":                       "路线号码",
