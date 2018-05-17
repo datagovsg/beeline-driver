@@ -20,6 +20,11 @@ export default [
       currentVersion: null
     };
 
+    // Used for displaying info
+    $scope.disp = {
+      routeId: null, // for troubleshooting message
+    }
+
     $scope.hasCordova = !!window.cordova || false
 
     DevicePromise.then(()=>{
@@ -101,9 +106,11 @@ export default [
     $scope.start = async function() {
       try {
         if(VALID_INTEGER_REGEX.test($scope.data.routeId)) {
+          $scope.disp.routeId = $scope.data.routeId
           try {
             $ionicLoading.show({template: loadingTemplate});
             $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
+            $scope.disp.tripId = $scope.data.tripId
           } catch (e) {
             throw e;
           } finally {
@@ -148,6 +155,14 @@ export default [
             disableBack: true
           });
           $state.go("cancel",{routeId:$scope.data.routeId, tripId: $scope.data.tripId});
+        }
+        else if (error.data.message && error.data.message.includes("Driver is disallowed from driving trip")) {
+          VerifiedPromptService.alert({
+            title: "Error",
+            subTitle: `You are not allowed to drive this route`
+          }).then(function(response){
+            $scope.data.routeId = null;
+          })
         }
         else {
           VerifiedPromptService.alert({
