@@ -34,10 +34,12 @@
         {{ 'UPDATE_VEHICLE' | translate }}
         <span class="item-note">{{data.vehicleNo}}</span>
       </div>
-    </br>
-    <div class="text-center version-number" ng-show="hasCordova && data.currentVersion">
-      Current Version: {{data.currentVersion}}
-    </div>
+      <div class="text-center footer-info" ng-show="hasCordova && data.currentVersion">
+        Current Version: {{data.currentVersion}}
+      </div>
+      <div class="text-center footer-info" ng-if="disp.routeId">
+        Route ID error: {{disp.routeId}}
+      </div>
     </div>
   </ion-content>
 </ion-view>
