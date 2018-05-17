@@ -9955,7 +9955,7 @@ h3.route-label {
     #choose-route ion-content > .scroll .footer .item-note {
       color: black;
       font-weight: bold; }
-    #choose-route ion-content > .scroll .footer .version-number {
+    #choose-route ion-content > .scroll .footer .footer-info {
       padding-top: 5px;
       color: #CCC; }
 
