@@ -1,0 +1,394 @@
+[
+  {
+    "file": "CNAME",
+    "hash": "34751f11a356374c6de4dc8d5ab7e93c"
+  },
+  {
+    "file": "css/fonts/Lato-Bold.woff",
+    "hash": "d878b6c29b10beca227e9eef4246111b"
+  },
+  {
+    "file": "css/fonts/Lato-Regular.woff",
+    "hash": "27bd77b9162d388cb8d4c4217c7c5e2a"
+  },
+  {
+    "file": "css/ionic.app.css",
+    "hash": "7e8c1d0f48436d0ff58b288401f05e70"
+  },
+  {
+    "file": "css/ionic.app.min.css",
+    "hash": "af484ecf648d03dbd74507c67e30a9dd"
+  },
+  {
+    "file": "image/alert-circled.png",
+    "hash": "a70b294e3ed1c6839d2d86b04a9a7498"
+  },
+  {
+    "file": "image/android-close.png",
+    "hash": "3cd806be827f99671584bd9cff3b123e"
+  },
+  {
+    "file": "image/android-close0.png",
+    "hash": "3cd806be827f99671584bd9cff3b123e"
+  },
+  {
+    "file": "image/arrow-back.png",
+    "hash": "04a07558b041498e2ecf7e0ebf6c76cc"
+  },
+  {
+    "file": "image/banner_logo.png",
+    "hash": "dcaa42401badd0e0b6614d6c46b5feb5"
+  },
+  {
+    "file": "image/board.png",
+    "hash": "c1f60900bebff94a214692343de0ea17"
+  },
+  {
+    "file": "image/car-image.png",
+    "hash": "8c5a0011b71506d27aec721ce717408c"
+  },
+  {
+    "file": "image/dash.png",
+    "hash": "101f8ab7c29ac7e5ff8208998c4cccc9"
+  },
+  {
+    "file": "image/GPSoff.svg",
+    "hash": "c033e1fc170339c59f40e698efffcc91"
+  },
+  {
+    "file": "image/GPSon.svg",
+    "hash": "a6f2ac13399f1a326a5b09757a8ada95"
+  },
+  {
+    "file": "image/icon-stop.png",
+    "hash": "d2fd07ba33ee966de60b7772f2493f17"
+  },
+  {
+    "file": "image/IconBookingPassenger.png",
+    "hash": "e75c49b5121b607ed2d0888689827548"
+  },
+  {
+    "file": "image/IconLoginPhone.png",
+    "hash": "e58a70921d95d95082a67eee9aee7a70"
+  },
+  {
+    "file": "image/ionic.png",
+    "hash": "251ebf03b1c7889cf36cbcbcce8f689e"
+  },
+  {
+    "file": "image/ios7-clock.png",
+    "hash": "47cc19d666e09b31a9dbd8c92d49ef4d"
+  },
+  {
+    "file": "image/loader120.gif",
+    "hash": "29ff918c3261a94a05962f4433306ba7"
+  },
+  {
+    "file": "image/loader60.gif",
+    "hash": "58d4b1a486977747f7d40edc98b0b33c"
+  },
+  {
+    "file": "index.html",
+    "hash": "f67984600da92a460c53ebc789ed56d9"
+  },
+  {
+    "file": "js/angular-simple-logger.js",
+    "hash": "e73a726caa05c767d6c0ac66bb3386f0"
+  },
+  {
+    "file": "js/bundle.js",
+    "hash": "179f2d3881ec9575a2c5a57c0ea0ad89"
+  },
+  {
+    "file": "js/bundle.js.map",
+    "hash": "6717990c821c1756854af2d6717a41ba"
+  },
+  {
+    "file": "js/ng-cordova.min.js",
+    "hash": "f8990514da9399da893b60f6dbd570c9"
+  },
+  {
+    "file": "lib/ionic/css/ionic.css",
+    "hash": "6cdadf6ed39d5a14994dfd22aab35e44"
+  },
+  {
+    "file": "lib/ionic/css/ionic.min.css",
+    "hash": "69b6aba4f6d47c03b5be1fbd5aed153b"
+  },
+  {
+    "file": "lib/ionic/fonts/ionicons.eot",
+    "hash": "2c2ae068be3b089e0a5b59abb1831550"
+  },
+  {
+    "file": "lib/ionic/fonts/ionicons.svg",
+    "hash": "621bd386841f74e0053cb8e67f8a0604"
+  },
+  {
+    "file": "lib/ionic/fonts/ionicons.ttf",
+    "hash": "24712f6c47821394fba7942fbb52c3b2"
+  },
+  {
+    "file": "lib/ionic/fonts/ionicons.woff",
+    "hash": "05acfdb568b3df49ad31355b19495d4a"
+  },
+  {
+    "file": "lib/ionic/js/angular-ui/angular-ui-router.js",
+    "hash": "1f7fe3573d463743394e98d8b00eb228"
+  },
+  {
+    "file": "lib/ionic/js/angular-ui/angular-ui-router.min.js",
+    "hash": "83f32131b638a8686a43510fbd645b1b"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-animate.js",
+    "hash": "11974f7151cb3bc9c5d4820756c60d18"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-animate.min.js",
+    "hash": "abf4748a7ef6bb5b610ecb5ab749afae"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-resource.js",
+    "hash": "f9e3e662c0698e830be89599d7620e0f"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-resource.min.js",
+    "hash": "97796a250538882e4d26ddf37e05f208"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-sanitize.js",
+    "hash": "3327cce34c3af9a2088cbc8fa9d62c84"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular-sanitize.min.js",
+    "hash": "bacfe60d661bf26faa119cebc50c6518"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular.js",
+    "hash": "7ee4960c3fdfa8a88b3b540e19fcf7ff"
+  },
+  {
+    "file": "lib/ionic/js/angular/angular.min.js",
+    "hash": "d2342622316f832ef1333c74e41354ca"
+  },
+  {
+    "file": "lib/ionic/js/ionic-angular.js",
+    "hash": "0323097db585d40eab7a71d414d8d9c0"
+  },
+  {
+    "file": "lib/ionic/js/ionic-angular.min.js",
+    "hash": "c81f119bbecf436bfaa17c28ff3ef095"
+  },
+  {
+    "file": "lib/ionic/js/ionic.bundle.js",
+    "hash": "0ff2d86a483237d943b5d5f12d7790ac"
+  },
+  {
+    "file": "lib/ionic/js/ionic.bundle.min.js",
+    "hash": "e0cc14dc4c94a45d368932afd38c0614"
+  },
+  {
+    "file": "lib/ionic/js/ionic.js",
+    "hash": "e5455b6c32f086d880d60203df0d9d84"
+  },
+  {
+    "file": "lib/ionic/js/ionic.min.js",
+    "hash": "bbf477571ff58642f262d70a93694f6d"
+  },
+  {
+    "file": "lib/ionic/scss/_action-sheet.scss",
+    "hash": "d0c6449f31db02323aa6e7f56ef55e67"
+  },
+  {
+    "file": "lib/ionic/scss/_animations.scss",
+    "hash": "5596f74cb1ee03f9faf453ad4ee11807"
+  },
+  {
+    "file": "lib/ionic/scss/_backdrop.scss",
+    "hash": "7ff048e091b39f6615db62ee136ef040"
+  },
+  {
+    "file": "lib/ionic/scss/_badge.scss",
+    "hash": "c7b1b0e3049754fc22b45730e6c560fa"
+  },
+  {
+    "file": "lib/ionic/scss/_bar.scss",
+    "hash": "aac5621aef2e18ec8b1357dbab753000"
+  },
+  {
+    "file": "lib/ionic/scss/_button-bar.scss",
+    "hash": "797376c7cc46dbec7589be9ecacd6689"
+  },
+  {
+    "file": "lib/ionic/scss/_button.scss",
+    "hash": "78ec8db7cd9d771f011dcff61e8f81fd"
+  },
+  {
+    "file": "lib/ionic/scss/_checkbox.scss",
+    "hash": "89a0987dd24210f16863d7ba2c7312bd"
+  },
+  {
+    "file": "lib/ionic/scss/_form.scss",
+    "hash": "169f7a6e449aa9e1bed20a1f30887c97"
+  },
+  {
+    "file": "lib/ionic/scss/_grid.scss",
+    "hash": "9a87c565e397bb73b7f467726a63e01c"
+  },
+  {
+    "file": "lib/ionic/scss/_items.scss",
+    "hash": "e4c46d2f4ba12769d254cc066cd27989"
+  },
+  {
+    "file": "lib/ionic/scss/_list.scss",
+    "hash": "0ab8daf57764aac25bf68aa0b0e6c776"
+  },
+  {
+    "file": "lib/ionic/scss/_loading.scss",
+    "hash": "9f23e266d43a432bbf07a8677d1d1592"
+  },
+  {
+    "file": "lib/ionic/scss/_menu.scss",
+    "hash": "c12d33c8bea78495b2571665e35cb192"
+  },
+  {
+    "file": "lib/ionic/scss/_mixins.scss",
+    "hash": "2f2cd7b2b96f1af3142c30138b2f2b0c"
+  },
+  {
+    "file": "lib/ionic/scss/_modal.scss",
+    "hash": "38e8624ef28a495e7a01341915516bd1"
+  },
+  {
+    "file": "lib/ionic/scss/_platform.scss",
+    "hash": "db73214ac171e89a966c24d5320fe096"
+  },
+  {
+    "file": "lib/ionic/scss/_popover.scss",
+    "hash": "924a0474d4e58b3280e7d1ebf1938a55"
+  },
+  {
+    "file": "lib/ionic/scss/_popup.scss",
+    "hash": "988126e645408f1e5a270934520c20ac"
+  },
+  {
+    "file": "lib/ionic/scss/_progress.scss",
+    "hash": "19a19537d8e9483db7bde8a7febd43f6"
+  },
+  {
+    "file": "lib/ionic/scss/_radio.scss",
+    "hash": "9e5544332590f92c25ea065140610b03"
+  },
+  {
+    "file": "lib/ionic/scss/_range.scss",
+    "hash": "ae2eb0fc86bdcef56346885dcb76370f"
+  },
+  {
+    "file": "lib/ionic/scss/_refresher.scss",
+    "hash": "23c7b98a85caf376b414f4ed5a713831"
+  },
+  {
+    "file": "lib/ionic/scss/_reset.scss",
+    "hash": "319f0fb2d58da7fc89222752c5e527a4"
+  },
+  {
+    "file": "lib/ionic/scss/_scaffolding.scss",
+    "hash": "9bb74fc2540444de042fd9949101762f"
+  },
+  {
+    "file": "lib/ionic/scss/_select.scss",
+    "hash": "7b40e394e01f33ebc89fcfc89f826410"
+  },
+  {
+    "file": "lib/ionic/scss/_slide-box.scss",
+    "hash": "ae10f39144dc0f6b5b24fb6e811e992a"
+  },
+  {
+    "file": "lib/ionic/scss/_slides.scss",
+    "hash": "504700ae567875f003c7fd1571a482e1"
+  },
+  {
+    "file": "lib/ionic/scss/_spinner.scss",
+    "hash": "472ae7eb35a68c22078b1d56b10f35be"
+  },
+  {
+    "file": "lib/ionic/scss/_tabs.scss",
+    "hash": "5d92af59a2653b035857d6a77e606520"
+  },
+  {
+    "file": "lib/ionic/scss/_toggle.scss",
+    "hash": "09146009f139820a34375ec3dc70c5a0"
+  },
+  {
+    "file": "lib/ionic/scss/_transitions.scss",
+    "hash": "c060678db2049bbca8833bf769d65dd1"
+  },
+  {
+    "file": "lib/ionic/scss/_type.scss",
+    "hash": "db602af625137bdc4d95b262d77a15c1"
+  },
+  {
+    "file": "lib/ionic/scss/_util.scss",
+    "hash": "c7af3ffdcc728e1c6f44061ed6120c15"
+  },
+  {
+    "file": "lib/ionic/scss/_variables.scss",
+    "hash": "92a9250ee7fe39133f561297266b180e"
+  },
+  {
+    "file": "lib/ionic/scss/ionic.scss",
+    "hash": "a102a720475b3304d099fc3c94e7f619"
+  },
+  {
+    "file": "lib/ionic/scss/ionicons/_ionicons-font.scss",
+    "hash": "9a1734051fa60f52fdbdd74001b0f0e0"
+  },
+  {
+    "file": "lib/ionic/scss/ionicons/_ionicons-icons.scss",
+    "hash": "fcdab55027fe7da71f277ee58fad686a"
+  },
+  {
+    "file": "lib/ionic/scss/ionicons/_ionicons-variables.scss",
+    "hash": "0af49648c5756e4a96eb1eb70f016ee3"
+  },
+  {
+    "file": "lib/ionic/scss/ionicons/ionicons.scss",
+    "hash": "37204d759a9eb7bfc074034fd1bf95fb"
+  },
+  {
+    "file": "lib/ionic/version.json",
+    "hash": "2230fb053b68d338caf012e86feff1f5"
+  },
+  {
+    "file": "scripts/locales/en.json",
+    "hash": "fbfac3baa13ab2ead35982691653cedd"
+  },
+  {
+    "file": "scripts/locales/zh.json",
+    "hash": "072006df1101e0b402d477189fa0564d"
+  },
+  {
+    "file": "templates/cancel.html",
+    "hash": "ec10865e12ba1fdbe98c89e88fe945d9"
+  },
+  {
+    "file": "templates/choose-route.html",
+    "hash": "ac23fbfecb104dfed5702e1073396958"
+  },
+  {
+    "file": "templates/login.html",
+    "hash": "97d78a125f9837b7f46bd7b6b84922f6"
+  },
+  {
+    "file": "templates/sidebar.html",
+    "hash": "d1e679dd30d5c708498a2afae10d3830"
+  },
+  {
+    "file": "templates/sms.html",
+    "hash": "b1a9164e3c7d65f1070860155fcaa98f"
+  },
+  {
+    "file": "templates/start.html",
+    "hash": "a1dfa06ca38b1f7fe38040082a5a5630"
+  }
+]
