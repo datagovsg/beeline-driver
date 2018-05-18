@@ -106,12 +106,12 @@ export default [
     $scope.start = async function() {
       try {
         if(VALID_INTEGER_REGEX.test($scope.data.routeId)) {
-          $scope.disp.routeId = $scope.data.routeId
+          $scope.disp.routeId = null
           try {
             $ionicLoading.show({template: loadingTemplate});
             $scope.data.tripId = await TripService.assignTrip($scope.data.routeId);
-            $scope.disp.tripId = $scope.data.tripId
           } catch (e) {
+            $scope.disp.routeId = $scope.data.routeId
             throw e;
           } finally {
             $ionicLoading.hide();
