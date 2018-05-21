@@ -9609,7 +9609,7 @@
 	              break;
 	            }
 
-	            $scope.disp.routeId = $scope.data.routeId;
+	            $scope.disp.routeId = null;
 	            _context3.prev = 3;
 
 	            $ionicLoading.show({ template: _loading2.default });
@@ -9618,14 +9618,14 @@
 
 	          case 7:
 	            $scope.data.tripId = _context3.sent;
-
-	            $scope.disp.tripId = $scope.data.tripId;
 	            _context3.next = 14;
 	            break;
 
-	          case 11:
-	            _context3.prev = 11;
+	          case 10:
+	            _context3.prev = 10;
 	            _context3.t0 = _context3["catch"](3);
+
+	            $scope.disp.routeId = $scope.data.routeId;
 	            throw _context3.t0;
 
 	          case 14:
@@ -9734,7 +9734,7 @@
 	            return _context3.stop();
 	        }
 	      }
-	    }, _callee3, this, [[0, 30], [3, 11, 14, 17]]);
+	    }, _callee3, this, [[0, 30], [3, 10, 14, 17]]);
 	  }));
 	}];
 
