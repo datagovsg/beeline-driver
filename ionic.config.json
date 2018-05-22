@@ -1,8 +1,12 @@
 {
   "name": "beeline-driver",
   "app_id": "",
+  "type": "ionic1",
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"
-  ]
+  ],
+  "integrations": {
+    "cordova": {}
+  }
 }
