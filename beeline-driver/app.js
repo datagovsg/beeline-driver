@@ -71,12 +71,6 @@ app.controller("CancelController", CancelController)
       cordova.plugins.Keyboard.disableScroll(false);
     }
 
-
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleLightContent();
-    }
-
     //stop screen sleep
     if (window.plugins && window.plugins.insomnia){
       window.plugins.insomnia.keepAwake();
