@@ -129,7 +129,7 @@ export default [
     this.cancelTrip = function(tripId){
       return BeelineService.request({
         method: "POST",
-        url: "/trips/"+tripId+"/statuses?messagePassengers=true",
+        url: "/trips/"+tripId+"/messages?messagePassengers=true",
         data: {
           status: "cancelled"
         }
