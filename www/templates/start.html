@@ -14,9 +14,9 @@
         </h3>
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
-      <div class="item item-divider">
-        <a href="{{googleMapsNavigationUrl}}" ng-if="googleMapsNavigationUrl">
-          <img src="image/google-maps.png" style="width: auto; height: 2em" />
+      <div class="item item-divider text-center">
+        <a href="#" ng-if="googleMapsNavigationUrl" ng-click="openExternalUrl($event, googleMapsNavigationUrl)">
+          <img src="image/google-maps.png" style="width: auto; height: 3em" />
         </a>
       </div>
       <div class="tabs-striped tabs-color-royal tabs-background-default">

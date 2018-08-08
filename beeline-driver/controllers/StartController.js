@@ -244,6 +244,11 @@ export default[
       $state.go("app.route");
     };
 
+    $scope.openExternalUrl = function ($event, url) {
+      $event.preventDefault()
+      window.open(url, '_system')
+    }
+
     //when leave this view, stop the ping service and remove timeouts
     var stopPingandInterval = function (){
       $timeout.cancel(GPSOffTimeout);
