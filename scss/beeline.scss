@@ -90,13 +90,13 @@ span {
   background-color: $energized;
 }
 
-img.image-pulse {
+img.image-pulse-on {
   transform: scale(1.0, 1.0);
   transition: 0.2s linear all;
   vertical-align: middle;
 }
 
-img:not(.image-pulse){
+img.image-pulse:not(.image-pulse-on){
   transform: scale(0, 0);
   transition: 1.3s ease all;
   vertical-align: middle;
