@@ -14,6 +14,11 @@
         </h3>
         <h1 class="text-center">{{ tripCode }}</h1>
       </div>
+      <div class="item item-divider">
+        <a href="{{googleMapsNavigationUrl}}" ng-if="googleMapsNavigationUrl">
+          <img src="image/google-maps.png" style="width: auto; height: 2em" />
+        </a>
+      </div>
       <div class="tabs-striped tabs-color-royal tabs-background-default">
         <div class="tabs beeline-tabs">
           <div class="tab-item" ng-click="data.currentList='board'" ng-class="{'active': data.currentList=='board'}">

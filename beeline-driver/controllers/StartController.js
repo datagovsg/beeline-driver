@@ -1,6 +1,8 @@
 import _ from "lodash";
 // import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
+import querystring from 'querystring'
+
 export default[
   "$scope","$state","TripService","$ionicPopup","$timeout","$stateParams",
   "PingService","$ionicLoading","$rootScope","VerifiedPromptService",
@@ -15,6 +17,7 @@ export default[
       tripId: $stateParams.tripId || undefined,
       currentList: 'board',
     }
+    $scope.googleMapsNavigationUrl = null
 
     var reloadPassengerTimeout;
     var classToggleTimeout;
@@ -49,6 +52,26 @@ export default[
       $scope.alightStops = _.sortBy($scope.alightStops, function(item){
         return item.time;
       });
+
+      computeNavigationUrls()
+    }
+
+    function computeNavigationUrls () {
+      const stopsOfRelevance = _.sortBy(
+        _.filter($scope.trip.tripStops, tripStop => tripStop.passengerCount),
+        i => i.time
+      )
+
+      const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
+
+      $scope.googleMapsNavigationUrl = `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+        // Don't show origin -- start with the user's current location
+        destination: latLngOfStop(stopsOfRelevance[stopsOfRelevance.length - 1]),
+        waypoints: stopsOfRelevance.slice(0, stopsOfRelevance.length - 1)
+          .map(latLngOfStop)
+          .join('|'),
+        travelmode: 'driving',
+      })
     }
 
     //reload passenger list with ignoreCache=true to update
