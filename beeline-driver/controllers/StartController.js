@@ -57,21 +57,29 @@ export default[
     }
 
     function computeNavigationUrls () {
-      const stopsOfRelevance = _.sortBy(
-        _.filter($scope.trip.tripStops, tripStop => tripStop.passengerCount),
-        i => i.time
-      )
+      const bookingCutoff = new Date(_.minBy($scope.trip.tripStops, 'time').time).getTime() +
+        _.get($scope.trip, 'bookingInfo.windowSize', 0) // windowSize is a negative number
 
-      const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
+      if (Date.now() < bookingCutoff) {
+        // not ready yet...
+        $scope.googleMapsNavigationUrl = false
+      } else {
+        const stopsOfRelevance = _.sortBy(
+          _.filter($scope.trip.tripStops, tripStop => tripStop.passengerCount),
+          i => i.time
+        )
 
-      $scope.googleMapsNavigationUrl = `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
-        // Don't show origin -- start with the user's current location
-        destination: latLngOfStop(stopsOfRelevance[stopsOfRelevance.length - 1]),
-        waypoints: stopsOfRelevance.slice(0, stopsOfRelevance.length - 1)
-          .map(latLngOfStop)
-          .join('|'),
-        travelmode: 'driving',
-      })
+        const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
+
+        $scope.googleMapsNavigationUrl = `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+          // Don't show origin -- start with the user's current location
+          destination: latLngOfStop(stopsOfRelevance[stopsOfRelevance.length - 1]),
+          waypoints: stopsOfRelevance.slice(0, stopsOfRelevance.length - 1)
+            .map(latLngOfStop)
+            .join('|'),
+          travelmode: 'driving',
+        })
+      }
     }
 
     //reload passenger list with ignoreCache=true to update
