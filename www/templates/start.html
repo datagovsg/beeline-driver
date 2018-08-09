@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-nav-buttons side="left">
+  <ion-nav-buttons side="primary">
     <span ng-if="googleMapsNavigationUrl === false" class="button booking-not-closed">
       <img src="image/google-maps.png" style="width: auto; height: 3em" />
     </span>
@@ -9,7 +9,7 @@
     </a>
   </ion-nav-buttons>
   <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}}</ion-nav-title>
-  <ion-nav-buttons side="right">
+  <ion-nav-buttons side="secondary">
     <button class="button">
       {{ping.pingStatus}}
       <img ng-class="{'image-pulse': true, 'image-pulse-on': ping.isAnimated || ping.isRedON}" ng-src="{{ping.pingStatusSymbol}}">
