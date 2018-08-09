@@ -9810,15 +9810,23 @@ span {
 .highlight {
   background-color: #ffe76e; }
 
-img.image-pulse {
+img.image-pulse-on {
   transform: scale(1, 1);
   transition: 0.2s linear all;
   vertical-align: middle; }
 
-img:not(.image-pulse) {
+img.image-pulse:not(.image-pulse-on) {
   transform: scale(0, 0);
   transition: 1.3s ease all;
   vertical-align: middle; }
+
+/*
+For the google-maps button. Because it only routes to
+stops with pickup/dropoff activity, we want to disable
+it until the booking window has been closed.
+ */
+.booking-not-closed img {
+  filter: saturate(0%) contrast(50%) brightness(70%); }
 
 .stop-no-passenger {
   background-color: #EEE;

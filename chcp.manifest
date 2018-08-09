@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "7e8c1d0f48436d0ff58b288401f05e70"
+    "hash": "f40c500bceda4e12f27d2c5b8f682a66"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -50,6 +50,10 @@
   {
     "file": "image/dash.png",
     "hash": "101f8ab7c29ac7e5ff8208998c4cccc9"
+  },
+  {
+    "file": "image/google-maps.png",
+    "hash": "0ef4294debf8778a5ea52aeb764567c3"
   },
   {
     "file": "image/GPSoff.svg",
@@ -89,7 +93,7 @@
   },
   {
     "file": "index.html",
-    "hash": "f67984600da92a460c53ebc789ed56d9"
+    "hash": "5127256de0866025485787abd3a9f090"
   },
   {
     "file": "js/angular-simple-logger.js",
@@ -97,11 +101,11 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "d2fc1fa343a73fd30396a1e0452a3f01"
+    "hash": "90236a2178f07a9c8b1247d4ff48175e"
   },
   {
     "file": "js/bundle.js.map",
-    "hash": "6717990c821c1756854af2d6717a41ba"
+    "hash": "995cf3d97bf22b06c8f7580fd05ca807"
   },
   {
     "file": "js/ng-cordova.min.js",
@@ -389,6 +393,6 @@
   },
   {
     "file": "templates/start.html",
-    "hash": "a1dfa06ca38b1f7fe38040082a5a5630"
+    "hash": "5915b4c08a89820dc01f13d22e1ca213"
   }
 ]
