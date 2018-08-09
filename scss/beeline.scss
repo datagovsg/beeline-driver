@@ -109,7 +109,7 @@ it until the booking window has been closed.
  */
 .booking-not-closed {
   img {
-    filter: saturate(20%) contrast(50%) brightness(70%);
+    filter: saturate(0%) contrast(50%) brightness(70%);
   }
 }
 
