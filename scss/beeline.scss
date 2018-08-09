@@ -108,7 +108,9 @@ stops with pickup/dropoff activity, we want to disable
 it until the booking window has been closed.
  */
 .booking-not-closed {
-  filter: saturate(20%),
+  img {
+    filter: saturate(20%) contrast(50%) brightness(70%);
+  }
 }
 
 .stop-no-passenger {
