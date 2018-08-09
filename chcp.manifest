@@ -101,7 +101,7 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "90236a2178f07a9c8b1247d4ff48175e"
+    "hash": "0d54c847185ad765cf666de9ed08ed98"
   },
   {
     "file": "js/bundle.js.map",
@@ -393,6 +393,6 @@
   },
   {
     "file": "templates/start.html",
-    "hash": "5915b4c08a89820dc01f13d22e1ca213"
+    "hash": "886c5f5f2242f369777dbbfab86dfbc0"
   }
 ]
