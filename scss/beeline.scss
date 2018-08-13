@@ -102,15 +102,10 @@ img.image-pulse:not(.image-pulse-on){
   vertical-align: middle;
 }
 
-/*
-For the google-maps button. Because it only routes to
-stops with pickup/dropoff activity, we want to disable
-it until the booking window has been closed.
- */
-.booking-not-closed {
-  img {
-    filter: saturate(0%) contrast(50%) brightness(70%);
-  }
+img.maps-icon {
+  width: auto;
+  height: 1.5em;
+  vertical-align: middle;
 }
 
 .stop-no-passenger {
