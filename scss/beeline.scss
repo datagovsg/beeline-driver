@@ -111,6 +111,10 @@ img.maps-icon {
 .stop-no-passenger {
   background-color: $item-bg-greyed;
   color: $item-text-greyed;
+
+  img.maps-icon {
+    filter: saturate(0%);
+  }
 }
 
 // Font-size overrides
