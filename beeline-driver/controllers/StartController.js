@@ -2,6 +2,7 @@ import _ from "lodash";
 // import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
 import querystring from 'querystring'
+import polyline from '@mapbox/polyline'
 
 export default[
   "$scope","$state","TripService","$ionicPopup","$timeout","$stateParams",
@@ -56,30 +57,45 @@ export default[
       computeNavigationUrls()
     }
 
-    function computeNavigationUrls () {
-      const bookingCutoff = new Date(_.minBy($scope.trip.tripStops, 'time').time).getTime() +
-        _.get($scope.trip, 'bookingInfo.windowSize', 0) // windowSize is a negative number
+    async function computeNavigationUrls () {
+      const tripStops = _.sortBy($scope.trip.tripStops, 'time')
+      const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
+      const route = await TripService.getRoute($scope.data.routeId)
+      const path = route && polyline.decode(route.path).map(([a, b]) => [b, a])
 
-      if (Date.now() < bookingCutoff) {
-        // not ready yet...
-        $scope.googleMapsNavigationUrl = false
-      } else {
-        const stopsOfRelevance = _.sortBy(
-          _.filter($scope.trip.tripStops, tripStop => tripStop.passengerCount),
-          i => i.time
-        )
-
-        const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
-
-        $scope.googleMapsNavigationUrl = `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
-          // Don't show origin -- start with the user's current location
-          destination: latLngOfStop(stopsOfRelevance[stopsOfRelevance.length - 1]),
-          waypoints: stopsOfRelevance.slice(0, stopsOfRelevance.length - 1)
-            .map(latLngOfStop)
-            .join('|'),
+      function simpleNavigationURL(tripStop) {
+        return `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+          destination: latLngOfStop(tripStop),
           travelmode: 'driving',
         })
       }
+
+      function waypointedNavigationURL(tripStop, prevTripStop) {
+        const prevTripStopIndex = path.indexOf(_.minBy(path, a => latLngDistance(a, prevTripStop.stop.coordinates.coordinates)))
+        const tripStopIndex = path.indexOf(_.minBy(path, a => latLngDistance(a, tripStop.stop.coordinates.coordinates)))
+
+        const waypointCoords = (prevTripStopIndex <= tripStopIndex)
+          ? path[tripStopIndex - 1]
+          : path[tripStopIndex + 1]
+
+        if (!waypointCoords || prevTripStopIndex === -1 || tripStopIndex === -1) {
+          return simpleNavigationURL(tripStop)
+        }
+
+        return `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+          destination: latLngOfStop(tripStop),
+          waypoints: `${waypointCoords[1]},${waypointCoords[0]}`,
+          travelmode: 'driving',
+        })
+      }
+
+      tripStops.forEach((tripStop, index) => {
+        if (index === 0 || !path) {
+          tripStop.googleMapsNavigationUrl = simpleNavigationURL(tripStop)
+        } else {
+          tripStop.googleMapsNavigationUrl = waypointedNavigationURL(tripStop, tripStops[index - 1])
+        }
+      })
     }
 
     //reload passenger list with ignoreCache=true to update
@@ -265,6 +281,18 @@ export default[
       PingService.stop();
     }
 
+    function latLngDistance(a, b) {
+      const latDiffRadians = (b[1] - a[1]) / 180 * Math.PI
+      const lngDiffRadians = (b[0] - a[0]) / 180 * Math.PI
+
+      const avgLatRadians = 0.5 * (a[1] + b[1]) / 180 * Math.PI
+
+      const diffEW = lngDiffRadians * 6371e3 * Math.cos(avgLatRadians)
+      const diffNS = latDiffRadians * 6371e3
+
+      return Math.sqrt(diffEW * diffEW + diffNS * diffNS)
+    }
+
     // Triggered when devices with a hardware back button (Android) is clicked by the user
     // This is a Cordova/Phonegap platform specifc method
     function onHardwareBackButton(e) {
@@ -272,5 +300,4 @@ export default[
       $scope.stopPing();
       return false;
     };
-
   }];
