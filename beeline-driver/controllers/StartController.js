@@ -57,12 +57,22 @@ export default[
       computeNavigationUrls()
     }
 
+    /**
+     * Augments each item in the `tripStops` property with a `googleMapsNavigationURL` property.
+     *
+     * The navigation URL will add a waypoint to ensure the correct direction of approach, provided
+     * such information can be derived from the `path` property.
+     */
     async function computeNavigationUrls () {
       const tripStops = _.sortBy($scope.trip.tripStops, 'time')
       const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
       const route = await TripService.getRoute($scope.data.routeId)
       const path = route && polyline.decode(route.path).map(([a, b]) => [b, a])
 
+      /**
+       * Navigation from driver's current location to stop
+       * @param {TripStop} tripStop
+       */
       function simpleNavigationURL(tripStop) {
         return `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
           destination: latLngOfStop(tripStop),
@@ -70,15 +80,40 @@ export default[
         })
       }
 
+      /**
+       * Navigation from driver's current location, to the point in the path just before the trip stop,
+       * then onward to the trip stop.
+       *
+       * This relies on route.path being accurate.
+       *
+       * @param {TripStop} tripStop
+       * @param {TripStop} prevTripStop
+       */
       function waypointedNavigationURL(tripStop, prevTripStop) {
-        const prevTripStopIndex = path.indexOf(_.minBy(path, a => latLngDistance(a, prevTripStop.stop.coordinates.coordinates)))
-        const tripStopIndex = path.indexOf(_.minBy(path, a => latLngDistance(a, tripStop.stop.coordinates.coordinates)))
+        const nearestPathPointToPrev = _(path)
+          .map((value, index) => // [latlng], index, distance
+            [value, index, roughLngLatDistance(value, prevTripStop.stop.coordinates.coordinates)])
+          .filter(v => v[2] < 400)
+          .minBy(v => v[2])
 
-        const waypointCoords = (prevTripStopIndex <= tripStopIndex)
-          ? path[tripStopIndex - 1]
-          : path[tripStopIndex + 1]
+        const nearestPathPointToCurrent = _(path)
+          .map((value, index) => // [latlng], index, distance
+            [value, index, roughLngLatDistance(value, tripStop.stop.coordinates.coordinates)])
+          .filter(v => v[2] < 400)
+          .minBy(v => v[2])
 
-        if (!waypointCoords || prevTripStopIndex === -1 || tripStopIndex === -1) {
+        // This condition will be true, e.g. if the path does not correspond to the actual trip stops
+        // in the list
+        if (!nearestPathPointToPrev || !nearestPathPointToCurrent || (prevTripStopIndex > tripStopIndex)) {
+          return simpleNavigationURL(tripStop)
+        }
+
+        const prevTripStopIndex = nearestPathPointToPrev[1]
+        const tripStopIndex = nearestPathPointToCurrent[1]
+
+        const waypointCoords = path[tripStopIndex - 1]
+
+        if (!waypointCoords) {
           return simpleNavigationURL(tripStop)
         }
 
@@ -281,7 +316,7 @@ export default[
       PingService.stop();
     }
 
-    function latLngDistance(a, b) {
+    function roughLngLatDistance(a, b) {
       const latDiffRadians = (b[1] - a[1]) / 180 * Math.PI
       const lngDiffRadians = (b[0] - a[0]) / 180 * Math.PI
 
