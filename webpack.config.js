@@ -1,33 +1,29 @@
 var path = require('path');
 var fs = require('fs');
 
-if (!process.env.BACKEND_URL) {
-  throw new Error(`
-Please run the following before running webpack:
+const production = process.env.NODE_ENV === 'production'
 
-$ export BACKEND_URL=<something>
+let env
 
-<something> is one of:
-1. https://api.beeline.sg (LIVE)
-2. https://api-staging.beeline.sg (STAGING)
+if (production) {
+  env = {
+    BACKEND_URL: 'https://api.beeline.sg',
+    TRACKING_URL: 'https://tracking.beeline.sg',
+  }
+} else {
+  env = {
+    BACKEND_URL: process.env.BACKEND_URL || 'https://api-staging.beeline.sg',
+    TRACKING_URL: process.env.TRACKING_URL || 'https://tracking-staging.beeline.sg'
+  }
+}
+
+console.log(`
+BACKEND_URL is ${env.BACKEND_URL}
 `)
-}
 
-if (!process.env.TRACKING_URL) {
-  throw new Error(`
-Please run the following before running webpack:
-
-$ export TRACKING_URL=<something>
-
-<something> is one of:
-1. https://tracking.beeline.sg (LIVE)
-2. https://tracking-staging.beeline.sg (STAGING)
+console.log(`
+TRACKING_URL is ${env.TRACKING_URL}
 `)
-}
-var env = {
-  BACKEND_URL: process.env.BACKEND_URL || 'https://api-staging.beeline.sg',
-  TRACKING_URL: process.env.TRACKING_URL || 'https://tracking-staging.beeline.sg'
-}
 
 fs.writeFileSync(`${__dirname}/beeline-driver/env.json`, JSON.stringify(env))
 
