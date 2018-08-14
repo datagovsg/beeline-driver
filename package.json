@@ -38,6 +38,7 @@
     "http-server": "^0.11.0",
     "install": "^0.8.1",
     "ionic": "^3.12.0",
+    "ios-deploy": "^1.9.3",
     "json-loader": "^0.5.4",
     "jsonwebtoken": "^5.7.0",
     "lodash": "^4.11.1",
@@ -55,7 +56,8 @@
     "cordova-plugin-insomnia",
     "cordova-plugin-app-version",
     "cordova-hot-code-push-plugin",
-    "cordova-plugin-network-information"
+    "cordova-plugin-network-information",
+    "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": [
     "android",
