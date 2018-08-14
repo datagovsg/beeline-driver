@@ -13,7 +13,7 @@
   },
   {
     "file": "css/ionic.app.css",
-    "hash": "f40c500bceda4e12f27d2c5b8f682a66"
+    "hash": "b8aaf850272ae07577e19c51774340c8"
   },
   {
     "file": "css/ionic.app.min.css",
@@ -101,11 +101,7 @@
   },
   {
     "file": "js/bundle.js",
-    "hash": "0d54c847185ad765cf666de9ed08ed98"
-  },
-  {
-    "file": "js/bundle.js.map",
-    "hash": "995cf3d97bf22b06c8f7580fd05ca807"
+    "hash": "99e62567cbf762d82661bc322cb6117b"
   },
   {
     "file": "js/ng-cordova.min.js",
@@ -393,6 +389,6 @@
   },
   {
     "file": "templates/start.html",
-    "hash": "886c5f5f2242f369777dbbfab86dfbc0"
+    "hash": "cc6bfe6dcc1fa76ecae7cdca302590d0"
   }
 ]
