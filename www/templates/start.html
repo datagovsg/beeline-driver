@@ -1,9 +1,9 @@
 <ion-view>
   <ion-nav-title>{{ 'ROUTE' | translate }} {{data.routeId}}</ion-nav-title>
-  <ion-nav-buttons side="right">
+  <ion-nav-buttons side="secondary">
     <button class="button">
       {{ping.pingStatus}}
-      <img ng-class="{'image-pulse': ping.isAnimated || ping.isRedON}" ng-src="{{ping.pingStatusSymbol}}">
+      <img ng-class="{'image-pulse': true, 'image-pulse-on': ping.isAnimated || ping.isRedON}" ng-src="{{ping.pingStatusSymbol}}">
     </button>
   </ion-nav-buttons>
   <ion-content class="start" scroll=true>
@@ -31,6 +31,9 @@
               <strong>{{boardStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
+              <a href="#" ng-click="openExternalUrl($event, boardStop.googleMapsNavigationUrl)">
+                <img src="image/google-maps.png" class="maps-icon" />
+              </a>
               {{boardStop.stop.description}}
             </div>
             <div class="col col-20 col-top passenger-count">
@@ -55,6 +58,9 @@
               <strong>{{alightStop.time | date:'h:mm a'}}</strong>
             </div>
             <div class="col col-60 item-text-wrap">
+              <a href="#" ng-click="openExternalUrl($event, alightStop.googleMapsNavigationUrl)">
+                <img src="image/google-maps.png" class="maps-icon" />
+              </a>
               {{alightStop.stop.description}}
             </div>
             <div class="col col-20 col-top passenger-count">
@@ -71,7 +77,6 @@
             </ul>
           </div>
         </div>
-
       </div>
     </div>
     <div class="primary-button bottom-button" ng-click="stopPing()">{{ 'STOP_TRIP_BUTTON' | translate }}</div>

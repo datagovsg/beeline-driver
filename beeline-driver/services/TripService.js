@@ -81,6 +81,15 @@ export default [
       });
     };
 
+    this.getRoute = function(routeId) {
+      return BeelineService.request({
+        method: "GET",
+        url: '/routes/' + routeId
+      })
+      .then((response) => response.data)
+      .catch((err) => null)
+    }
+
     this.getRouteDescription = async function(routeId) {
       try {
         if (self.route && self.route.id == routeId) {

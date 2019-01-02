@@ -1,6 +1,9 @@
 import _ from "lodash";
 // import confirmPromptTemplate from "../templates/confirm-prompt.html";
 import loadingTemplate from "../templates/loading.html";
+import querystring from 'querystring'
+import polyline from '@mapbox/polyline'
+
 export default[
   "$scope","$state","TripService","$ionicPopup","$timeout","$stateParams",
   "PingService","$ionicLoading","$rootScope","VerifiedPromptService",
@@ -15,6 +18,7 @@ export default[
       tripId: $stateParams.tripId || undefined,
       currentList: 'board',
     }
+    $scope.googleMapsNavigationUrl = null
 
     var reloadPassengerTimeout;
     var classToggleTimeout;
@@ -49,6 +53,84 @@ export default[
       $scope.alightStops = _.sortBy($scope.alightStops, function(item){
         return item.time;
       });
+
+      computeNavigationUrls()
+    }
+
+    /**
+     * Augments each item in the `tripStops` property with a `googleMapsNavigationURL` property.
+     *
+     * The navigation URL will add a waypoint to ensure the correct direction of approach, provided
+     * such information can be derived from the `path` property.
+     */
+    async function computeNavigationUrls () {
+      const tripStops = _.sortBy($scope.trip.tripStops, 'time')
+      const latLngOfStop = tripStop => `${tripStop.stop.coordinates.coordinates[1]},${tripStop.stop.coordinates.coordinates[0]}`
+      const route = await TripService.getRoute($scope.data.routeId)
+      const path = route && polyline.decode(route.path).map(([a, b]) => [b, a])
+
+      /**
+       * Navigation from driver's current location to stop
+       * @param {TripStop} tripStop
+       */
+      function simpleNavigationURL(tripStop) {
+        return `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+          destination: latLngOfStop(tripStop),
+          travelmode: 'driving',
+        })
+      }
+
+      /**
+       * Navigation from driver's current location, to the point in the path just before the trip stop,
+       * then onward to the trip stop.
+       *
+       * This relies on route.path being accurate.
+       *
+       * @param {TripStop} tripStop
+       * @param {TripStop} prevTripStop
+       */
+      function waypointedNavigationURL(tripStop, prevTripStop) {
+        const nearestPathPointToPrev = _(path)
+          .map((value, index) => // [latlng], index, distance
+            [value, index, roughLngLatDistance(value, prevTripStop.stop.coordinates.coordinates)])
+          .filter(v => v[2] < 400)
+          .minBy(v => v[2])
+
+        const nearestPathPointToCurrent = _(path)
+          .map((value, index) => // [latlng], index, distance
+            [value, index, roughLngLatDistance(value, tripStop.stop.coordinates.coordinates)])
+          .filter(v => v[2] < 400)
+          .minBy(v => v[2])
+
+        // This condition will be true, e.g. if the path does not correspond to the actual trip stops
+        // in the list
+        if (!nearestPathPointToPrev || !nearestPathPointToCurrent || (prevTripStopIndex > tripStopIndex)) {
+          return simpleNavigationURL(tripStop)
+        }
+
+        const prevTripStopIndex = nearestPathPointToPrev[1]
+        const tripStopIndex = nearestPathPointToCurrent[1]
+
+        const waypointCoords = path[tripStopIndex - 1]
+
+        if (!waypointCoords) {
+          return simpleNavigationURL(tripStop)
+        }
+
+        return `https://www.google.com/maps/dir/?api=1&` + querystring.stringify({
+          destination: latLngOfStop(tripStop),
+          waypoints: `${waypointCoords[1]},${waypointCoords[0]}`,
+          travelmode: 'driving',
+        })
+      }
+
+      tripStops.forEach((tripStop, index) => {
+        if (index === 0 || !path) {
+          tripStop.googleMapsNavigationUrl = simpleNavigationURL(tripStop)
+        } else {
+          tripStop.googleMapsNavigationUrl = waypointedNavigationURL(tripStop, tripStops[index - 1])
+        }
+      })
     }
 
     //reload passenger list with ignoreCache=true to update
@@ -221,12 +303,29 @@ export default[
       $state.go("app.route");
     };
 
+    $scope.openExternalUrl = function ($event, url) {
+      $event.preventDefault()
+      window.open(url, '_system')
+    }
+
     //when leave this view, stop the ping service and remove timeouts
     var stopPingandInterval = function (){
       $timeout.cancel(GPSOffTimeout);
       $timeout.cancel(reloadPassengerTimeout);
       $timeout.cancel(classToggleTimeout);
       PingService.stop();
+    }
+
+    function roughLngLatDistance(a, b) {
+      const latDiffRadians = (b[1] - a[1]) / 180 * Math.PI
+      const lngDiffRadians = (b[0] - a[0]) / 180 * Math.PI
+
+      const avgLatRadians = 0.5 * (a[1] + b[1]) / 180 * Math.PI
+
+      const diffEW = lngDiffRadians * 6371e3 * Math.cos(avgLatRadians)
+      const diffNS = latDiffRadians * 6371e3
+
+      return Math.sqrt(diffEW * diffEW + diffNS * diffNS)
     }
 
     // Triggered when devices with a hardware back button (Android) is clicked by the user
@@ -236,5 +335,4 @@ export default[
       $scope.stopPing();
       return false;
     };
-
   }];
